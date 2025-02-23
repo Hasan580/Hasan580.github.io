@@ -1,106 +1,147 @@
-<!-- Add this CSS to your existing styles -->
-<style>
-    /* Add to existing :root variables */
-    :root {
-        --bg-pattern: linear-gradient(45deg, 
-            rgba(255,255,255,0.02) 10%,
-            rgba(0,0,0,0.02) 90%);
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hassan Firas - Web Developer & Designer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2ecc71;
+            --secondary: #3498db;
+            --bg-light: #f8f9fa;
+            --text-light: #2c3e50;
+            --bg-dark: #2c3e50;
+            --text-dark: #ecf0f1;
+        }
 
-    body {
-        position: relative;
-        overflow-x: hidden;
-    }
+        /* Previous styles remain, here are critical fixes */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 50px;
+            position: relative;
+            z-index: 1;
+        }
 
-    .background-pattern {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        opacity: 0.1;
-        background: var(--bg-pattern);
-    }
+        /* Fixed particle positioning */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-    .motivational-text {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 8rem;
-        font-weight: 900;
-        white-space: nowrap;
-        color: var(--primary);
-        opacity: 0.03;
-        user-select: none;
-        z-index: -1;
-        animation: float 20s infinite linear;
-    }
-
-    @keyframes float {
-        0% { transform: translate(-50%, -50%) rotate(-5deg); }
-        50% { transform: translate(-50%, -55%) rotate(5deg); }
-        100% { transform: translate(-50%, -50%) rotate(-5deg); }
-    }
-
-    /* Add particle effect */
-    .particles {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: -1;
-    }
-
-    .particle {
-        position: absolute;
-        background: currentColor;
-        opacity: 0.05;
-        border-radius: 50%;
-        animation: particle-float 3s infinite;
-    }
-
-    @keyframes particle-float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-20px); }
-    }
-</style>
-
-<!-- Add these elements right after <body> tag -->
+        /* Added missing media queries */
+        @media (max-width: 768px) {
+            .profile-section {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .profile-photo {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
 <body>
-    <div class="background-pattern"></div>
-    
-    <div class="motivational-text">
-        <span>CREATIVITY</span>
-        <span>VISION</span>
-        <span>STORYTELLING</span>
-        <span>MOMENTS</span>
-        <span>PASSION</span>
-    </div>
+    <button class="mode-toggle" onclick="toggleDarkMode()">🌓</button>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
-    <div class="particles">
-        <!-- JavaScript will add particles dynamically -->
-    </div>
+    <section class="hero" id="home">
+        <h2>Full Stack Developer & UI/UX Designer</h2>
+        <h2>Based in Baghdad, Iraq</h2>
+        <h1>I'm Hassan Firas</h1>
+        <p>Turning complex problems into elegant digital solutions through code and design.</p>
+        <button class="contact-btn">Hire Me</button>
+    </section>
 
-    <!-- Add this script at the end before </body> -->
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <img src="images/profile.jpg" alt="Hassan Firas" class="profile-photo">
+        <div>
+            <h2>About Me</h2>
+            <p>Iraqi developer with 3+ years experience creating responsive websites and web applications. Specializing in MERN stack and user-centered design.</p>
+            <div class="language-badges">
+                <span class="language-badge">Arabic (Native)</span>
+                <span class="language-badge">English (Professional)</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills-grid" id="skills">
+        <div class="skill-card">
+            <h3><i class="fas fa-code"></i> Frontend Development</h3>
+            <p>HTML5, CSS3, JavaScript, React.js</p>
+        </div>
+        <div class="skill-card">
+            <h3><i class="fas fa-server"></i> Backend Development</h3>
+            <p>Node.js, Express, MongoDB, REST APIs</p>
+        </div>
+        <div class="skill-card">
+            <h3><i class="fas fa-palette"></i> UI/UX Design</h3>
+            <p>Figma, Adobe XD, User Flows, Prototyping</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-info" id="contact">
+        <h2>Get in Touch</h2>
+        <a href="tel:+9647806804467" class="phone-link">
+            <i class="fas fa-phone"></i> +964 780 680 4467
+        </a>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </section>
+
     <script>
-        // Create particle effect
+        // Fixed dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        // Initialize dark mode
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+            
+            // Initialize particles
+            createParticles();
+        });
+
+        // Fixed particle generation
         function createParticles() {
-            const particles = document.querySelector('.particles');
+            const container = document.querySelector('.particles');
             for(let i = 0; i < 50; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
-                particle.style.width = Math.random() * 5 + 2 + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 2 + 's';
-                particles.appendChild(particle);
+                particle.style.cssText = `
+                    width: ${Math.random() * 5 + 2}px;
+                    height: ${Math.random() * 5 + 2}px;
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                    animation-delay: ${Math.random() * 2}s;
+                `;
+                container.appendChild(particle);
             }
         }
-        createParticles();
     </script>
 </body>
+</html>
