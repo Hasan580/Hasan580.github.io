@@ -1,147 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hassan Firas - Web Developer & Designer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #2ecc71;
-            --secondary: #3498db;
-            --bg-light: #f8f9fa;
-            --text-light: #2c3e50;
-            --bg-dark: #2c3e50;
-            --text-dark: #ecf0f1;
-        }
-
-        /* Previous styles remain, here are critical fixes */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 0 50px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Fixed particle positioning */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Added missing media queries */
-        @media (max-width: 768px) {
-            .profile-section {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .profile-photo {
-                margin: 0 auto;
-            }
-        }
-    </style>
-</head>
-<body>
-    <button class="mode-toggle" onclick="toggleDarkMode()">🌓</button>
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#portfolio">Portfolio</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
-    </nav>
-
-    <section class="hero" id="home">
-        <h2>Full Stack Developer & UI/UX Designer</h2>
-        <h2>Based in Baghdad, Iraq</h2>
-        <h1>I'm Hassan Firas</h1>
-        <p>Turning complex problems into elegant digital solutions through code and design.</p>
-        <button class="contact-btn">Hire Me</button>
-    </section>
-
-    <!-- Profile Section -->
-    <section class="profile-section">
-        <img src="images/profile.jpg" alt="Hassan Firas" class="profile-photo">
-        <div>
-            <h2>About Me</h2>
-            <p>Iraqi developer with 3+ years experience creating responsive websites and web applications. Specializing in MERN stack and user-centered design.</p>
-            <div class="language-badges">
-                <span class="language-badge">Arabic (Native)</span>
-                <span class="language-badge">English (Professional)</span>
-            </div>
+<!-- Add this section where you want to display your Figma design -->
+<section class="portfolio-section" id="portfolio">
+    <div class="container">
+        <h2>My Design Work</h2>
+        <div class="figma-embed">
+            <iframe 
+                style="border: 1px solid rgba(0, 0, 0, 0.1);" 
+                title="Figma Design Preview"
+                src="https://embed.figma.com/design/6b4IsSkhq21SiZYsjmHyLY/Modern-Website-UI-Design-in-Figma%3A-Step-by-Step-Tutorial-for-Beginners-(Community)?node-id=0-1&embed-host=share" 
+                allowfullscreen>
+            </iframe>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Skills Section -->
-    <section class="skills-grid" id="skills">
-        <div class="skill-card">
-            <h3><i class="fas fa-code"></i> Frontend Development</h3>
-            <p>HTML5, CSS3, JavaScript, React.js</p>
-        </div>
-        <div class="skill-card">
-            <h3><i class="fas fa-server"></i> Backend Development</h3>
-            <p>Node.js, Express, MongoDB, REST APIs</p>
-        </div>
-        <div class="skill-card">
-            <h3><i class="fas fa-palette"></i> UI/UX Design</h3>
-            <p>Figma, Adobe XD, User Flows, Prototyping</p>
-        </div>
-    </section>
+<!-- Add this CSS to your styles -->
+<style>
+    .portfolio-section {
+        padding: 80px 20px;
+        background: rgba(255,255,255,0.1);
+    }
 
-    <!-- Contact Section -->
-    <section class="contact-info" id="contact">
-        <h2>Get in Touch</h2>
-        <a href="tel:+9647806804467" class="phone-link">
-            <i class="fas fa-phone"></i> +964 780 680 4467
-        </a>
-        <div class="social-links">
-            <a href="#"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-whatsapp"></i></a>
-        </div>
-    </section>
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 
-    <script>
-        // Fixed dark mode toggle
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    .figma-embed {
+        position: relative;
+        padding: 20px;
+        background: var(--bg-light);
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        margin-top: 30px;
+    }
+
+    .figma-embed iframe {
+        width: 100%;
+        height: 600px;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Dark mode adaptation */
+    body.dark-mode .figma-embed {
+        background: var(--bg-dark);
+    }
+
+    body.dark-mode .figma-embed iframe {
+        border-color: rgba(255,255,255,0.1) !important;
+    }
+
+    @media (max-width: 768px) {
+        .figma-embed iframe {
+            height: 400px;
         }
+    }
 
-        // Initialize dark mode
-        document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('darkMode') === 'true') {
-                document.body.classList.add('dark-mode');
-            }
-            
-            // Initialize particles
-            createParticles();
-        });
-
-        // Fixed particle generation
-        function createParticles() {
-            const container = document.querySelector('.particles');
-            for(let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.cssText = `
-                    width: ${Math.random() * 5 + 2}px;
-                    height: ${Math.random() * 5 + 2}px;
-                    left: ${Math.random() * 100}%;
-                    top: ${Math.random() * 100}%;
-                    animation-delay: ${Math.random() * 2}s;
-                `;
-                container.appendChild(particle);
-            }
+    @media (max-width: 480px) {
+        .figma-embed iframe {
+            height: 300px;
         }
-    </script>
-</body>
-</html>
+    }
+</style>
