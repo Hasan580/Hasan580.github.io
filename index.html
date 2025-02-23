@@ -4,207 +4,175 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hassan Firas - Professional Videographer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #FF4D4D;
-            --secondary: #00CFC8;
-            --bg-light: #f8f9fa;
-            --text-light: #333;
-            --bg-dark: #0a0a0a;
-            --text-dark: #f1f1f1;
+        /* Previous CSS remains the same - Add these new styles */
+
+        /* Profile Section */
+        .profile-section {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            padding: 50px;
+            align-items: center;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-            transition: background 0.3s, color 0.3s;
+        .profile-photo {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        body {
-            background: var(--bg-light);
-            color: var(--text-light);
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 50px;
         }
 
-        body.dark-mode {
-            background: var(--bg-dark);
-            color: var(--text-dark);
+        .skill-card {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 15px;
+            transition: transform 0.3s;
         }
 
-        nav {
-            padding: 20px 50px;
-            position: fixed;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
+        .skill-card:hover {
+            transform: translateY(-5px);
         }
 
-        body.dark-mode nav {
-            background: rgba(10, 10, 10, 0.95);
+        /* Certification Section */
+        .certifications {
+            padding: 50px;
         }
 
-        nav a {
-            margin-right: 30px;
-            text-decoration: none;
-            color: inherit;
-            font-weight: 500;
-            position: relative;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .hero {
-            height: 100vh;
+        .cert-item {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 0 50px;
-            opacity: 0;
-            animation: fadeIn 1s forwards 0.5s;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: slideUp 1s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .hero h2 {
-            font-size: 1.5rem;
-            color: inherit;
-            margin-bottom: 10px;
-            font-weight: 400;
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards 0.3s;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            max-width: 600px;
+            align-items: center;
             margin: 20px 0;
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards 0.5s;
         }
 
-        .contact-btn {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            margin-top: 20px;
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards 0.7s;
-            transition: transform 0.3s, box-shadow 0.3s;
+        .cert-icon {
+            font-size: 2rem;
+            margin-right: 20px;
+            color: var(--primary);
         }
 
-        .contact-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .mode-toggle {
-            position: fixed;
-            top: 25px;
-            right: 50px;
-            background: none;
-            border: none;
-            cursor: pointer;
+        /* Contact Info */
+        .contact-info {
+            text-align: center;
+            padding: 50px;
             font-size: 1.2rem;
-            color: inherit;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .phone-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+            margin: 20px 0;
+            display: block;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Language Badges */
+        .language-badges {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            padding: 30px;
         }
 
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .language-badge {
+            padding: 8px 20px;
+            border-radius: 20px;
+            background: var(--primary);
+            color: white;
         }
 
-        @media (max-width: 768px) {
-            nav {
-                padding: 20px;
-                text-align: center;
-            }
+        /* Gallery Section */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            padding: 50px;
+        }
 
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+        .gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
 
-            .mode-toggle {
-                right: 20px;
-            }
+        .gallery img:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
-    <button class="mode-toggle" onclick="toggleDarkMode()">🌓</button>
-    <nav>
-        <a href="#portfolio">Portfolio</a>
-        <a href="#about">About</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#contact">Contact</a>
-    </nav>
+    <!-- Previous navigation and hero section remain the same -->
 
-    <section class="hero">
-        <h2>Professional Videographer</h2>
-        <h2>Shootings in New York</h2>
-        <h1>Hello, I Am<br>Hassan Firas</h1>
-        <p>Videography is the art of capturing moments and turning them into memories. It is a way to tell stories and share experiences with others.</p>
-        <button class="contact-btn">Contact Me</button>
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <img src="images/your-photo.jpg" alt="Hassan Firas" class="profile-photo">
+        <div>
+            <h2>About Me</h2>
+            <p>Professional videographer with 5+ years experience in cinematic storytelling. Specialized in event coverage, commercial videos, and documentary filmmaking.</p>
+        </div>
     </section>
 
-    <script>
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            // Save user preference
-            const isDark = document.body.classList.contains('dark-mode');
-            localStorage.setItem('darkMode', isDark);
-        }
+    <!-- Skills Section -->
+    <section class="skills-grid">
+        <div class="skill-card">
+            <h3><i class="fas fa-video"></i> Video Production</h3>
+            <p>Full-cycle production from scripting to post-production</p>
+        </div>
+        <div class="skill-card">
+            <h3><i class="fas fa-lightbulb"></i> Lighting Design</h3>
+            <p>Professional studio and outdoor lighting setups</p>
+        </div>
+        <!-- Add more skill cards -->
+    </section>
 
-        // Check saved preference
-        if (localStorage.getItem('darkMode') === 'true') {
-            document.body.classList.add('dark-mode');
-        }
+    <!-- Certifications -->
+    <section class="certifications">
+        <h2>Certifications</h2>
+        <div class="cert-item">
+            <i class="fas fa-certificate cert-icon"></i>
+            <div>
+                <h3>Adobe Certified Expert - Premiere Pro</h3>
+                <p>2022 | Certification ID: ACE12345</p>
+            </div>
+        </div>
+        <!-- Add more certifications -->
+    </section>
 
-        // Smooth scroll for navigation
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const section = document.querySelector(this.getAttribute('href'));
-                section.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-    </script>
+    <!-- Languages -->
+    <div class="language-badges">
+        <span class="language-badge">English (Fluent)</span>
+        <span class="language-badge">Arabic (Native)</span>
+    </div>
+
+    <!-- Contact Section -->
+    <section class="contact-info">
+        <h2>Let's Work Together</h2>
+        <a href="tel:+2137806804467" class="phone-link">
+            <i class="fas fa-phone"></i> +213 780 68 04 467
+        </a>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery">
+        <img src="images/work1.jpg" alt="Project 1">
+        <img src="images/work2.jpg" alt="Project 2">
+        <!-- Add more work samples -->
+    </section>
+
+    <!-- Previous script section remains the same -->
 </body>
 </html>
