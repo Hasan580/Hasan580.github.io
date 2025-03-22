@@ -4,50 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         header {
-            background: #333;
+            background: linear-gradient(90deg, #4b6cb7, #182848);
             color: #fff;
-            padding: 1rem 0;
+            padding: 2rem 0;
             text-align: center;
         }
         header h1 {
             margin: 0;
+            font-size: 2.5rem;
+        }
+        header p {
+            font-size: 1.2rem;
         }
         nav {
             display: flex;
             justify-content: center;
-            background: #444;
+            background: #333;
         }
         nav a {
             color: #fff;
-            padding: 1rem;
+            padding: 1rem 2rem;
             text-decoration: none;
+            transition: background 0.3s ease;
         }
         nav a:hover {
             background: #555;
         }
         .container {
             padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         .section {
             margin-bottom: 2rem;
         }
         .section h2 {
-            border-bottom: 2px solid #333;
+            border-bottom: 2px solid #4b6cb7;
             padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        .section p {
+            font-size: 1.1rem;
+            line-height: 1.6;
         }
         footer {
             background: #333;
             color: #fff;
             text-align: center;
             padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .project {
+            background: #f4f4f4;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .project:hover {
+            transform: translateY(-5px);
+        }
+        .project img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .project h3 {
+            margin-top: 1rem;
         }
     </style>
 </head>
@@ -68,7 +107,23 @@
         </div>
         <div id="projects" class="section">
             <h2>Projects</h2>
-            <p>Showcase some of your projects here. You can include links, descriptions, and images.</p>
+            <div class="project-grid">
+                <div class="project">
+                    <img src="project1.jpg" alt="Project 1">
+                    <h3>Project 1</h3>
+                    <p>Description of project 1 goes here.</p>
+                </div>
+                <div class="project">
+                    <img src="project2.jpg" alt="Project 2">
+                    <h3>Project 2</h3>
+                    <p>Description of project 2 goes here.</p>
+                </div>
+                <div class="project">
+                    <img src="project3.jpg" alt="Project 3">
+                    <h3>Project 3</h3>
+                    <p>Description of project 3 goes here.</p>
+                </div>
+            </div>
         </div>
         <div id="contact" class="section">
             <h2>Contact</h2>
