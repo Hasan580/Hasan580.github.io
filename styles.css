@@ -353,3 +353,115 @@ main { padding-top: var(--navbar-height); position: relative; z-index: 1; }
     .contact-intro { font-size: 1rem; }
     .footer { font-size: 0.8rem; padding: 1.5rem 4%;}
 }
+/* --- Mobile Menu Styles --- */
+.mobile-menu-toggle {
+    display: none; /* Hidden on desktop BY DEFAULT */
+    background: none;
+    border: none;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    z-index: 1500; /* Above mobile nav, below potentially active navbar */
+    position: relative; /* For positioning spans correctly */
+    margin-left: 1rem; /* Space from theme toggle if needed */
+}
+.mobile-menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--current-text-color); /* Use theme variable */
+    border-radius: 1px;
+    position: absolute;
+    left: 0;
+    transition: transform 0.3s ease, top 0.3s ease, opacity 0.3s ease;
+}
+.mobile-menu-toggle span:nth-child(1) { top: 6px; }
+.mobile-menu-toggle span:nth-child(2) { top: 14px; }
+.mobile-menu-toggle span:nth-child(3) { top: 22px; }
+
+/* Active (Cross) State for Toggle */
+.mobile-menu-toggle.active span:nth-child(1) { top: 14px; transform: rotate(45deg); }
+.mobile-menu-toggle.active span:nth-child(2) { opacity: 0; }
+.mobile-menu-toggle.active span:nth-child(3) { top: 14px; transform: rotate(-45deg); }
+
+
+.mobile-nav {
+    position: fixed;
+    top: 0; /* Start from the top now */
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Cover full viewport */
+    background-color: var(--current-bg-color); /* Match background */
+    z-index: 1400; /* High index, but below toggle button potentially */
+    display: none; /* CHANGE: Hide completely by default */
+    opacity: 0; /* Start fully transparent */
+    align-items: center;
+    justify-content: center;
+    /* Keep transform for slide-in effect */
+    transform: translateX(-100%);
+    transition: transform 0.5s var(--transition-ease), opacity 0.4s ease, background-color 0.4s ease;
+    overflow-y: auto; /* Allow scrolling if needed */
+}
+
+.mobile-nav.active {
+    display: flex; /* CHANGE: Show when active */
+    opacity: 1; /* Fade in */
+    transform: translateX(0); /* Slide in */
+}
+
+.mobile-nav-links {
+    list-style: none;
+    text-align: center;
+    padding: 0; /* Reset padding */
+}
+
+.mobile-nav-links li {
+    margin-bottom: 2.5rem; /* Increase spacing */
+    opacity: 0; /* Start hidden for stagger */
+    transform: translateY(25px); /* Start slightly lower */
+    /* Transition applied when .active is added to parent */
+    transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+}
+
+/* Stagger animation for links when menu opens */
+.mobile-nav.active .mobile-nav-links li {
+   opacity: 1;
+   transform: translateY(0);
+}
+/* Apply increasing delays */
+.mobile-nav.active .mobile-nav-links li:nth-child(1) { transition-delay: 0.2s; }
+.mobile-nav.active .mobile-nav-links li:nth-child(2) { transition-delay: 0.28s; }
+.mobile-nav.active .mobile-nav-links li:nth-child(3) { transition-delay: 0.36s; }
+.mobile-nav.active .mobile-nav-links li:nth-child(4) { transition-delay: 0.44s; }
+.mobile-nav.active .mobile-nav-links li:nth-child(5) { transition-delay: 0.52s; }
+
+
+.mobile-nav-links a {
+    color: var(--current-heading-color); /* Brighter text */
+    font-size: clamp(1.5rem, 5vw, 2rem); /* Responsive font size */
+    font-weight: 600;
+    text-decoration: none;
+    padding: 10px; /* Add some padding */
+    display: inline-block; /* Allows padding */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+.mobile-nav-links a:hover {
+    color: var(--current-primary-accent);
+    transform: scale(1.1);
+}
+
+
+/* --- Responsiveness --- */
+@media (max-width: 992px) {
+    .nav-links { display: none; } /* Hide desktop links */
+    .mobile-menu-toggle {
+         display: block; /* Show mobile toggle ONLY on smaller screens */
+     }
+    /* Keep other responsive rules for title size, etc. */
+    .navbar-container { padding: 0 1.5rem; }
+    .section-title { font-size: clamp(2rem, 4.5vw, 2.8rem); margin-bottom: 3rem; }
+    .content-section { padding: 80px 4%; }
+}
+
+/* Keep other specific media queries (@media (max-width: 768px), etc.) as they were */
+/* Ensure they DO NOT contain rules that would override the hiding of .mobile-nav on larger screens */
