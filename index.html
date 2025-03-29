@@ -3,107 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Use the name from the screenshot or your preference -->
     <title>Hassan - Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <ink rel="website icon" type="jpg" href="vector-web-icon-design.jpg" >
-</head> 
-<body>
-    <!-- Background Container -->
+    <!-- Corrected icon link -->
+    <!-- Make sure 'vector-web-icon-design.jpg' is a suitable icon format (like .ico or .png) and path is correct -->
+    <link rel="icon" type="image/jpeg" href="vector-web-icon-design.jpg">
+</head>
+<!-- Default theme set here -->
+<body data-theme="dark">
+
+    <!-- Background Container (Using the image from your original CSS) -->
     <div class="background-container"></div>
+     <!-- Gradient Overlay for effect -->
+     <div class="gradient-overlay"></div>
 
     <!-- Navigation Bar -->
     <nav class="navbar">
-        <div class="logo">
-            <a href="#hero">Your Logo/Name</a>
-        </div>
-        <ul class="nav-links">
-            <li><a href="#hero">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+         <div class="navbar-container">
+             <div class="logo animate-nav-item">
+                 <!-- Using name from screenshot's footer -->
+                 <a href="#hero">Hassan F. A<span class="logo-dot">.</span></a>
+             </div>
+             <ul class="nav-links animate-nav-item" style="--delay: 0.1s;">
+                 <li><a href="#hero">Home</a></li>
+                 <li><a href="#about">About</a></li>
+                 <li><a href="#skills">Skills</a></li> <!-- Added Skills -->
+                 <li><a href="#projects">Projects</a></li>
+                 <li><a href="#contact">Contact</a></li>
+             </ul>
+             <button id="theme-toggle" class="theme-toggle-button animate-nav-item" aria-label="Toggle Theme" style="--delay: 0.2s;">
+                 <span class="icon-sun">☀️</span>
+                 <span class="icon-moon">🌙</span>
+             </button>
+              <!-- Mobile Menu Toggle (Hidden on desktop) -->
+              <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+             </button>
+         </div>
     </nav>
+     <!-- Mobile Navigation Menu (Initially Hidden) -->
+    <div class="mobile-nav">
+        <ul class="mobile-nav-links">
+             <li><a href="#hero">Home</a></li>
+             <li><a href="#about">About</a></li>
+             <li><a href="#skills">Skills</a></li>
+             <li><a href="#projects">Projects</a></li>
+             <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+
 
     <!-- Main Content Area -->
     <main>
         <!-- Hero Section -->
         <section id="hero" class="content-section hero-section">
             <div class="hero-content">
-                <h1>Welcome! I'm [Your Name]</h1>
-                <p class="subtitle">Creative Web Developer / Designer / [Your Role]</p>
-                <p>Building beautiful and functional web experiences.</p>
-                <a href="#projects" class="cta-button">View My Work</a>
+                <!-- Updated name based on footer -->
+                <h1 class="animate-on-scroll"><span>Welcome!</span><br> I'm Hassan F. Abd-Almuttaleb</h1>
+                 <p class="subtitle animate-on-scroll" data-delay="0.1s">
+                    Creative Web Developer / Designer / [Your Role]
+                </p>
+                <p class="hero-description animate-on-scroll" data-delay="0.2s">Building beautiful and functional web experiences.</p>
+                 <!-- Buttons Container -->
+                <div class="hero-buttons animate-on-scroll" data-delay="0.3s">
+                     <!-- Black/Gold Button -->
+                     <a href="#projects" class="cta-button"><span>View My Work</span></a>
+                    <!-- Black/Gold Secondary Button (CV) -->
+                    <!-- IMPORTANT: Replace 'your-cv.pdf' with the actual path/filename -->
+                    <a href="your-cv.pdf" download="Hassan_Abd-Almuttaleb_CV.pdf" class="cta-button secondary"><span>Download CV</span></a>
+                </div>
             </div>
+              <!-- Animated Scroll Down Hint -->
+             <a href="#about" class="scroll-down-hint" aria-label="Scroll down">
+                <div class="mouse"></div>
+            </a>
         </section>
 
-        <!-- About Section -->
+        <!-- About Section (Example Structure) -->
         <section id="about" class="content-section">
-            <h2>About Me</h2>
-            <p>
+             <h2 class="section-title animate-on-scroll"><span>About Me</span></h2>
+            <p class="animate-on-scroll" data-delay="0.1s">
                 Write something interesting about yourself here. Talk about your passion, skills,
-                experience, and what drives you. Keep it engaging! Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore
-                magna aliqua.
+                experience, and what drives you. Keep it engaging! Lorem ipsum dolor sit amet...
             </p>
-            <p>
+             <p class="animate-on-scroll" data-delay="0.2s">
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-                esse cillum dolore eu fugiat nulla pariatur.
+                ex ea commodo consequat...
             </p>
         </section>
 
-        <!-- Projects Section -->
+        <!-- Skills Section (Example Structure) -->
+         <section id="skills" class="content-section skills-section">
+             <h2 class="section-title animate-on-scroll"><span>My Skills</span></h2>
+             <div class="skills-container">
+                 <!-- Skill Item -->
+                 <div class="skill-item animate-on-scroll">
+                     <div class="skill-icon">[HTML5]</div>
+                     <h3>HTML5</h3>
+                 </div>
+                  <!-- Skill Item -->
+                  <div class="skill-item animate-on-scroll" data-delay="0.1s">
+                     <div class="skill-icon">[CSS3]</div>
+                     <h3>CSS3</h3>
+                 </div>
+                   <!-- Skill Item -->
+                   <div class="skill-item animate-on-scroll" data-delay="0.2s">
+                     <div class="skill-icon">[JS]</div>
+                     <h3>JavaScript</h3>
+                 </div>
+                 <!-- Add More -->
+             </div>
+         </section>
+
+        <!-- Projects Section (Example Structure) -->
         <section id="projects" class="content-section">
-            <h2>My Projects</h2>
+            <h2 class="section-title animate-on-scroll"><span>My Projects</span></h2>
             <div class="project-grid">
-                <!-- Project 1 -->
-                <div class="project-card">
-                    <h3>Project Title One</h3>
-                    <p>Short description of the project. What technologies were used? What was the goal?</p>
-                    <a href="#" target="_blank" class="project-link">View Project</a>
+                <!-- Project Card 1 -->
+                <div class="project-card animate-on-scroll">
+                     <div class="project-info">
+                         <h3>Project Title One</h3>
+                         <p>Short description of the project. What technologies were used?</p>
+                         <a href="#" target="_blank" class="project-link">View Project</a>
+                    </div>
                 </div>
-                <!-- Project 2 -->
-                <div class="project-card">
-                    <h3>Project Title Two</h3>
-                    <p>Another cool project. Maybe mention a specific challenge you overcame.</p>
-                    <a href="#" target="_blank" class="project-link">View Live Demo</a>
-                </div>
-                <!-- Project 3 -->
-                <div class="project-card">
-                    <h3>Project Title Three</h3>
-                    <p>This one showcases different skills. Use varied descriptions!</p>
-                    <a href="#" target="_blank" class="project-link">See Code on GitHub</a>
-                </div>
-                 <!-- Add more projects as needed -->
-                  <a href="your-cv.pdf" download="Hassan F.pdf" class="cta-button secondary">Download CV</a>
+                <!-- Add More -->
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="content-section">
-            <h2>Get In Touch</h2>
-            <p>
-                I'm currently available for freelance work or full-time positions.
-                Have a project in mind or just want to say hi? Feel free to reach out!
+        <section id="contact" class="content-section contact-section">
+            <!-- Title Matching Screenshot Style -->
+             <h2 class="section-title animate-on-scroll"><span>Let's Connect</span></h2>
+            <!-- Intro Text Matching Screenshot -->
+            <p class="contact-intro animate-on-scroll" data-delay="0.1s">
+                Have a project in mind, a question, or just want to say hello?<br>
+                My inbox is always open!
             </p>
-            <form class="contact-form">
-                 <input type="text" name="name" placeholder="Your Name" required>
-                 <input type="email" name="email" placeholder="Your Email" required>
-                 <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-                 <button type="submit" class="cta-button">Send Message</button>
+             <!-- Updated Form matching Screenshot Style -->
+            <form class="contact-form animate-on-scroll" data-delay="0.2s" action="#" method="POST">
+                <!-- Removed floating labels, using placeholders -->
+                <div class="form-group">
+                    <input type="text" id="name" name="name" required placeholder="Your Name">
+                 </div>
+                 <div class="form-group">
+                    <input type="email" id="email" name="email" required placeholder="Your Email">
+                 </div>
+                 <div class="form-group">
+                    <textarea id="message" name="message" rows="4" required placeholder="Your Message"></textarea>
+                 </div>
+                 <!-- Updated Submit Button -->
+                 <button type="submit" class="cta-button">
+                     <span>Send Message</span>
+                 </button>
             </form>
-            <p class="contact-alternative">
-                Or email me directly at: <a href="mailto:hassanazawi50@gmail.com">hassanazawi50@gmail.com</a>
+            <!-- Alternative Text Matching Screenshot -->
+            <p class="contact-alternative animate-on-scroll" data-delay="0.3s">
+                Alternatively, reach out via <a href="mailto:hassanazawi50@gmail.com">hassanazawi50@gmail.com</a>
             </p>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer>
-        <p>© 2025 [Hassan F. Abd-Almuttaleb]. All Rights Reserved.</p>
-        <!-- Optional: Add social media links here -->
+     <footer class="footer">
+        <div class="footer-content">
+             <p>© 2024 Hassan F. Abd-Almuttaleb. All Rights Reserved.</p>
+         </div>
     </footer>
+
+    <!-- Include the script file -->
+    <script src="script.js"></script>
 
 </body>
 </html>
