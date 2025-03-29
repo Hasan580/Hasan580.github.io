@@ -1,24 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Personal Site</title>
-  <link href="styles.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Awesome Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <nav class="top bar">
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+    <!-- Background Container -->
+    <div class="background-container"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#hero">Your Logo/Name</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
     </nav>
-  </header>
-  <main>
-  </main>
-  <footer>
-  </footer>
+
+    <!-- Main Content Area -->
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="content-section hero-section">
+            <div class="hero-content">
+                <h1>Welcome! I'm [Your Name]</h1>
+                <p class="subtitle">Creative Web Developer / Designer / [Your Role]</p>
+                <p>Building beautiful and functional web experiences.</p>
+                <a href="#projects" class="cta-button">View My Work</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="content-section">
+            <h2>About Me</h2>
+            <p>
+                Write something interesting about yourself here. Talk about your passion, skills,
+                experience, and what drives you. Keep it engaging! Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore
+                magna aliqua.
+            </p>
+            <p>
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                esse cillum dolore eu fugiat nulla pariatur.
+            </p>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="content-section">
+            <h2>My Projects</h2>
+            <div class="project-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <h3>Project Title One</h3>
+                    <p>Short description of the project. What technologies were used? What was the goal?</p>
+                    <a href="#" target="_blank" class="project-link">View Project</a>
+                </div>
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <h3>Project Title Two</h3>
+                    <p>Another cool project. Maybe mention a specific challenge you overcame.</p>
+                    <a href="#" target="_blank" class="project-link">View Live Demo</a>
+                </div>
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <h3>Project Title Three</h3>
+                    <p>This one showcases different skills. Use varied descriptions!</p>
+                    <a href="#" target="_blank" class="project-link">See Code on GitHub</a>
+                </div>
+                 <!-- Add more projects as needed -->
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="content-section">
+            <h2>Get In Touch</h2>
+            <p>
+                I'm currently available for freelance work or full-time positions.
+                Have a project in mind or just want to say hi? Feel free to reach out!
+            </p>
+            <form class="contact-form">
+                 <input type="text" name="name" placeholder="Your Name" required>
+                 <input type="email" name="email" placeholder="Your Email" required>
+                 <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                 <button type="submit" class="cta-button">Send Message</button>
+            </form>
+            <p class="contact-alternative">
+                Or email me directly at: <a href="mailto:your.email@example.com">your.email@example.com</a>
+            </p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2023 [Your Name]. All Rights Reserved.</p>
+        <!-- Optional: Add social media links here -->
+    </footer>
+
 </body>
 </html>
