@@ -3,179 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Use the name from the screenshot or your preference -->
-    <title>Hassan - Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Hassan F.A - Creative Digital Portfolio</title>
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Corrected icon link -->
-    <!-- Make sure 'vector-web-icon-design.jpg' is a suitable icon format (like .ico or .png) and path is correct -->
-    <link rel="icon" type="image/jpeg" href="vector-web-icon-design.jpg">
+    <!-- === FONT AWESOME for Icons === -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Optional: Favicon -->
+    <!-- <link rel="icon" type="image/png" href="favicon.png"> -->
 </head>
-<!-- Default theme set here -->
-<body data-theme="dark">
+<body data-theme="dark"> <!-- Default theme -->
 
-    <!-- Background Container (Using the image from your original CSS) -->
+    <!-- === Preloader === -->
+    <div class="preloader">
+        <div class="preloader-logo">[HF.A]</div>
+        <div class="preloader-bar"></div>
+    </div>
+
+    <!-- === Custom Cursor === -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- === Background Elements === -->
     <div class="background-container"></div>
-     <!-- Gradient Overlay for effect -->
-     <div class="gradient-overlay"></div>
+    <div class="grain-overlay"></div> <!-- Subtle texture -->
+    <div class="gradient-overlay"></div> <!-- Atmospheric gradient -->
 
-    <!-- Navigation Bar -->
+    <!-- === Creative Navbar === -->
     <nav class="navbar">
-         <div class="navbar-container">
-             <div class="logo animate-nav-item">
-                 <!-- Using name from screenshot's footer -->
-                 <a href="#hero">Hassan F. A<span class="logo-dot">.</span></a>
-             </div>
-             <ul class="nav-links animate-nav-item" style="--delay: 0.1s;">
-                 <li><a href="#hero">Home</a></li>
-                 <li><a href="#about">About</a></li>
-                 <li><a href="#skills">Skills</a></li> <!-- Added Skills -->
-                 <li><a href="#projects">Projects</a></li>
-                 <li><a href="#contact">Contact</a></li>
-             </ul>
-             <button id="theme-toggle" class="theme-toggle-button animate-nav-item" aria-label="Toggle Theme" style="--delay: 0.2s;">
-                 <span class="icon-sun">☀️</span>
-                 <span class="icon-moon">🌙</span>
+        <div class="navbar-container">
+            <div class="logo animate-nav-item">
+                <a href="#hero" class="hover-target">Hassan F.A<span class="logo-dot">.</span></a>
+            </div>
+            <ul class="nav-links animate-nav-item" style="--delay: 0.1s;">
+                <li><a href="#about" class="hover-target">About</a></li>
+                <li><a href="#skills" class="hover-target">Skills</a></li>
+                <li><a href="#projects" class="hover-target">Projects</a></li>
+                <li><a href="#contact" class="hover-target">Contact</a></li>
+                <!-- Hire Me Button/Link -->
+                <li class="nav-hire-me"><a href="#contact" class="cta-button hire-me-btn hover-target"><span>Hire Me</span></a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle-button animate-nav-item hover-target" aria-label="Toggle Theme" style="--delay: 0.2s;">
+                <span class="icon-sun">☀️</span>
+                <span class="icon-moon">🌙</span>
+            </button>
+             <button class="mobile-menu-toggle hover-target" aria-label="Toggle Menu">
+                <span></span><span></span><span></span>
              </button>
-              <!-- Mobile Menu Toggle (Hidden on desktop) -->
-              <button class="mobile-menu-toggle" aria-label="Toggle Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-             </button>
-         </div>
+        </div>
     </nav>
-     <!-- Mobile Navigation Menu (Initially Hidden) -->
+     <!-- Mobile Nav Menu -->
     <div class="mobile-nav">
         <ul class="mobile-nav-links">
-             <li><a href="#hero">Home</a></li>
-             <li><a href="#about">About</a></li>
-             <li><a href="#skills">Skills</a></li>
-             <li><a href="#projects">Projects</a></li>
-             <li><a href="#contact">Contact</a></li>
+             <li><a href="#about" class="hover-target">About</a></li>
+             <li><a href="#skills" class="hover-target">Skills</a></li>
+             <li><a href="#projects" class="hover-target">Projects</a></li>
+             <li><a href="#contact" class="hover-target">Contact</a></li>
+             <li class="nav-hire-me"><a href="#contact" class="cta-button hire-me-btn hover-target"><span>Hire Me</span></a></li>
         </ul>
     </div>
 
-
-    <!-- Main Content Area -->
+    <!-- === Main Content Area === -->
     <main>
         <!-- Hero Section -->
         <section id="hero" class="content-section hero-section">
             <div class="hero-content">
-                <!-- Updated name based on footer -->
-                <h1 class="animate-on-scroll"><span>Welcome!</span><br> I'm Hassan F. Abd-Almuttaleb</h1>
-                 <p class="subtitle animate-on-scroll" data-delay="0.1s">
-                    Creative Web Developer / Designer / [Your Role]
+                <h1 class="animate-on-scroll text-reveal">
+                   <span class="reveal-layer"></span>
+                   <span class="reveal-text"> <span class="sub-reveal">Welcome!</span><br> I'm Hassan F. Abd-Almuttaleb </span>
+                </h1>
+                <p class="subtitle animate-on-scroll" data-delay="0.3s">
+                    Creative Web Developer / UI&UX Designer / Tech Enthusiast
                 </p>
-                <p class="hero-description animate-on-scroll" data-delay="0.2s">Building beautiful and functional web experiences.</p>
-                 <!-- Buttons Container -->
-                <div class="hero-buttons animate-on-scroll" data-delay="0.3s">
-                     <!-- Black/Gold Button -->
-                     <a href="#projects" class="cta-button"><span>View My Work</span></a>
-                    <!-- Black/Gold Secondary Button (CV) -->
-                    <!-- IMPORTANT: Replace 'your-cv.pdf' with the actual path/filename -->
-                    <a href="your-cv.pdf" download="Hassan_Abd-Almuttaleb_CV.pdf" class="cta-button secondary"><span>Download CV</span></a>
+                <p class="hero-description animate-on-scroll" data-delay="0.5s">
+                    Transforming ideas into immersive and highly functional digital realities. Passionate about clean code and engaging user experiences.
+                </p>
+                <div class="hero-buttons animate-on-scroll" data-delay="0.7s">
+                    <a href="#projects" class="cta-button hover-target">
+                        <span>Explore Works</span>
+                        <div class="button-border-glow"></div>
+                    </a>
+                    <!-- CV Download Button -->
+                    <a href="your-cv.pdf" download="Hassan_Abd-Almuttaleb_CV.pdf" class="cta-button secondary hover-target">
+                        <span>Download CV</span>
+                        <div class="button-border-glow"></div>
+                    </a>
                 </div>
             </div>
-              <!-- Animated Scroll Down Hint -->
-             <a href="#about" class="scroll-down-hint" aria-label="Scroll down">
+             <a href="#about" class="scroll-down-hint hover-target" aria-label="Scroll down">
                 <div class="mouse"></div>
             </a>
         </section>
 
-        <!-- About Section (Example Structure) -->
+        <!-- About Section -->
         <section id="about" class="content-section">
-             <h2 class="section-title animate-on-scroll"><span>About Me</span></h2>
-            <p class="animate-on-scroll" data-delay="0.1s">
-                Write something interesting about yourself here. Talk about your passion, skills,
-                experience, and what drives you. Keep it engaging! Lorem ipsum dolor sit amet...
-            </p>
-             <p class="animate-on-scroll" data-delay="0.2s">
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat...
-            </p>
+             <h2 class="section-title animate-on-scroll"><span class="hover-target">About Me</span></h2>
+            <div class="about-content">
+                <div class="about-image animate-on-scroll" data-delay="0.1s">
+                     <!-- === Your Photo Here === -->
+                     <!-- <img src="your-photo.jpg" alt="Hassan F. Abd-Almuttaleb"> -->
+                      <div class="image-placeholder hover-target"><span>HFA</span></div>
+                      <!-- ====================== -->
+                </div>
+                <div class="about-text animate-on-scroll" data-delay="0.3s">
+                    <h3>Bridging Design and Development</h3>
+                    <p>
+                        Hey there! I'm Hassan, a dedicated developer with a keen eye for design, based in [Your Location]. My drive stems from a deep curiosity about digital interaction and a commitment to building web applications that are not only robust and performant but also intuitive and beautiful.
+                    </p>
+                    <p>
+                        With a strong foundation in modern web technologies (HTML, CSS, JavaScript, and beyond), I enjoy tackling challenges and continuously learning. My process involves understanding user needs, meticulous planning, and iterative development to deliver pixel-perfect results.
+                    </p>
+                     <p class="signature hover-target">- Hassan F. Abd-Almuttaleb</p>
+                </div>
+            </div>
         </section>
 
-        <!-- Skills Section (Example Structure) -->
-         <section id="skills" class="content-section skills-section">
-             <h2 class="section-title animate-on-scroll"><span>My Skills</span></h2>
-             <div class="skills-container">
-                 <!-- Skill Item -->
-                 <div class="skill-item animate-on-scroll">
-                     <div class="skill-icon">[HTML5]</div>
-                     <h3>HTML5</h3>
+        <!-- Skills Section -->
+        <section id="skills" class="content-section skills-section">
+            <h2 class="section-title animate-on-scroll"><span class="hover-target">Tech Palette</span></h2>
+            <div class="skills-grid">
+                <!-- Skill: HTML5 -->
+                <div class="skill-card animate-on-scroll hover-target">
+                     <div class="skill-icon"><i class="fab fa-html5"></i></div>
+                     <h4 class="skill-name">HTML5</h4>
+                     <div class="skill-tooltip">Semantic Structure</div>
+                </div>
+                <!-- Skill: CSS3 -->
+                <div class="skill-card animate-on-scroll hover-target" data-delay="0.1s">
+                     <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
+                     <h4 class="skill-name">CSS3</h4>
+                     <div class="skill-tooltip">Styling & Animations</div>
+                </div>
+                <!-- Skill: JavaScript -->
+                <div class="skill-card animate-on-scroll hover-target" data-delay="0.2s">
+                     <div class="skill-icon"><i class="fab fa-js-square"></i></div>
+                     <h4 class="skill-name">JavaScript</h4>
+                      <div class="skill-tooltip">Interactivity & Logic</div>
+                </div>
+                 <!-- Skill: Git -->
+                 <div class="skill-card animate-on-scroll hover-target" data-delay="0.3s">
+                     <div class="skill-icon"><i class="fab fa-git-alt"></i></div>
+                     <h4 class="skill-name">Git</h4>
+                     <div class="skill-tooltip">Version Control</div>
                  </div>
-                  <!-- Skill Item -->
-                  <div class="skill-item animate-on-scroll" data-delay="0.1s">
-                     <div class="skill-icon">[CSS3]</div>
-                     <h3>CSS3</h3>
+                 <!-- Skill: Figma -->
+                 <div class="skill-card animate-on-scroll hover-target" data-delay="0.4s">
+                    <div class="skill-icon"><i class="fab fa-figma"></i></div>
+                    <h4 class="skill-name">Figma</h4>
+                     <div class="skill-tooltip">UI/UX Design</div>
+                </div>
+                 <!-- Skill: Computer Maintenance -->
+                 <div class="skill-card animate-on-scroll hover-target" data-delay="0.5s">
+                    <div class="skill-icon"><i class="fas fa-screwdriver-wrench"></i></div> <!-- or fa-tools, fa-computer -->
+                    <h4 class="skill-name">Maintenance</h4>
+                     <div class="skill-tooltip">Hardware & Software</div>
+                </div>
+                 <!-- Add more skills as needed -->
+                 <div class="skill-card animate-on-scroll hover-target" data-delay="0.6s">
+                     <div class="skill-icon"><i class="fas fa-terminal"></i></div> <!-- Example: CLI -->
+                     <h4 class="skill-name">CLI</h4>
+                      <div class="skill-tooltip">Command Line</div>
                  </div>
-                   <!-- Skill Item -->
-                   <div class="skill-item animate-on-scroll" data-delay="0.2s">
-                     <div class="skill-icon">[JS]</div>
-                     <h3>JavaScript</h3>
+                 <div class="skill-card animate-on-scroll hover-target" data-delay="0.7s">
+                     <div class="skill-icon"><i class="fas fa-bug"></i></div> <!-- Example: Debugging -->
+                     <h4 class="skill-name">Debugging</h4>
+                      <div class="skill-tooltip">Problem Solving</div>
                  </div>
-                 <!-- Add More -->
-             </div>
-         </section>
+            </div>
+        </section>
 
-        <!-- Projects Section (Example Structure) -->
-        <section id="projects" class="content-section">
-            <h2 class="section-title animate-on-scroll"><span>My Projects</span></h2>
-            <div class="project-grid">
-                <!-- Project Card 1 -->
-                <div class="project-card animate-on-scroll">
-                     <div class="project-info">
-                         <h3>Project Title One</h3>
-                         <p>Short description of the project. What technologies were used?</p>
-                         <a href="#" target="_blank" class="project-link">View Project</a>
+        <!-- Projects Section -->
+         <section id="projects" class="content-section">
+             <h2 class="section-title animate-on-scroll"><span class="hover-target">Featured Creations</span></h2>
+             <div class="project-grid-creative">
+                 <!-- Project 1 -->
+                 <div class="project-item animate-on-scroll hover-target" data-delay="0s">
+                    <div class="project-image-wrapper">
+                         <img src="https://via.placeholder.com/600x450/111/333?text=Project+Alpha" alt="Project Alpha">
+                    </div>
+                     <div class="project-details">
+                         <h3 class="project-title">Project Alpha</h3>
+                         <p class="project-description">Innovative platform solving [Problem X] using [Key Tech]. Features include [Feature 1] & [Feature 2].</p>
+                         <div class="project-tech"><span>React</span><span>Node.js</span><span>API</span></div>
+                         <div class="project-links">
+                            <a href="#" class="project-link icon-link hover-target" target="_blank" aria-label="View Live"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="#" class="project-link icon-link hover-target" target="_blank" aria-label="View Code"><i class="fab fa-github"></i></a>
+                        </div>
                     </div>
                 </div>
-                <!-- Add More -->
+                <!-- Project 2 -->
+                 <div class="project-item animate-on-scroll hover-target" data-delay="0.15s">
+                    <div class="project-image-wrapper">
+                         <img src="https://via.placeholder.com/600x450/222/444?text=Project+Beta" alt="Project Beta">
+                     </div>
+                      <div class="project-details">
+                         <h3 class="project-title">Project Beta</h3>
+                         <p class="project-description">Engaging portfolio showcase with complex CSS animations and responsive design.</p>
+                         <div class="project-tech"><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div>
+                          <div class="project-links">
+                             <a href="#" class="project-link icon-link hover-target" target="_blank" aria-label="View Live"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="#" class="project-link icon-link hover-target" target="_blank" aria-label="View Code"><i class="fab fa-github"></i></a>
+                         </div>
+                     </div>
+                 </div>
+                 <!-- Project 3 (Example) -->
+                   <div class="project-item animate-on-scroll hover-target" data-delay="0.3s">
+                    <div class="project-image-wrapper">
+                         <img src="https://via.placeholder.com/600x450/333/555?text=Project+Gamma" alt="Project Gamma">
+                     </div>
+                      <div class="project-details">
+                         <h3 class="project-title">Project Gamma</h3>
+                         <p class="project-description">Interactive data visualization tool built with [Framework/Library] for analyzing [Data Type].</p>
+                         <div class="project-tech"><span>Vue.js</span><span>D3.js</span><span>Data Viz</span></div>
+                          <div class="project-links">
+                            <a href="#" class="project-link icon-link hover-target" target="_blank" aria-label="View Live"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="#" class="project-link icon-link hover-target" target="_blank" aria-label="View Code"><i class="fab fa-github"></i></a>
+                         </div>
+                     </div>
+                 </div>
+                  <!-- Add More Projects -->
             </div>
         </section>
 
         <!-- Contact Section -->
         <section id="contact" class="content-section contact-section">
-            <!-- Title Matching Screenshot Style -->
-             <h2 class="section-title animate-on-scroll"><span>Let's Connect</span></h2>
-            <!-- Intro Text Matching Screenshot -->
-            <p class="contact-intro animate-on-scroll" data-delay="0.1s">
-                Have a project in mind, a question, or just want to say hello?<br>
-                My inbox is always open!
-            </p>
-             <!-- Updated Form matching Screenshot Style -->
+             <h2 class="section-title animate-on-scroll"><span class="hover-target">Get In Touch</span></h2>
+             <p class="contact-intro animate-on-scroll" data-delay="0.1s">
+                 Ready to start your next project or just want to chat?<br> Drop me a line, I'd love to hear from you!
+             </p>
             <form class="contact-form animate-on-scroll" data-delay="0.2s" action="#" method="POST">
-                <!-- Removed floating labels, using placeholders -->
-                <div class="form-group">
-                    <input type="text" id="name" name="name" required placeholder="Your Name">
+                 <div class="form-group input-animate">
+                     <input type="text" id="name" name="name" required placeholder=" ">
+                     <label for="name">Your Name</label>
+                     <span class="focus-border"></span>
                  </div>
-                 <div class="form-group">
-                    <input type="email" id="email" name="email" required placeholder="Your Email">
+                 <div class="form-group input-animate" style="--delay: 0.1s">
+                     <input type="email" id="email" name="email" required placeholder=" ">
+                     <label for="email">Your Email</label>
+                     <span class="focus-border"></span>
                  </div>
-                 <div class="form-group">
-                    <textarea id="message" name="message" rows="4" required placeholder="Your Message"></textarea>
+                 <div class="form-group input-animate" style="--delay: 0.2s">
+                     <textarea id="message" name="message" rows="5" required placeholder=" "></textarea>
+                     <label for="message">Your Message</label>
+                      <span class="focus-border area"></span>
                  </div>
-                 <!-- Updated Submit Button -->
-                 <button type="submit" class="cta-button">
-                     <span>Send Message</span>
+                 <button type="submit" class="cta-button hover-target input-animate" style="--delay: 0.3s">
+                     <span>Send Inquiry</span>
+                      <div class="button-border-glow"></div>
                  </button>
-            </form>
-            <!-- Alternative Text Matching Screenshot -->
-            <p class="contact-alternative animate-on-scroll" data-delay="0.3s">
-                Alternatively, reach out via <a href="mailto:hassanazawi50@gmail.com">hassanazawi50@gmail.com</a>
+             </form>
+            <p class="contact-alternative animate-on-scroll" data-delay="0.4s">
+                 Or connect via <a href="mailto:hassanazawi50@gmail.com" class="hover-target">hassanazawi50@gmail.com</a>
             </p>
         </section>
     </main>
 
     <!-- Footer -->
      <footer class="footer">
-        <div class="footer-content">
-             <p>© 2024 Hassan F. Abd-Almuttaleb. All Rights Reserved.</p>
+         <div class="footer-content">
+             <div class="social-links">
+                  <a href="[Your GitHub Link]" target="_blank" aria-label="GitHub" class="hover-target"><i class="fab fa-github"></i></a>
+                  <a href="[Your LinkedIn Link]" target="_blank" aria-label="LinkedIn" class="hover-target"><i class="fab fa-linkedin-in"></i></a>
+                  <!-- Add other relevant socials -->
+              </div>
+             <p>© 2024 Hassan F. Abd-Almuttaleb. <br class="mobile-break"> Built with passion & <span class="heart">☕</span>.</p>
          </div>
-    </footer>
+     </footer>
 
-    <!-- Include the script file -->
+
+    <!-- === SCRIPTS === -->
     <script src="script.js"></script>
 
 </body>
