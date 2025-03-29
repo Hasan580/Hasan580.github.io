@@ -1,7 +1,396 @@
-div{
-  background-color: red;
-  text-aligin: center;
+/* --- Base Reset & Global Styles --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-.audio{
-  background-color: blue;
+
+html {
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #eee; /* Light text color for contrast against dark background */
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    background-color: #111; /* Fallback background */
+}
+
+.background-container {
+    position: fixed; /* Fixed position to stay behind content */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    background: url('https://wallpapercave.com/wp/wp2633650.jpg') no-repeat center center/cover; /* Replace 'background.jpg' */
+    z-index: -1; /* Place it behind everything */
+    /* Optional: Add a subtle overlay */
+    /* background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: overlay; */
+}
+
+h1, h2, h3 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: rgb(230, 230, 255); /* Slightly off-white */
+}
+
+h1 {
+    font-size: 3rem;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+    color: rgb(0, 238, 255); /* Vibrant RGB color */
+}
+
+/* Underline effect for h2 */
+h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: rgb(0, 238, 255); /* Match the h2 color */
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+}
+
+p {
+    margin-bottom: 1rem;
+    color: rgb(200, 200, 220); /* Slightly muted text */
+}
+
+a {
+    color: rgb(0, 238, 255); /* Accent color for links */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: rgb(255, 0, 150); /* Different hover color */
+}
+
+/* --- Navigation Bar --- */
+.navbar {
+    position: fixed; /* Stick to the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+
+    /* Frosted Glass Effect */
+    background: linear-gradient(90deg, rgba(25, 0, 50, 0.6), rgba(0, 25, 50, 0.6)); /* Gradient background */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Safari */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    /* Subtle Animated Gradient Background */
+    background-size: 200% 200%;
+    animation: gradientShift 10s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.navbar .logo a {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.navbar .logo a:hover {
+    color: rgb(0, 238, 255);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 2rem;
+}
+
+.nav-links a {
+    color: #eee;
+    font-weight: 400;
+    padding-bottom: 5px;
+    position: relative;
+}
+
+/* Underline animation on hover */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: rgb(0, 238, 255);
+    transition: width 0.3s ease-in-out;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-links a:hover {
+    color: #fff; /* Make text brighter on hover */
+}
+
+/* --- Main Content & Sections --- */
+main {
+    padding-top: 80px; /* Add padding to prevent content from hiding behind fixed navbar */
+    width: 100%;
+    position: relative; /* Needed for section backgrounds to work with fixed background */
+    z-index: 1;
+}
+
+.content-section {
+    padding: 60px 10%; /* Padding top/bottom and left/right */
+    margin: 40px auto; /* Space between sections */
+    max-width: 1100px; /* Limit content width */
+
+    /* Frosted Glass Background for Content Blocks */
+    background: rgba(10, 10, 20, 0.75); /* Darker semi-transparent */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    /* Entrance Animation */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInSection 0.8s ease-out forwards;
+}
+
+/* Stagger the animation */
+section:nth-of-type(1) { animation-delay: 0.1s; }
+section:nth-of-type(2) { animation-delay: 0.2s; }
+section:nth-of-type(3) { animation-delay: 0.3s; }
+section:nth-of-type(4) { animation-delay: 0.4s; }
+
+@keyframes fadeInSection {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Hero Section Specific Styles --- */
+.hero-section {
+    min-height: calc(100vh - 80px); /* Full viewport height minus navbar */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: none; /* Hero section doesn't need its own background block */
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    padding-top: 0; /* Adjust padding as needed */
+    margin-top: 0;
+}
+
+.hero-content {
+     /* Optional: Add a subtle background to hero text if needed for readability */
+    /* background: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 10px; */
+}
+
+.hero-section h1 {
+    font-size: 3.5rem; /* Larger for hero */
+    margin-bottom: 0.5rem;
+    color: #fff;
+    /* Text Shadow for Readability */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.hero-section .subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: rgb(200, 200, 255);
+    margin-bottom: 1.5rem;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.cta-button {
+    display: inline-block;
+    background: rgb(0, 238, 255); /* Vibrant accent color */
+    color: rgb(10, 10, 30); /* Dark text on button */
+    padding: 12px 30px;
+    border-radius: 50px; /* Pill shape */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 238, 255, 0.4); /* Glow effect */
+
+    /* Pulse Animation */
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.cta-button:hover {
+    background: rgb(255, 0, 150); /* Hover color */
+    transform: translateY(-3px); /* Slight lift */
+    box-shadow: 0 6px 20px rgba(255, 0, 150, 0.5);
+    color: #fff;
+    animation-play-state: paused; /* Pause pulse on hover */
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* --- Projects Section --- */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.project-card {
+    background: rgba(255, 255, 255, 0.05); /* Very subtle background */
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.project-card h3 {
+    color: rgb(0, 238, 255);
+    margin-bottom: 0.5rem;
+}
+
+.project-link {
+    display: inline-block;
+    margin-top: 1rem;
+    font-weight: 600;
+    color: rgb(255, 0, 150);
+}
+
+.project-link:hover {
+    text-decoration: underline;
+    color: rgb(0, 238, 255);
+}
+
+
+/* --- Contact Section --- */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 2rem auto; /* Center form */
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    color: #eee;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: rgba(238, 238, 238, 0.6);
+}
+
+.contact-form button {
+    align-self: center; /* Center button */
+}
+
+.contact-alternative {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 2rem 5%;
+    margin-top: 3rem;
+    background: rgba(0, 0, 0, 0.8); /* Dark footer */
+    color: #aaa;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Responsiveness --- */
+@media (max-width: 768px) {
+    h1 { font-size: 2.5rem; }
+    .hero-section h1 { font-size: 2.8rem; }
+    h2 { font-size: 2rem; }
+    .hero-section .subtitle { font-size: 1.2rem; }
+
+    .navbar {
+        padding: 1rem 3%;
+        flex-direction: column; /* Stack logo and links */
+        background: linear-gradient(90deg, rgba(25, 0, 50, 0.8), rgba(0, 25, 50, 0.8)); /* Less transparent on mobile maybe */
+
+    }
+
+    .navbar .logo {
+        margin-bottom: 0.5rem;
+    }
+
+    .nav-links {
+        justify-content: center;
+        width: 100%;
+        padding-top: 0.5rem;
+    }
+
+    .nav-links li {
+        margin-left: 1rem; /* Reduce spacing */
+        margin-right: 1rem;
+    }
+
+    main {
+        padding-top: 120px; /* Adjust for taller mobile navbar */
+    }
+
+    .content-section {
+        padding: 40px 5%; /* Reduce padding */
+    }
+
+    .project-grid {
+        grid-template-columns: 1fr; /* Stack projects */
+    }
 }
