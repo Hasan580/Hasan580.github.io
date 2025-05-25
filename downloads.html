@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloads - Hassan Digital Lab</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-microchip"></i>
+                <span>Hassan Digital Lab</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="downloads.html" class="nav-link active">Downloads</a>
+                </li>
+                <li class="nav-item">
+                    <a href="services.html" class="nav-link">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">
+                <i class="fas fa-download"></i>
+                Downloads Center
+            </h1>
+            <p class="page-subtitle">Essential files, tools, and resources from our YouTube tutorials</p>
+        </div>
+    </section>
+
+    <!-- Downloads Section -->
+    <section class="downloads">
+        <div class="container">
+            <!-- Search and Filter -->
+            <div class="downloads-controls">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search downloads...">
+                </div>
+                <div class="filter-tabs">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="software">Software</button>
+                    <button class="filter-btn" data-filter="drivers">Drivers</button>
+                    <button class="filter-btn" data-filter="tools">Tools</button>
+                    <button class="filter-btn" data-filter="guides">Guides</button>
+                </div>
+            </div>
+
+            <!-- Downloads Grid -->
+            <div class="downloads-grid" id="downloadsGrid">
+                <!-- Software Category -->
+                <div class="download-card" data-category="software">
+                    <div class="download-icon">
+                        <i class="fab fa-windows"></i>
+                    </div>
+                    <div class="download-info">
+                        <h3>Windows Installation Media</h3>
+                        <p>Official Windows 10/11 installation ISO files and media creation tool</p>
+                        <div class="download-meta">
+                            <span class="file-size">4.5 GB</span>
+                            <span class="file-type">ISO</span>
+                            <span class="downloads-count">1,234 downloads</span>
+                        </div>
+                    </div>
+                    <div class="download-actions">
+                        <button class="btn btn-primary download-btn" onclick="handleDownload('windows-iso')">
+                            <i class="fas fa-download"></i>
+                            Download
+                        </button>
+                        <button class="btn btn-secondary" onclick="showVideoTutorial('windows-install')">
+                            <i class="fab fa-youtube"></i>
+                            Tutorial
+                        </button>
+                    </div>
+                </div>
+
+                <div class="download-card" data-category="software">
+                    <div class="download-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="download-info">
+                        <h3>Essential Antivirus Package</h3>
+                        <p>Curated collection of free antivirus solutions and malware removal tools</p>
+                        <div class="download-meta">
+                            <span class="file-size">156 MB</span>
+                            <span class="file-type">ZIP</span>
+                            <span class="downloads-count">892 downloads</span>
+                        </div>
+                    </div>
+                    <div class="download-actions">
+                        <button class="btn btn-primary download-btn" onclick="handleDownload('antivirus-pack')">
+                            <i class="fas fa-download"></i>
+                            Download
+                        </button>
+                        <button class="btn btn-secondary" onclick="showVideoTutorial('antivirus-setup')">
+                            <i class="fab fa-youtube"></i>
+                            Tutorial
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Drivers Category -->
+                <div class="download-card" data-category="drivers">
+                    <div class="download-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="download-info">
+                        <h3>Universal Driver Pack</h3>
+                        <p>Comprehensive driver collection for common hardware components</p>
+                        <div class="download-meta">
+                            <span class="file-size">2.1 GB</span>
+                            <span class="file-type">EXE</span>
+                            <span class="downloads-count">567 downloads</span>
+                        </div>
+                    </div>
+                    <div class="download-actions">
+                        <button class="btn btn-primary download-btn" onclick="handleDownload('driver-pack')">
+                            <i class="fas fa-download"></i>
+                            Download
+                        </button>
+                        <button class="btn btn-secondary" onclick="showVideoTutorial('driver-install')">
+                            <i class="fab fa-youtube"></i>
+                            Tutorial
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tools Category -->
+                <div class="download-card" data-category="tools">
+                    <div class="download-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="download-info">
+                        <h3>PC Diagnostic Tools</h3>
+                        <p>Hardware testing and diagnostic utilities for troubleshooting</p>
+                        <div class="download-meta">
+                            <span class="file-size">45 MB</span>
+                            <span class="file-type">ZIP</span>
+                            <span class="downloads-count">723 downloads</span>
+                        </div>
+                    </div>
+                    <div class="download-actions">
+                        <button class="btn btn-primary download-btn" onclick="handleDownload('diagnostic-tools')">
+                            <i class="fas fa-download"></i>
+                            Download
+                        </button>
+                        <button class="btn btn-secondary" onclick="showVideoTutorial('diagnostic-guide')">
+                            <i class="fab fa-youtube"></i>
+                            Tutorial
+                        </button>
+                    </div>
+                </div>
+
+                <div class="download-card" data-category="tools">
+                    <div class="download-icon">
+                        <i class="fas fa-broom"></i>
+                    </div>
+                    <div class="download-info">
+                        <h3>System Cleanup Suite</h3>
+                        <p>Registry cleaners, temp file removers, and optimization tools</p>
+                        <div class="download-meta">
+                            <span class="file-size">28 MB</span>
+                            <span class="file-type">ZIP</span>
+                            <span class="downloads-count">445 downloads</span>
+                        </div>
+                    </div>
+                    <div class="download-actions">
+                        <button class="btn btn-primary download-btn" onclick="handleDownload('cleanup-suite')">
+                            <i class="fas fa-download"></i>
+                            Download
+                        </button>
+                        <button class="btn btn-secondary" onclick="showVideoTutorial('system-cleanup')">
+                            <i class="fab fa-youtube"></i>
+                            Tutorial
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Guides Category -->
+                <div class="download-card" data-category="guides">
+                    <div class="download-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="download-info">
+                        <h3>Hardware Installation Guide</h3>
+                        <p>Step-by-step PDF guide for RAM, SSD, and component installation</p>
+                        <div class="download-meta">
+                            <span class="file-size">12 MB</span>
+                            <span class="file-type">PDF</span>
+                            <span class="downloads-count">1,156 downloads</span>
+                        </div>
+                    </div>
+                    <div class="download-actions">
+                        <button class="btn btn-primary download-btn" onclick="handleDownload('hardware-guide')">
+                            <i class="fas fa-download"></i>
+                            Download
+                        </button>
+                        <button class="btn btn-secondary" onclick="showVideoTutorial('hardware-install')">
+                            <i class="fab fa-youtube"></i>
+                            Tutorial
+                        </button>
+                    </div>
+                </div>
+
+                <div class="download-card" data-category="guides">
+                    <div class="download-icon">
+                        <i class="fas fa-thermometer-half"></i>
+                    </div>
+                    <div class="download-info">
+                        <h3>Thermal Paste Application Guide</h3>
+                        <p>Professional thermal paste replacement and application techniques</p>
+                        <div class="download-meta">
+                            <span class="file-size">8 MB</span>
+                            <span class="file-type">PDF</span>
+                            <span class="downloads-count">334 downloads</span>
+                        </div>
+                    </div>
+                    <div class="download-actions">
+                        <button class="btn btn-primary download-btn" onclick="handleDownload('thermal-guide')">
+                            <i class="fas fa-download"></i>
+                            Download
+                        </button>
+                        <button class="btn btn-secondary" onclick="showVideoTutorial('thermal-paste')">
+                            <i class="fab fa-youtube"></i>
+                            Tutorial
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Results Message -->
+            <div class="no-results" id="noResults" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>No downloads found</h3>
+                <p>Try adjusting your search or filter criteria</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- YouTube Channel Promotion -->
+    <section class="youtube-promo">
+        <div class="container">
+            <div class="promo-content">
+                <div class="promo-icon">
+                    <i class="fab fa-youtube"></i>
+                </div>
+                <div class="promo-text">
+                    <h2>Subscribe to Our YouTube Channel</h2>
+                    <p>Get the latest computer repair tutorials, tips, and tech reviews</p>
+                </div>
+                <div class="promo-action">
+                    <a href="#" class="btn btn-youtube" target="_blank">
+                        <i class="fab fa-youtube"></i>
+                        Subscribe Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-microchip"></i>
+                    <span>Firas Technology Solutions</span>
+                </div>
+                <p>&copy; 2025 Firas Technology Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Download Modal -->
+    <div class="modal" id="downloadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Download Information</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Files will be available soon! Subscribe to our YouTube channel to get notified when new downloads are added.</p>
+                <div class="modal-actions">
+                    <a href="#" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-youtube"></i>
+                        Visit YouTube
+                    </a>
+                    <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="downloads.js"></script>
+</body>
+</html>
