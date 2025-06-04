@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - Ibrahim A. Ghanim</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Ibrahim Ghanim</a>            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="projects.html" class="nav-link">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a href="courses.html" class="nav-link active">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#contact" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <button id="musicBtn" class="music-btn" title="Play Background Music">
+                        <i class="fas fa-music"></i>
+                    </button>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Courses Hero Section -->
+    <section class="courses-hero">
+        <div class="animated-bg-courses"></div>
+        <div class="hero-overlay">
+            <div class="container">
+                <h1 class="page-title">Educational Courses</h1>
+                <p class="page-subtitle">Comprehensive tutorials on industrial automation and control systems</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="courses-section">
+        <div class="container">
+            <div class="courses-grid">
+                <!-- Course 1 -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="course-header">
+                        <div class="course-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div class="course-badge">Playlist</div>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">PLC Programming Course</h3>
+                        <p class="course-description">
+                            Comprehensive course covering Programmable Logic Controllers from basics to advanced topics. 
+                            Learn ladder logic, function blocks, and real-world applications.
+                        </p>
+                        <div class="course-features">
+                            <div class="feature">
+                                <i class="fas fa-play-circle"></i>
+                                <span>Video Tutorials</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-code"></i>
+                                <span>Practical Examples</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-industry"></i>
+                                <span>Industrial Applications</span>
+                            </div>
+                        </div>
+                        <div class="course-topics">
+                            <h4>What You'll Learn:</h4>
+                            <ul>
+                                <li>PLC Hardware & Software</li>
+                                <li>Ladder Logic Programming</li>
+                                <li>Input/Output Configuration</li>
+                                <li>Timer and Counter Functions</li>
+                                <li>Communication Protocols</li>
+                            </ul>
+                        </div>
+                        <a href="https://www.youtube.com/playlist?list=PLbbOARpyIQn34g-ZBAlFgcYJcm0xaioos" target="_blank" class="course-link">
+                            <i class="fab fa-youtube"></i> Watch Course
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="course-header">
+                        <div class="course-icon">
+                            <i class="fas fa-microcontroller"></i>
+                        </div>
+                        <div class="course-badge">Playlist</div>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">LabVIEW Interface with Arduino</h3>
+                        <p class="course-description">
+                            Learn to create powerful interfaces between LabVIEW and Arduino for data acquisition, 
+                            control systems, and IoT applications.
+                        </p>
+                        <div class="course-features">
+                            <div class="feature">
+                                <i class="fas fa-desktop"></i>
+                                <span>GUI Development</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-wifi"></i>
+                                <span>IoT Integration</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Data Visualization</span>
+                            </div>
+                        </div>
+                        <div class="course-topics">
+                            <h4>What You'll Learn:</h4>
+                            <ul>
+                                <li>LabVIEW Fundamentals</li>
+                                <li>Arduino Programming</li>
+                                <li>Serial Communication</li>
+                                <li>Sensor Data Acquisition</li>
+                                <li>Real-time Monitoring</li>
+                            </ul>
+                        </div>
+                        <a href="https://www.youtube.com/playlist?list=PLbbOARpyIQn37nrD0ihFYXhQJEHQzQMhk" target="_blank" class="course-link">
+                            <i class="fab fa-youtube"></i> Watch Course
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course 3 -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="course-header">
+                        <div class="course-icon">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <div class="course-badge">Tutorial</div>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">PLC & HMI with Factory I/O</h3>
+                        <p class="course-description">
+                            Advanced tutorial on integrating PLC programming with HMI design using Factory I/O simulation software. 
+                            Perfect for industrial automation learning.
+                        </p>
+                        <div class="course-features">
+                            <div class="feature">
+                                <i class="fas fa-cogs"></i>
+                                <span>Simulation</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-tv"></i>
+                                <span>HMI Design</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-tools"></i>
+                                <span>Integration</span>
+                            </div>
+                        </div>
+                        <div class="course-topics">
+                            <h4>What You'll Learn:</h4>
+                            <ul>
+                                <li>Factory I/O Setup</li>
+                                <li>PLC-HMI Integration</li>
+                                <li>SCADA Systems</li>
+                                <li>Process Visualization</li>
+                                <li>Alarm Management</li>
+                            </ul>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=waUD0vUIxiI" target="_blank" class="course-link">
+                            <i class="fab fa-youtube"></i> Watch Tutorial
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Learning Resources -->
+    <section class="learning-resources">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Additional Learning Resources</h2>
+                <p class="section-subtitle">Expand your knowledge with these recommended topics</p>
+            </div>
+            <div class="resources-grid">
+                <div class="resource-item">
+                    <i class="fas fa-robot"></i>
+                    <h4>Machine Learning</h4>
+                    <p>AI applications in industrial automation</p>
+                </div>
+                <div class="resource-item">
+                    <i class="fab fa-python"></i>
+                    <h4>Python Programming</h4>
+                    <p>Automation scripts and data analysis</p>
+                </div>
+                <div class="resource-item">
+                    <i class="fas fa-drafting-compass"></i>
+                    <h4>AutoCAD</h4>
+                    <p>Technical drawing and design</p>
+                </div>
+                <div class="resource-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <h4>WinCC</h4>
+                    <p>SCADA and process visualization</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Learn More?</h2>
+                <p>Subscribe to my YouTube channel for the latest tutorials and courses.</p>
+                <a href="https://www.youtube.com/@7zr9" target="_blank" class="btn btn-primary">
+                    <i class="fab fa-youtube"></i> Subscribe Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Let's Chat Button -->
+    <div class="chat-button">
+        <button class="chat-btn" id="chatBtn">
+            <i class="fas fa-comments"></i>
+            <span>Let's Chat</span>
+        </button>
+    </div>    <!-- Background Music -->
+    <audio id="backgroundMusic" loop>
+        <source src="Billie Eilish - everything i wanted (Official Music Video).mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Ibrahim A. Ghanim. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
