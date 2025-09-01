@@ -164,22 +164,190 @@
         <section id="projects" class="page">
             <div class="content-wrapper">
                 <div class="page-header">
-                    <h1 class="page-title">Projects</h1>
+                    <h1 class="page-title">Interactive Projects</h1>
                     <p class="page-subtitle">Innovative solutions and creative implementations</p>
                 </div>
-                <div class="projects-container">
-                    <div class="project-placeholder">
-                        <div class="placeholder-icon">🚀</div>
-                        <h3>Exciting Projects Coming Soon</h3>
-                        <p>The projects will be published soon. Stay tuned for innovative solutions in control engineering and web development.</p>
-                        <div class="placeholder-animation">
-                            <div class="loading-dots">
-                                <span></span>
-                                <span></span>
-                                <span></span>
+                <div class="projects-grid">
+                    
+                    <!-- Particle Physics Demo -->
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3>⚡ Particle Physics Demo</h3>
+                            <p>Interactive particle system with mouse controls</p>
+                        </div>
+                        <div class="project-demo">
+                            <canvas id="particle-canvas" width="400" height="300"></canvas>
+                        </div>
+                        <div class="project-controls">
+                            <p>Click to explode • Hold and drag to attract particles</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Snake Game -->
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3>🐍 Classic Snake Game</h3>
+                            <p>Retro arcade game with modern styling</p>
+                        </div>
+                        <div class="project-demo">
+                            <canvas id="snake-canvas"></canvas>
+                        </div>
+                        <div class="project-controls">
+                            <p>Use arrow keys to control • Press SPACE to restart</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Developer Tools -->
+                    <div class="project-card full-width">
+                        <div class="project-header">
+                            <h3>🛠️ Developer Tools Suite</h3>
+                            <p>Multi-purpose toolkit for developers</p>
+                        </div>
+                        <div class="dev-tools-container">
+                            <div class="tool-tabs">
+                                <button class="tool-tab active" data-tab="calculator">Calculator</button>
+                                <button class="tool-tab" data-tab="color">Color Picker</button>
+                                <button class="tool-tab" data-tab="converter">Unit Converter</button>
+                                <button class="tool-tab" data-tab="base64">Base64 Tool</button>
+                            </div>
+                            
+                            <div class="tool-contents">
+                                <!-- Calculator -->
+                                <div id="calculator-tool" class="tool-content active">
+                                    <div class="calculator">
+                                        <div id="calc-display" class="calc-display">0</div>
+                                        <div class="calc-buttons">
+                                            <button class="calc-btn operator" data-value="C">C</button>
+                                            <button class="calc-btn operator" data-value="±">±</button>
+                                            <button class="calc-btn operator" data-value="/">/</button>
+                                            <button class="calc-btn operator" data-value="*">×</button>
+                                            
+                                            <button class="calc-btn" data-value="7">7</button>
+                                            <button class="calc-btn" data-value="8">8</button>
+                                            <button class="calc-btn" data-value="9">9</button>
+                                            <button class="calc-btn operator" data-value="-">-</button>
+                                            
+                                            <button class="calc-btn" data-value="4">4</button>
+                                            <button class="calc-btn" data-value="5">5</button>
+                                            <button class="calc-btn" data-value="6">6</button>
+                                            <button class="calc-btn operator" data-value="+">+</button>
+                                            
+                                            <button class="calc-btn" data-value="1">1</button>
+                                            <button class="calc-btn" data-value="2">2</button>
+                                            <button class="calc-btn" data-value="3">3</button>
+                                            <button class="calc-btn operator equals" data-value="=" rowspan="2">=</button>
+                                            
+                                            <button class="calc-btn zero" data-value="0">0</button>
+                                            <button class="calc-btn" data-value=".">.</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Color Picker -->
+                                <div id="color-tool" class="tool-content">
+                                    <div class="color-picker-tool">
+                                        <div class="color-input-section">
+                                            <input type="color" id="color-input" value="#3498db">
+                                            <div id="color-preview" class="color-preview"></div>
+                                        </div>
+                                        <div class="color-values">
+                                            <div class="color-value-item">
+                                                <label>HEX:</label>
+                                                <span id="hex-value" class="color-value clickable">#3498db</span>
+                                            </div>
+                                            <div class="color-value-item">
+                                                <label>RGB:</label>
+                                                <span id="rgb-value" class="color-value clickable">rgb(52, 152, 219)</span>
+                                            </div>
+                                            <div class="color-value-item">
+                                                <label>HSL:</label>
+                                                <span id="hsl-value" class="color-value clickable">hsl(204, 70%, 53%)</span>
+                                            </div>
+                                        </div>
+                                        <p class="click-hint">Click any value to copy to clipboard</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Unit Converter -->
+                                <div id="converter-tool" class="tool-content">
+                                    <div class="unit-converter">
+                                        <h4>Length Converter</h4>
+                                        <div class="converter-row">
+                                            <input type="number" id="length-input" value="1" step="any">
+                                            <select id="length-from">
+                                                <option value="mm">Millimeters</option>
+                                                <option value="cm">Centimeters</option>
+                                                <option value="m" selected>Meters</option>
+                                                <option value="km">Kilometers</option>
+                                                <option value="in">Inches</option>
+                                                <option value="ft">Feet</option>
+                                                <option value="yd">Yards</option>
+                                                <option value="mi">Miles</option>
+                                            </select>
+                                        </div>
+                                        <div class="converter-result">
+                                            <span>=</span>
+                                            <span id="length-result">1000</span>
+                                            <select id="length-to">
+                                                <option value="mm" selected>Millimeters</option>
+                                                <option value="cm">Centimeters</option>
+                                                <option value="m">Meters</option>
+                                                <option value="km">Kilometers</option>
+                                                <option value="in">Inches</option>
+                                                <option value="ft">Feet</option>
+                                                <option value="yd">Yards</option>
+                                                <option value="mi">Miles</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Base64 Tool -->
+                                <div id="base64-tool" class="tool-content">
+                                    <div class="base64-tool">
+                                        <div class="base64-section">
+                                            <label for="base64-input">Input:</label>
+                                            <textarea id="base64-input" placeholder="Enter text to encode/decode..."></textarea>
+                                        </div>
+                                        <div class="base64-buttons">
+                                            <button id="encode-btn">Encode to Base64</button>
+                                            <button id="decode-btn">Decode from Base64</button>
+                                        </div>
+                                        <div class="base64-section">
+                                            <label for="base64-output">Output:</label>
+                                            <textarea id="base64-output" readonly placeholder="Result will appear here..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Terminal Simulator -->
+                    <div class="project-card full-width">
+                        <div class="project-header">
+                            <h3>💻 Interactive Terminal</h3>
+                            <p>Command-line interface with custom commands</p>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-header">
+                                <span class="terminal-title">hassan@portfolio:~</span>
+                                <div class="terminal-buttons">
+                                    <span class="terminal-btn close"></span>
+                                    <span class="terminal-btn minimize"></span>
+                                    <span class="terminal-btn maximize"></span>
+                                </div>
+                            </div>
+                            <div class="terminal-body">
+                                <div class="terminal-output"></div>
+                                <div class="terminal-input-line">
+                                    <span class="terminal-prompt">hassan@portfolio:~$ </span>
+                                    <input type="text" class="terminal-input" placeholder="Type 'help' for commands..." autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </section>
@@ -249,6 +417,10 @@
             <div class="loader-progress"></div>
         </div>
     </div>    <script src="script.js"></script>
+    <script src="particle-demo.js"></script>
+    <script src="snake-game.js"></script>
+    <script src="dev-tools.js"></script>
+    <script src="terminal-simulator.js"></script>
     
     <!-- Immediate initialization script -->
     <script>
@@ -265,6 +437,32 @@
                     }, 1000);
                 }
             }, 1000);
+            
+            // Initialize interactive projects when projects page is activated
+            let projectsInitialized = false;
+            
+            function initializeProjects() {
+                if (projectsInitialized) return;
+                projectsInitialized = true;
+                
+                // Initialize Particle Demo
+                const particleCanvas = document.getElementById('particle-canvas');
+                if (particleCanvas && typeof ParticleSystem !== 'undefined') {
+                    new ParticleSystem(particleCanvas);
+                }
+                
+                // Initialize Snake Game
+                const snakeCanvas = document.getElementById('snake-canvas');
+                if (snakeCanvas && typeof SnakeGame !== 'undefined') {
+                    new SnakeGame(snakeCanvas);
+                }
+                
+                // Initialize Terminal
+                const terminalContainer = document.querySelector('.terminal-container');
+                if (terminalContainer && typeof TerminalSimulator !== 'undefined') {
+                    new TerminalSimulator(terminalContainer);
+                }
+            }
             
             // Ensure navigation works
             function setupNavigation() {
@@ -286,6 +484,11 @@
                         if (targetPage) {
                             targetPage.classList.add('active');
                             console.log('Activated page:', pageId);
+                            
+                            // Initialize projects if navigating to projects page
+                            if (pageId === 'projects') {
+                                setTimeout(initializeProjects, 100);
+                            }
                         }
                         
                         // Update nav

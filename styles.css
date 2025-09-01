@@ -1072,3 +1072,530 @@ body {
         hyphens: none;
     }
 }
+
+/* Interactive Projects Styles */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.project-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-gray);
+    border-radius: 16px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.project-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+}
+
+.project-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.project-header h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.project-header p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.project-demo {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 1rem;
+    min-height: 300px;
+}
+
+.project-controls {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-top: 1rem;
+}
+
+/* Particle Canvas */
+#particle-canvas {
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    cursor: crosshair;
+    max-width: 100%;
+    height: 300px;
+}
+
+/* Snake Game Canvas */
+#snake-canvas {
+    border: 2px solid var(--border-gray);
+    border-radius: 8px;
+    background: #000;
+    max-width: 100%;
+}
+
+/* Developer Tools */
+.dev-tools-container {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tool-tabs {
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--border-gray);
+}
+
+.tool-tab {
+    flex: 1;
+    padding: 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: var(--font-family);
+}
+
+.tool-tab:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.tool-tab.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--text-primary);
+}
+
+.tool-contents {
+    padding: 2rem;
+}
+
+.tool-content {
+    display: none;
+}
+
+.tool-content.active {
+    display: block;
+}
+
+/* Calculator */
+.calculator {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.calc-display {
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--text-primary);
+    font-size: 2rem;
+    font-family: 'Courier New', monospace;
+    text-align: right;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-gray);
+}
+
+.calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+}
+
+.calc-btn {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: var(--font-family);
+}
+
+.calc-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.calc-btn.operator {
+    background: rgba(52, 152, 219, 0.3);
+}
+
+.calc-btn.operator:hover {
+    background: rgba(52, 152, 219, 0.5);
+}
+
+.calc-btn.zero {
+    grid-column: span 2;
+}
+
+.calc-btn.equals {
+    grid-row: span 2;
+    background: rgba(46, 204, 113, 0.3);
+}
+
+.calc-btn.equals:hover {
+    background: rgba(46, 204, 113, 0.5);
+}
+
+/* Color Picker */
+.color-picker-tool {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.color-input-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+#color-input {
+    width: 80px;
+    height: 80px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.color-preview {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid var(--border-gray);
+}
+
+.color-values {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.color-value-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.color-value {
+    font-family: 'Courier New', monospace;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.color-value:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.click-hint {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-top: 1rem;
+}
+
+/* Unit Converter */
+.unit-converter {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.unit-converter h4 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.converter-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.converter-row input,
+.converter-row select {
+    flex: 1;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-family: var(--font-family);
+}
+
+.converter-result {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    font-size: 1.125rem;
+}
+
+#length-result {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+/* Base64 Tool */
+.base64-tool {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.base64-section {
+    margin-bottom: 1rem;
+}
+
+.base64-section label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.base64-section textarea {
+    width: 100%;
+    height: 100px;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-family: 'Courier New', monospace;
+    resize: vertical;
+}
+
+.base64-buttons {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.base64-buttons button {
+    flex: 1;
+    padding: 0.75rem;
+    background: rgba(52, 152, 219, 0.3);
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: var(--font-family);
+}
+
+.base64-buttons button:hover {
+    background: rgba(52, 152, 219, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Terminal Simulator */
+.terminal-container {
+    background: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    font-family: 'Courier New', monospace;
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.terminal-header {
+    background: #2d2d2d;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+}
+
+.terminal-title {
+    color: #fff;
+    font-size: 0.875rem;
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.terminal-btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.terminal-btn.close {
+    background: #ff5f56;
+}
+
+.terminal-btn.minimize {
+    background: #ffbd2e;
+}
+
+.terminal-btn.maximize {
+    background: #27ca3f;
+}
+
+.terminal-body {
+    flex: 1;
+    padding: 1rem;
+    background: #000;
+    color: #00ff00;
+    overflow-y: auto;
+    min-height: 300px;
+    max-height: 350px;
+}
+
+.terminal-output {
+    margin-bottom: 1rem;
+    white-space: pre-wrap;
+    line-height: 1.4;
+}
+
+.terminal-output div {
+    margin-bottom: 0.25rem;
+}
+
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+}
+
+.terminal-prompt {
+    color: #00ff00;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+}
+
+.terminal-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    outline: none;
+}
+
+.terminal-input::placeholder {
+    color: #666;
+}
+
+/* Responsive Design for Projects */
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .project-card {
+        padding: 1rem;
+    }
+    
+    .project-demo {
+        padding: 0.5rem;
+        min-height: 250px;
+    }
+    
+    #particle-canvas {
+        height: 250px;
+    }
+    
+    .tool-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .tool-tab {
+        flex: 1;
+        min-width: 120px;
+        padding: 0.75rem 0.5rem;
+        font-size: 0.875rem;
+    }
+    
+    .tool-contents {
+        padding: 1rem;
+    }
+    
+    .calc-buttons {
+        gap: 0.25rem;
+    }
+    
+    .calc-btn {
+        padding: 0.75rem;
+        font-size: 1rem;
+    }
+    
+    .converter-row {
+        flex-direction: column;
+    }
+    
+    .base64-buttons {
+        flex-direction: column;
+    }
+    
+    .terminal-body {
+        padding: 0.75rem;
+        font-size: 0.875rem;
+        min-height: 250px;
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-demo {
+        min-height: 200px;
+    }
+    
+    #particle-canvas {
+        height: 200px;
+    }
+    
+    .tool-tab {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.75rem;
+    }
+    
+    .calc-display {
+        font-size: 1.5rem;
+        padding: 0.75rem;
+    }
+    
+    .calc-btn {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+    
+    .terminal-body {
+        padding: 0.5rem;
+        font-size: 0.75rem;
+        min-height: 200px;
+        max-height: 250px;
+    }
+}
