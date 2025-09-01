@@ -1599,3 +1599,420 @@ body {
         max-height: 250px;
     }
 }
+
+/* Tech Demos Styles */
+.tech-demos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.demo-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-gray);
+    border-radius: 16px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.demo-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+}
+
+.demo-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.demo-header h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.demo-header p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+/* Code Editor */
+.code-editor-container {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.editor-tabs {
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--border-gray);
+}
+
+.editor-tab {
+    flex: 1;
+    padding: 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: var(--font-family);
+}
+
+.editor-tab:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.editor-tab.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--text-primary);
+}
+
+.editor-content {
+    position: relative;
+    height: 200px;
+}
+
+.code-textarea {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: var(--text-primary);
+    font-family: 'Courier New', monospace;
+    font-size: 0.875rem;
+    resize: none;
+    outline: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.code-textarea.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.code-textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.editor-controls {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.run-btn, .clear-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.run-btn {
+    background: rgba(46, 204, 113, 0.8);
+    color: white;
+}
+
+.run-btn:hover {
+    background: rgba(46, 204, 113, 1);
+    transform: translateY(-2px);
+}
+
+.clear-btn {
+    background: rgba(231, 76, 60, 0.8);
+    color: white;
+}
+
+.clear-btn:hover {
+    background: rgba(231, 76, 60, 1);
+    transform: translateY(-2px);
+}
+
+.code-output {
+    height: 200px;
+    border-top: 1px solid var(--border-gray);
+}
+
+#code-preview {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: white;
+}
+
+/* CSS Playground */
+.css-playground {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.playground-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.control-group label {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.control-group select,
+.control-group input[type="range"],
+.control-group input[type="color"] {
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-gray);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: var(--font-family);
+}
+
+.control-group input[type="color"] {
+    height: 40px;
+    cursor: pointer;
+}
+
+.control-group span {
+    color: var(--text-secondary);
+    font-family: 'Courier New', monospace;
+}
+
+.playground-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 2px dashed var(--border-gray);
+}
+
+.demo-element {
+    font-size: 100px;
+    transform-origin: center;
+    transition: all 0.3s ease;
+}
+
+/* JavaScript Challenges */
+.challenges-container {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.challenge-tabs {
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--border-gray);
+    flex-wrap: wrap;
+}
+
+.challenge-tab {
+    flex: 1;
+    min-width: 120px;
+    padding: 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: var(--font-family);
+}
+
+.challenge-tab:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.challenge-tab.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--text-primary);
+}
+
+.challenge-content {
+    padding: 2rem;
+}
+
+.challenge {
+    display: none;
+}
+
+.challenge.active {
+    display: block;
+}
+
+.challenge h4 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+}
+
+.challenge p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.challenge textarea {
+    width: 100%;
+    height: 150px;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-family: 'Courier New', monospace;
+    font-size: 0.875rem;
+    resize: vertical;
+    margin-bottom: 1rem;
+}
+
+.challenge textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.run-challenge-btn {
+    padding: 0.75rem 1.5rem;
+    background: rgba(52, 152, 219, 0.8);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-weight: 500;
+    transition: var(--transition);
+    margin-bottom: 1rem;
+}
+
+.run-challenge-btn:hover {
+    background: rgba(52, 152, 219, 1);
+    transform: translateY(-2px);
+}
+
+.challenge-output {
+    min-height: 60px;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.875rem;
+    white-space: pre-wrap;
+}
+
+.challenge-output .success {
+    color: #2ecc71;
+}
+
+.challenge-output .error {
+    color: #e74c3c;
+}
+
+/* Responsive Design for Tech Demos */
+@media (max-width: 768px) {
+    .tech-demos-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .demo-card {
+        padding: 1rem;
+    }
+    
+    .editor-content {
+        height: 150px;
+    }
+    
+    .code-output {
+        height: 150px;
+    }
+    
+    .playground-controls {
+        grid-template-columns: 1fr;
+    }
+    
+    .playground-preview {
+        height: 150px;
+    }
+    
+    .demo-element {
+        font-size: 80px;
+    }
+    
+    .challenge-tabs {
+        flex-direction: column;
+    }
+    
+    .challenge-tab {
+        flex: none;
+    }
+    
+    .challenge-content {
+        padding: 1rem;
+    }
+    
+    .challenge textarea {
+        height: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .editor-tabs {
+        flex-direction: column;
+    }
+    
+    .editor-tab {
+        flex: none;
+        padding: 0.75rem;
+    }
+    
+    .editor-content {
+        height: 120px;
+    }
+    
+    .code-output {
+        height: 120px;
+    }
+    
+    .editor-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .playground-preview {
+        height: 120px;
+    }
+    
+    .demo-element {
+        font-size: 60px;
+    }
+    
+    .challenge textarea {
+        height: 100px;
+        font-size: 0.75rem;
+    }
+}

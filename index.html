@@ -357,18 +357,182 @@
             <div class="vanta-background" id="vanta-youtube"></div>
             <div class="content-wrapper">
                 <div class="page-header">
-                    <h1 class="page-title">BitKnight YouTube Channel</h1>
-                    <p class="page-subtitle">Technology content and tutorials</p>
+                    <h1 class="page-title">Tech Demos & Experiments</h1>
+                    <p class="page-subtitle">Interactive demonstrations and creative coding experiments</p>
                 </div>
-                <div class="youtube-container">
-                    <div class="youtube-placeholder">
-                        <div class="placeholder-icon">🎥</div>
-                        <h3>YouTube Videos Coming Soon</h3>
-                        <p>YouTube videos will be published soon on the BitKnight channel. Expect content about technology, programming, and engineering.</p>
-                        <div class="placeholder-animation">
-                            <div class="pulse-circle"></div>
+                <div class="tech-demos-container">
+                    
+                    <!-- Interactive Code Editor -->
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <h3>🔥 Live Code Editor</h3>
+                            <p>Try out HTML, CSS, and JavaScript in real-time</p>
+                        </div>
+                        <div class="code-editor-container">
+                            <div class="editor-tabs">
+                                <button class="editor-tab active" data-lang="html">HTML</button>
+                                <button class="editor-tab" data-lang="css">CSS</button>
+                                <button class="editor-tab" data-lang="js">JavaScript</button>
+                            </div>
+                            <div class="editor-content">
+                                <textarea id="html-editor" class="code-textarea active" placeholder="Enter HTML code...">&lt;h1&gt;Hello World!&lt;/h1&gt;
+&lt;p&gt;Welcome to the live editor&lt;/p&gt;
+&lt;button onclick="alert('Hello!')"&gt;Click me&lt;/button&gt;</textarea>
+                                <textarea id="css-editor" class="code-textarea" placeholder="Enter CSS code...">h1 {
+  color: #3498db;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+p {
+  color: #2ecc71;
+  text-align: center;
+  margin: 20px 0;
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}</textarea>
+                                <textarea id="js-editor" class="code-textarea" placeholder="Enter JavaScript code...">// Add some interactive JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('Page loaded!');
+  
+  // Add some animation
+  const h1 = document.querySelector('h1');
+  if (h1) {
+    h1.style.transition = 'all 0.3s ease';
+    h1.addEventListener('mouseenter', function() {
+      this.style.transform = 'scale(1.1)';
+    });
+    h1.addEventListener('mouseleave', function() {
+      this.style.transform = 'scale(1)';
+    });
+  }
+});</textarea>
+                            </div>
+                            <div class="editor-controls">
+                                <button id="run-code-btn" class="run-btn">▶ Run Code</button>
+                                <button id="clear-code-btn" class="clear-btn">🗑 Clear</button>
+                            </div>
+                            <div class="code-output">
+                                <iframe id="code-preview" sandbox="allow-scripts allow-same-origin"></iframe>
+                            </div>
                         </div>
                     </div>
+                    
+                    <!-- Interactive CSS Playground -->
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <h3>🎨 CSS Animation Playground</h3>
+                            <p>Experiment with CSS animations and transforms</p>
+                        </div>
+                        <div class="css-playground">
+                            <div class="playground-controls">
+                                <div class="control-group">
+                                    <label>Animation:</label>
+                                    <select id="animation-select">
+                                        <option value="none">None</option>
+                                        <option value="bounce">Bounce</option>
+                                        <option value="rotate">Rotate</option>
+                                        <option value="pulse">Pulse</option>
+                                        <option value="shake">Shake</option>
+                                        <option value="swing">Swing</option>
+                                    </select>
+                                </div>
+                                <div class="control-group">
+                                    <label>Duration:</label>
+                                    <input type="range" id="duration-slider" min="0.5" max="5" step="0.1" value="2">
+                                    <span id="duration-value">2s</span>
+                                </div>
+                                <div class="control-group">
+                                    <label>Color:</label>
+                                    <input type="color" id="color-select" value="#3498db">
+                                </div>
+                                <div class="control-group">
+                                    <label>Size:</label>
+                                    <input type="range" id="size-slider" min="50" max="200" value="100">
+                                    <span id="size-value">100px</span>
+                                </div>
+                            </div>
+                            <div class="playground-preview">
+                                <div id="animated-element" class="demo-element">
+                                    🚀
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- JavaScript Challenges -->
+                    <div class="demo-card full-width">
+                        <div class="demo-header">
+                            <h3>🧠 JavaScript Mini Challenges</h3>
+                            <p>Quick coding challenges to test your skills</p>
+                        </div>
+                        <div class="challenges-container">
+                            <div class="challenge-tabs">
+                                <button class="challenge-tab active" data-challenge="fizzbuzz">FizzBuzz</button>
+                                <button class="challenge-tab" data-challenge="palindrome">Palindrome</button>
+                                <button class="challenge-tab" data-challenge="fibonacci">Fibonacci</button>
+                                <button class="challenge-tab" data-challenge="sorting">Array Sort</button>
+                            </div>
+                            <div class="challenge-content">
+                                <div id="fizzbuzz-challenge" class="challenge active">
+                                    <h4>FizzBuzz Challenge</h4>
+                                    <p>Print numbers 1-100, but replace multiples of 3 with "Fizz", multiples of 5 with "Buzz", and multiples of both with "FizzBuzz"</p>
+                                    <textarea id="fizzbuzz-code" placeholder="Write your FizzBuzz solution here...">// Your FizzBuzz solution
+for (let i = 1; i <= 100; i++) {
+  // Your code here
+}</textarea>
+                                    <button onclick="runChallenge('fizzbuzz')" class="run-challenge-btn">Test Solution</button>
+                                    <div id="fizzbuzz-output" class="challenge-output"></div>
+                                </div>
+                                <div id="palindrome-challenge" class="challenge">
+                                    <h4>Palindrome Checker</h4>
+                                    <p>Write a function that checks if a string is a palindrome (reads the same forwards and backwards)</p>
+                                    <textarea id="palindrome-code" placeholder="Write your palindrome checker here...">function isPalindrome(str) {
+  // Your code here
+  // Return true if palindrome, false otherwise
+}
+
+// Test with: isPalindrome("racecar")</textarea>
+                                    <button onclick="runChallenge('palindrome')" class="run-challenge-btn">Test Solution</button>
+                                    <div id="palindrome-output" class="challenge-output"></div>
+                                </div>
+                                <div id="fibonacci-challenge" class="challenge">
+                                    <h4>Fibonacci Sequence</h4>
+                                    <p>Generate the first n numbers in the Fibonacci sequence</p>
+                                    <textarea id="fibonacci-code" placeholder="Write your Fibonacci solution here...">function fibonacci(n) {
+  // Your code here
+  // Return array of first n Fibonacci numbers
+}
+
+// Test with: fibonacci(10)</textarea>
+                                    <button onclick="runChallenge('fibonacci')" class="run-challenge-btn">Test Solution</button>
+                                    <div id="fibonacci-output" class="challenge-output"></div>
+                                </div>
+                                <div id="sorting-challenge" class="challenge">
+                                    <h4>Array Sorting</h4>
+                                    <p>Implement a sorting algorithm (bubble sort, quick sort, etc.)</p>
+                                    <textarea id="sorting-code" placeholder="Write your sorting solution here...">function sortArray(arr) {
+  // Your code here
+  // Return sorted array
+}
+
+// Test with: sortArray([64, 34, 25, 12, 22, 11, 90])</textarea>
+                                    <button onclick="runChallenge('sorting')" class="run-challenge-btn">Test Solution</button>
+                                    <div id="sorting-output" class="challenge-output"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </section>
@@ -421,6 +585,7 @@
     <script src="snake-game.js"></script>
     <script src="dev-tools.js"></script>
     <script src="terminal-simulator.js"></script>
+    <script src="tech-demos.js"></script>
     
     <!-- Immediate initialization script -->
     <script>
