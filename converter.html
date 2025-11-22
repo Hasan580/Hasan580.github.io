@@ -56,6 +56,12 @@
                         <span data-en="My Orders" data-ar="طلباتي">طلباتي</span>
                     </a>
 
+                    <!-- Cart Button -->
+                    <button id="cartBtn" class="relative px-4 py-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-all">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">0</span>
+                    </button>
+
                     <!-- Back to Store -->
                     <a href="index.html" class="px-4 py-2 rounded-full bg-accent text-white hover:bg-accent-dark transition-all">
                         <i class="fas fa-arrow-right mr-2"></i>
@@ -186,6 +192,97 @@
             </div>
         </div>
     </section>
+
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="fixed top-0 left-0 h-full w-96 bg-white dark:bg-gray-900 shadow-2xl transform -translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-primary dark:text-blue-400" data-en="Shopping Cart" data-ar="سلة التسوق">سلة التسوق</h3>
+                <button id="closeCart" class="text-gray-500 hover:text-red-500 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div id="cartItems" class="space-y-4 mb-6">
+                <!-- Cart items will be inserted here -->
+            </div>
+            
+            <div class="border-t border-gray-300 dark:border-gray-700 pt-4">
+                <div class="flex justify-between items-center text-xl font-bold mb-4">
+                    <span data-en="Total" data-ar="المجموع">المجموع</span>
+                    <span id="cartTotal" class="text-primary dark:text-blue-400">0 IQD</span>
+                </div>
+                <button id="checkoutBtn" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-full font-bold hover:shadow-xl transition-all">
+                    <i class="fas fa-credit-card mr-2"></i>
+                    <span data-en="Proceed to Checkout" data-ar="إتمام الطلب">إتمام الطلب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white dark:bg-gray-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-scaleIn">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-3xl font-bold text-primary dark:text-blue-400" data-en="Checkout" data-ar="إتمام الطلب">إتمام الطلب</h3>
+                    <button id="closeCheckout" class="text-gray-500 hover:text-red-500 text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <form id="checkoutForm" class="space-y-6">
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-2" data-en="Full Name" data-ar="الاسم الكامل">الاسم الكامل</label>
+                        <input type="text" id="customerName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-2" data-en="Phone Number" data-ar="رقم الهاتف">رقم الهاتف</label>
+                        <input type="tel" id="customerPhone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-2" data-en="Email (Optional)" data-ar="البريد الإلكتروني (اختياري)">البريد الإلكتروني (اختياري)</label>
+                        <input type="email" id="customerEmail" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-2" data-en="Delivery Address" data-ar="عنوان التوصيل">عنوان التوصيل</label>
+                        <textarea id="customerAddress" required rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                    </div>
+                    
+                    <div class="bg-blue-50 dark:bg-gray-800 rounded-lg p-4">
+                        <h4 class="font-bold text-primary dark:text-blue-400 mb-3" data-en="Order Summary" data-ar="ملخص الطلب">ملخص الطلب</h4>
+                        <div id="checkoutSummary" class="space-y-2 text-sm">
+                            <!-- Order items will be shown here -->
+                        </div>
+                        <div class="border-t border-gray-300 dark:border-gray-600 mt-3 pt-3 flex justify-between font-bold text-lg">
+                            <span data-en="Total" data-ar="المجموع">المجموع</span>
+                            <span id="checkoutTotal" class="text-primary dark:text-blue-400">0 IQD</span>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-4 rounded-full font-bold text-lg hover:shadow-xl transition-all">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <span data-en="Confirm Order" data-ar="تأكيد الطلب">تأكيد الطلب</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white dark:bg-gray-900 rounded-3xl max-w-md w-full p-8 text-center animate-scaleIn">
+            <div class="text-6xl mb-4">🎉</div>
+            <h3 class="text-3xl font-bold text-primary dark:text-blue-400 mb-4" data-en="Order Confirmed!" data-ar="تم تأكيد الطلب!">تم تأكيد الطلب!</h3>
+            <p class="text-gray-700 dark:text-gray-300 mb-6" data-en="Thank you for your order! We'll contact you soon." data-ar="شكراً لطلبك! سنتواصل معك قريباً.">شكراً لطلبك! سنتواصل معك قريباً.</p>
+            <button id="closeSuccess" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-full font-bold hover:shadow-xl transition-all">
+                <span data-en="Continue Shopping" data-ar="متابعة التسوق">متابعة التسوق</span>
+            </button>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-primary dark:bg-gray-900 text-white py-8 mt-16">
