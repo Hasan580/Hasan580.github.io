@@ -39,12 +39,11 @@ const upload = multer({
     }
 });
 
-// Meshy AI Configuration
-const MESHY_API_KEY = 'msy_USuAj3KUFCgcnz0OQdp3IHlmFQyoqQlMBKZZ';
-const MESHY_API_BASE_URL = 'https://api.meshy.ai';
-const MESHY_API_VERSION = 'v2';
+// Tripo3D AI Configuration
+const TRIPO_API_KEY = 'tsk_aAgU5MKf97r6LlwOrVY3q_4TZIPH0cQBwfhmuNWV810';
+const TRIPO_API_BASE_URL = 'https://api.tripo3d.ai/v2/openapi';
 
-// Upload image and convert to 3D
+// Upload image and convert to 3D using Tripo3D
 app.post('/api/convert-to-3d', upload.single('image'), async (req, res) => {
     try {
         if (!req.file) {
@@ -57,41 +56,41 @@ app.post('/api/convert-to-3d', upload.single('image'), async (req, res) => {
         const imagePath = req.file.path;
         const imageBuffer = fs.readFileSync(imagePath);
         const base64Image = imageBuffer.toString('base64');
-        const imageDataUrl = `data:${req.file.mimetype};base64,${base64Image}`;
 
-        // Call Meshy AI API - Text to 3D Preview endpoint
-        const apiUrl = `${MESHY_API_BASE_URL}/${MESHY_API_VERSION}/text-to-3d`;
+        // Call Tripo3D API - Image to 3D
+        const apiUrl = `${TRIPO_API_BASE_URL}/task`;
         
         const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${MESHY_API_KEY}`,
+                'Authorization': `Bearer ${TRIPO_API_KEY}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                mode: 'preview',
-                prompt: 'A 3D model converted from an uploaded image',
-                art_style: 'realistic',
-                negative_prompt: 'low quality, low resolution, blurry'
+                type: 'image_to_model',
+                file: {
+                    type: req.file.mimetype,
+                    data: base64Image
+                }
             })
         });
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
-            console.error('Meshy API Error:', errorData);
-            throw new Error(`Meshy API error: ${response.status} - ${JSON.stringify(errorData)}`);
+            console.error('Tripo3D API Error:', errorData);
+            throw new Error(`Tripo3D API error: ${response.status} - ${JSON.stringify(errorData)}`);
         }
 
         const data = await response.json();
-        console.log('Meshy API Response:', data);
+        console.log('Tripo3D API Response:', data);
 
         // Clean up uploaded file after processing
         fs.unlinkSync(imagePath);
 
         res.json({
             success: true,
-            taskId: data.result || data.id || data.task_id,
-            message: 'Image uploaded successfully. Processing started.'
+            taskId: data.data?.task_id || data.task_id,
+            message: 'Image uploaded successfully. Processing started with Tripo3D.'
         });
 
     } catch (error) {
@@ -109,15 +108,15 @@ app.post('/api/convert-to-3d', upload.single('image'), async (req, res) => {
     }
 });
 
-// Check task status
+// Check task status for Tripo3D
 app.get('/api/task-status/:taskId', async (req, res) => {
     try {
         const { taskId } = req.params;
 
-        const response = await fetch(`${MESHY_API_BASE_URL}/${MESHY_API_VERSION}/text-to-3d/${taskId}`, {
+        const response = await fetch(`${TRIPO_API_BASE_URL}/task/${taskId}`, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${MESHY_API_KEY}`
+                'Authorization': `Bearer ${TRIPO_API_KEY}`
             }
         });
 
@@ -129,7 +128,20 @@ app.get('/api/task-status/:taskId', async (req, res) => {
         const data = await response.json();
         console.log('Task Status:', data);
 
-        res.json(data);
+        // Transform Tripo3D response to match our expected format
+        const taskData = data.data || data;
+        const transformedResponse = {
+            status: taskData.status === 'success' ? 'SUCCEEDED' : 
+                   taskData.status === 'failed' ? 'FAILED' : 
+                   taskData.status === 'running' ? 'PENDING' : 'PENDING',
+            progress: taskData.progress || 0,
+            model_urls: taskData.output ? {
+                glb: taskData.output.model,
+                rendered_image: taskData.output.rendered_image
+            } : null
+        };
+
+        res.json(transformedResponse);
 
     } catch (error) {
         console.error('Error checking task status:', error);

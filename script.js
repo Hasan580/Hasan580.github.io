@@ -10,12 +10,10 @@ const CONFIG = {
     yourEmail: 'your-email@example.com',
     
     // Backend Server Configuration
-    backendUrl: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-        ? 'http://localhost:3000' 
-        : 'https://hasan580.github.io',
+    backendUrl: 'http://localhost:3000',
     pollInterval: 5000, // 5 seconds
     maxPollTime: 300000, // 5 minutes
-    demoMode: true // Set to false when you have a working backend
+    demoMode: false // Real Tripo3D API now active!
 };
 
 // Load Products from localStorage or use default
