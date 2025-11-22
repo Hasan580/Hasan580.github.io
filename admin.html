@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | 3D Hub Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <img src="IMG_1778.PNG" alt="Logo" class="h-12 w-12">
+                    <div>
+                        <h1 class="text-xl font-bold text-primary">لوحة تحكم 3D Hub</h1>
+                        <p class="text-xs text-gray-600">إدارة المنتجات</p>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="testLocalStorage()" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-all">
+                        <i class="fas fa-vial mr-2"></i>
+                        اختبار النظام
+                    </button>
+                    <a href="index.html" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-all">
+                        <i class="fas fa-home mr-2"></i>
+                        العودة للمتجر
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mx-auto px-6 py-8">
+        <!-- Statistics Dashboard -->
+        <div class="grid md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm opacity-80">مجموع المنتجات</p>
+                        <h3 id="totalProducts" class="text-3xl font-bold mt-2">0</h3>
+                    </div>
+                    <i class="fas fa-box text-4xl opacity-50"></i>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm opacity-80">إجمالي القيمة</p>
+                        <h3 id="totalValue" class="text-2xl font-bold mt-2">0 د.ع</h3>
+                    </div>
+                    <i class="fas fa-money-bill-wave text-4xl opacity-50"></i>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm opacity-80">متوسط السعر</p>
+                        <h3 id="avgPrice" class="text-2xl font-bold mt-2">0 د.ع</h3>
+                    </div>
+                    <i class="fas fa-chart-line text-4xl opacity-50"></i>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm opacity-80">الفئات</p>
+                        <h3 id="totalCategories" class="text-3xl font-bold mt-2">4</h3>
+                    </div>
+                    <i class="fas fa-layer-group text-4xl opacity-50"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Most Selling Product & Pending Orders -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-gradient-to-br from-pink-500 to-rose-600 text-white rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-semibold mb-3">
+                    <i class="fas fa-fire mr-2"></i>
+                    الأكثر مبيعاً
+                </h3>
+                <div id="bestSellingProduct">
+                    <p class="text-sm opacity-80">لا توجد مبيعات بعد</p>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-br from-red-500 to-red-600 text-white rounded-lg shadow-lg p-6 cursor-pointer" onclick="showOrdersSection()">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm opacity-80">الطلبات المعلقة</p>
+                        <h3 id="pendingOrders" class="text-3xl font-bold mt-2">0</h3>
+                        <p class="text-sm opacity-80 mt-1">انقر للمراجعة</p>
+                    </div>
+                    <i class="fas fa-shopping-cart text-4xl opacity-50"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Product Form -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                <i class="fas fa-plus-circle text-primary mr-2"></i>
+                إضافة منتج جديد
+            </h2>
+            
+            <form id="addProductForm" class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">اسم المنتج (عربي)</label>
+                    <input type="text" id="nameAr" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="اكسسوارات طباعة">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Product Name (English)</label>
+                    <input type="text" id="nameEn" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Printing Accessories">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">الوصف (عربي)</label>
+                    <textarea id="descriptionAr" required rows="3" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="وصف المنتج بالعربي"></textarea>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Description (English)</label>
+                    <textarea id="descriptionEn" required rows="3" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Product description in English"></textarea>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">السعر (دينار عراقي)</label>
+                    <input type="number" id="price" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="25000">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">الفئة</label>
+                    <select id="category" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" title="Product Category">
+                        <option value="figures">مجسمات</option>
+                        <option value="accessories">اكسسوارات</option>
+                        <option value="decorations">ديكورات</option>
+                        <option value="custom">تصاميم مخصصة</option>
+                    </select>
+                </div>
+                
+                <div class="md:col-span-2">
+                    <label class="block text-gray-700 font-semibold mb-2">رابط الصورة (من Instagram أو URL)</label>
+                    <input type="url" id="image" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="https://example.com/image.jpg">
+                    <p class="text-sm text-gray-500 mt-1">يمكنك استخدام رابط الصورة من منشور Instagram الخاص بك</p>
+                </div>
+                
+                <div class="md:col-span-2">
+                    <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-lg font-bold hover:shadow-xl transition-all">
+                        <i class="fas fa-plus mr-2"></i>
+                        إضافة المنتج
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Orders Section -->
+        <div id="ordersSection" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">
+                    <i class="fas fa-shopping-cart text-primary mr-2"></i>
+                    طلبات العملاء
+                    <span id="orderCount" class="text-lg text-gray-600">(0)</span>
+                </h2>
+                
+                <div class="flex gap-2 flex-wrap items-center">
+                    <button onclick="refreshOrders()" class="px-3 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all text-sm">
+                        <i class="fas fa-sync-alt mr-1"></i>تحديث
+                    </button>
+                    <button onclick="filterOrders('placed')" class="px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all order-filter-btn text-sm" data-status="placed">
+                        تم الطلب
+                    </button>
+                    <button onclick="filterOrders('accepted')" class="px-3 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all order-filter-btn text-sm" data-status="accepted">
+                        مقبولة
+                    </button>
+                    <button onclick="filterOrders('preparing')" class="px-3 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-all order-filter-btn text-sm" data-status="preparing">
+                        قيد التحضير
+                    </button>
+                    <button onclick="filterOrders('shipping')" class="px-3 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all order-filter-btn text-sm" data-status="shipping">
+                        بالطريق
+                    </button>
+                    <button onclick="filterOrders('delivered')" class="px-3 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-all order-filter-btn text-sm" data-status="delivered">
+                        تم التسليم
+                    </button>
+                    <button onclick="filterOrders('all')" class="px-3 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-all order-filter-btn active text-sm" data-status="all">
+                        الكل
+                    </button>
+                </div>
+            </div>
+            
+            <div id="ordersList" class="space-y-4">
+                <!-- Orders will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Products List -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">
+                    <i class="fas fa-box text-primary mr-2"></i>
+                    المنتجات الحالية
+                    <span id="productCount" class="text-lg text-gray-600">(0)</span>
+                </h2>
+                
+                <div class="flex gap-3">
+                    <button onclick="selectAllProducts()" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all">
+                        <i class="fas fa-check-square mr-2"></i>
+                        تحديد الكل
+                    </button>
+                    <button onclick="bulkDelete()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all">
+                        <i class="fas fa-trash mr-2"></i>
+                        حذف المحدد
+                    </button>
+                    <button onclick="exportProducts()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all">
+                        <i class="fas fa-download mr-2"></i>
+                        تصدير JSON
+                    </button>
+                    <button onclick="importProducts()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all">
+                        <i class="fas fa-upload mr-2"></i>
+                        استيراد
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Filter by Category -->
+            <div class="mb-4 flex gap-3">
+                <button onclick="filterProducts('all')" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-all filter-btn active" data-filter="all">
+                    الكل
+                </button>
+                <button onclick="filterProducts('figures')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all filter-btn" data-filter="figures">
+                    مجسمات
+                </button>
+                <button onclick="filterProducts('accessories')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all filter-btn" data-filter="accessories">
+                    اكسسوارات
+                </button>
+                <button onclick="filterProducts('decorations')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all filter-btn" data-filter="decorations">
+                    ديكورات
+                </button>
+                <button onclick="filterProducts('custom')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all filter-btn" data-filter="custom">
+                    مخصص
+                </button>
+            </div>
+            
+            <div id="productsList" class="space-y-4">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50"></div>
+
+    <script>
+        // Notification function for admin panel
+        function showNotification(message, type = 'info') {
+            const container = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            
+            const colors = {
+                success: 'bg-green-500',
+                error: 'bg-red-500',
+                warning: 'bg-yellow-500',
+                info: 'bg-blue-500'
+            };
+            
+            notification.className = `${colors[type]} text-white px-6 py-4 rounded-lg shadow-lg mb-4 animate-slideDown`;
+            notification.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} text-xl"></i>
+                    <span class="font-semibold">${message}</span>
+                </div>
+            `;
+            
+            container.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(-20px)';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+    </script>
+    <script>
+        // Admin Panel Functionality
+        console.log('=== ADMIN PANEL LOADING ===');
+        
+        let products = JSON.parse(localStorage.getItem('storeProducts')) || [];
+        let orders = JSON.parse(localStorage.getItem('storeOrders')) || [];
+        let selectedProducts = new Set();
+        let currentFilter = 'all';
+        let currentOrderFilter = 'all';
+        
+        console.log('Initial products count:', products.length);
+        console.log('Initial orders count:', orders.length);
+        console.log('Products:', products);
+        console.log('Orders:', orders);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM Content Loaded - Initializing admin panel...');
+            
+            loadProducts();
+            loadOrders();
+            updateStats();
+            updateBestSelling();
+            
+            document.getElementById('addProductForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                addProduct();
+            });
+            
+            // Auto-refresh orders every 10 seconds to catch new orders
+            setInterval(() => {
+                try {
+                    const oldOrderCount = orders.length;
+                    const oldPendingCount = orders.filter(o => o.status === 'placed').length;
+                    
+                    orders = JSON.parse(localStorage.getItem('storeOrders')) || [];
+                    
+                    const newOrderCount = orders.length;
+                    const newPendingCount = orders.filter(o => o.status === 'placed').length;
+                    
+                    if (newOrderCount > oldOrderCount || newPendingCount > oldPendingCount) {
+                        console.log('New order detected! Refreshing...');
+                        loadOrders();
+                        updateStats();
+                        showNotification('طلب جديد! 🎉', 'success');
+                    }
+                } catch (error) {
+                    console.error('Error in auto-refresh:', error);
+                }
+            }, 10000);
+            
+            console.log('Admin panel fully initialized!');
+        });
+
+        function addProduct() {
+            try {
+                const product = {
+                    id: Date.now(),
+                    nameAr: document.getElementById('nameAr').value.trim(),
+                    nameEn: document.getElementById('nameEn').value.trim(),
+                    descriptionAr: document.getElementById('descriptionAr').value.trim(),
+                    descriptionEn: document.getElementById('descriptionEn').value.trim(),
+                    price: parseFloat(document.getElementById('price').value),
+                    category: document.getElementById('category').value,
+                    image: document.getElementById('image').value.trim()
+                };
+
+                // Validate
+                if (!product.nameAr || !product.nameEn || !product.price || !product.image) {
+                    showNotification('يرجى ملء جميع الحقول المطلوبة', 'error');
+                    return;
+                }
+
+                console.log('Adding product:', product);
+
+                products.push(product);
+                localStorage.setItem('storeProducts', JSON.stringify(products));
+                
+                console.log('Product added successfully. Total products:', products.length);
+                
+                showNotification('تم إضافة المنتج بنجاح!', 'success');
+                document.getElementById('addProductForm').reset();
+                loadProducts();
+                updateStats();
+            } catch (error) {
+                console.error('Error adding product:', error);
+                showNotification('حدث خطأ أثناء إضافة المنتج', 'error');
+            }
+        }
+        
+        function updateStats() {
+            const totalProducts = products.length;
+            const totalValue = products.reduce((sum, p) => sum + p.price, 0);
+            const avgPrice = totalProducts > 0 ? totalValue / totalProducts : 0;
+            
+            document.getElementById('totalProducts').textContent = totalProducts;
+            document.getElementById('totalValue').textContent = totalValue.toLocaleString() + ' د.ع';
+            document.getElementById('avgPrice').textContent = Math.round(avgPrice).toLocaleString() + ' د.ع';
+            
+            // Count unique categories
+            const categories = new Set(products.map(p => p.category));
+            document.getElementById('totalCategories').textContent = categories.size;
+            
+            // Update pending orders count (placed + accepted + preparing + shipping)
+            const pendingCount = orders.filter(o => ['placed', 'accepted', 'preparing', 'shipping'].includes(o.status)).length;
+            document.getElementById('pendingOrders').textContent = pendingCount;
+        }
+        
+        function updateBestSelling() {
+            const salesStats = JSON.parse(localStorage.getItem('productSales')) || {};
+            const salesArray = Object.values(salesStats);
+            
+            if (salesArray.length === 0) {
+                document.getElementById('bestSellingProduct').innerHTML = '<p class="text-sm opacity-80">لا توجد مبيعات بعد</p>';
+                return;
+            }
+            
+            // Sort by total sold
+            salesArray.sort((a, b) => b.totalSold - a.totalSold);
+            const best = salesArray[0];
+            
+            document.getElementById('bestSellingProduct').innerHTML = `
+                <div>
+                    <h4 class="font-bold text-lg">${best.nameAr}</h4>
+                    <div class="flex items-center gap-4 mt-2">
+                        <div>
+                            <p class="text-2xl font-bold">${best.totalSold}</p>
+                            <p class="text-xs opacity-80">قطعة مباعة</p>
+                        </div>
+                        <div>
+                            <p class="text-xl font-bold">${best.revenue.toLocaleString()} د.ع</p>
+                            <p class="text-xs opacity-80">إجمالي الإيرادات</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadProducts() {
+            // Reload products from localStorage
+            products = JSON.parse(localStorage.getItem('storeProducts')) || [];
+            console.log('loadProducts: Total products in localStorage:', products.length);
+            
+            const container = document.getElementById('productsList');
+            const filteredProducts = currentFilter === 'all' 
+                ? products 
+                : products.filter(p => p.category === currentFilter);
+            
+            console.log('loadProducts: Filtered products:', filteredProducts.length);
+            
+            document.getElementById('productCount').textContent = `(${filteredProducts.length})`;
+            
+            if (products.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-500">
+                        <i class="fas fa-box-open text-6xl mb-4"></i>
+                        <p class="text-xl font-bold mb-2">لا توجد منتجات في المتجر</p>
+                        <p class="text-sm">قم بزيارة الصفحة الرئيسية أولاً لتحميل المنتجات الافتراضية</p>
+                        <a href="index.html" class="inline-block mt-4 px-6 py-3 bg-primary text-white rounded-lg hover:bg-secondary">
+                            الذهاب للصفحة الرئيسية
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            if (filteredProducts.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-500">
+                        <i class="fas fa-filter text-6xl mb-4"></i>
+                        <p>لا توجد منتجات بهذه الفئة</p>
+                        <p class="text-sm mt-2">إجمالي المنتجات: ${products.length}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filteredProducts.map(product => `
+                <div class="border rounded-lg p-4 hover:shadow-lg transition-all ${selectedProducts.has(product.id) ? 'bg-blue-50 border-blue-300' : ''}">
+                    <div class="flex gap-4">
+                        <input type="checkbox" 
+                               onchange="toggleProductSelection(${product.id})" 
+                               ${selectedProducts.has(product.id) ? 'checked' : ''}
+                               class="mt-2 w-5 h-5 cursor-pointer">
+                        <img src="${product.image}" alt="${product.nameAr}" class="w-24 h-24 object-cover rounded-lg">
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="font-bold text-lg">${product.nameAr}</h3>
+                                    <p class="text-sm text-gray-600">${product.nameEn}</p>
+                                    <p class="text-sm text-gray-500 mt-1">${product.descriptionAr.substring(0, 60)}...</p>
+                                    <div class="mt-2">
+                                        <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">${getCategoryName(product.category)}</span>
+                                        <span class="font-bold text-primary mr-2">${product.price.toLocaleString()} د.ع</span>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button onclick="editProduct(${product.id})" class="px-3 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-all">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button onclick="deleteProduct(${product.id})" class="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-all">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getCategoryName(category) {
+            const categories = {
+                'figures': 'مجسمات',
+                'accessories': 'اكسسوارات',
+                'decorations': 'ديكورات',
+                'custom': 'مخصص'
+            };
+            return categories[category] || category;
+        }
+
+        function deleteProduct(id) {
+            if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+                console.log('Deleting product ID:', id);
+                products = products.filter(p => p.id !== id);
+                selectedProducts.delete(id);
+                localStorage.setItem('storeProducts', JSON.stringify(products));
+                console.log('Product deleted. Remaining products:', products.length);
+                showNotification('تم حذف المنتج', 'success');
+                loadProducts();
+                updateStats();
+            }
+        }
+
+        function editProduct(id) {
+            const product = products.find(p => p.id === id);
+            if (product) {
+                console.log('Editing product:', product);
+                document.getElementById('nameAr').value = product.nameAr;
+                document.getElementById('nameEn').value = product.nameEn;
+                document.getElementById('descriptionAr').value = product.descriptionAr;
+                document.getElementById('descriptionEn').value = product.descriptionEn;
+                document.getElementById('price').value = product.price;
+                document.getElementById('category').value = product.category;
+                document.getElementById('image').value = product.image;
+                
+                // Remove the product (will be re-added when form is submitted)
+                products = products.filter(p => p.id !== id);
+                selectedProducts.delete(id);
+                localStorage.setItem('storeProducts', JSON.stringify(products));
+                loadProducts();
+                updateStats();
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                showNotification('قم بتعديل المنتج ثم اضغط إضافة المنتج', 'info');
+            }
+        }
+        
+        function toggleProductSelection(id) {
+            if (selectedProducts.has(id)) {
+                selectedProducts.delete(id);
+            } else {
+                selectedProducts.add(id);
+            }
+            loadProducts();
+        }
+        
+        function selectAllProducts() {
+            const filteredProducts = currentFilter === 'all' 
+                ? products 
+                : products.filter(p => p.category === currentFilter);
+            
+            if (selectedProducts.size === filteredProducts.length) {
+                selectedProducts.clear();
+            } else {
+                filteredProducts.forEach(p => selectedProducts.add(p.id));
+            }
+            loadProducts();
+        }
+        
+        function bulkDelete() {
+            if (selectedProducts.size === 0) {
+                showNotification('لم يتم تحديد أي منتجات', 'warning');
+                return;
+            }
+            
+            if (confirm(`هل تريد حذف ${selectedProducts.size} منتج؟`)) {
+                products = products.filter(p => !selectedProducts.has(p.id));
+                localStorage.setItem('storeProducts', JSON.stringify(products));
+                showNotification(`تم حذف ${selectedProducts.size} منتج`, 'success');
+                selectedProducts.clear();
+                loadProducts();
+                updateStats();
+            }
+        }
+        
+        function filterProducts(category) {
+            currentFilter = category;
+            selectedProducts.clear();
+            
+            // Update filter button styles
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.filter === category) {
+                    btn.classList.remove('bg-gray-200', 'text-gray-700');
+                    btn.classList.add('bg-primary', 'text-white');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                }
+            });
+            
+            loadProducts();
+        }
+        
+        function exportProducts() {
+            if (products.length === 0) {
+                showNotification('لا توجد منتجات للتصدير', 'warning');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(products, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `products_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            showNotification('تم تصدير المنتجات بنجاح', 'success');
+        }
+        
+        function importProducts() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'application/json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const importedProducts = JSON.parse(event.target.result);
+                        if (Array.isArray(importedProducts)) {
+                            if (confirm(`سيتم إضافة ${importedProducts.length} منتج. المتابعة؟`)) {
+                                products = [...products, ...importedProducts];
+                                localStorage.setItem('storeProducts', JSON.stringify(products));
+                                loadProducts();
+                                updateStats();
+                                showNotification('تم استيراد المنتجات بنجاح', 'success');
+                            }
+                        } else {
+                            showNotification('صيغة الملف غير صحيحة', 'error');
+                        }
+                    } catch (error) {
+                        showNotification('خطأ في قراءة الملف', 'error');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+        
+        // Order Management Functions
+        function loadOrders() {
+            // Force reload from localStorage
+            orders = JSON.parse(localStorage.getItem('storeOrders')) || [];
+            
+            console.log('Loading orders from localStorage:', orders.length, 'orders found');
+            
+            const container = document.getElementById('ordersList');
+            const filteredOrders = currentOrderFilter === 'all' 
+                ? orders 
+                : orders.filter(o => o.status === currentOrderFilter);
+            
+            console.log('Filtered orders:', filteredOrders.length);
+            
+            // Sort by newest first
+            filteredOrders.sort((a, b) => b.timestamp - a.timestamp);
+            
+            document.getElementById('orderCount').textContent = `(${filteredOrders.length})`;
+            
+            if (filteredOrders.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-500">
+                        <i class="fas fa-inbox text-6xl mb-4"></i>
+                        <p>لا توجد طلبات ${currentOrderFilter !== 'all' ? 'بهذه الحالة' : ''}</p>
+                        <p class="text-sm mt-2">إجمالي الطلبات: ${orders.length}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = filteredOrders.map(order => {
+                const statusColors = {
+                    placed: 'bg-blue-100 text-blue-800',
+                    accepted: 'bg-green-100 text-green-800',
+                    preparing: 'bg-purple-100 text-purple-800',
+                    shipping: 'bg-orange-100 text-orange-800',
+                    delivered: 'bg-teal-100 text-teal-800',
+                    cancelled: 'bg-red-100 text-red-800'
+                };
+                const statusLabels = {
+                    placed: 'تم الطلب',
+                    accepted: 'مقبول',
+                    preparing: 'قيد التحضير',
+                    shipping: 'بالطريق',
+                    delivered: 'تم التسليم',
+                    cancelled: 'ملغي'
+                };
+                
+                return `
+                    <div class="border rounded-lg p-6 ${order.status === 'pending' ? 'border-yellow-300 bg-yellow-50' : ''}">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="font-bold text-lg">طلب #${order.id.slice(-6)}</h3>
+                                <p class="text-sm text-gray-500">${order.orderDate}</p>
+                                <span class="inline-block mt-2 ${statusColors[order.status]} text-xs px-3 py-1 rounded-full font-semibold">
+                                    ${statusLabels[order.status]}
+                                </span>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-2xl font-bold text-primary">${order.totalAmount.toLocaleString()} د.ع</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4 p-4 bg-gray-50 rounded-lg">
+                            <div>
+                                <h4 class="font-semibold text-gray-700 mb-2">معلومات العميل</h4>
+                                <p class="text-sm"><i class="fas fa-user mr-2 text-primary"></i>${order.customer.name}</p>
+                                <p class="text-sm"><i class="fas fa-phone mr-2 text-primary"></i>${order.customer.phone}</p>
+                                <p class="text-sm"><i class="fas fa-envelope mr-2 text-primary"></i>${order.customer.email}</p>
+                                <p class="text-sm"><i class="fas fa-map-marker-alt mr-2 text-primary"></i>${order.customer.address}</p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold text-gray-700 mb-2">المنتجات</h4>
+                                ${order.items.map(item => `
+                                    <div class="text-sm flex justify-between mb-1">
+                                        <span>${item.name} × ${item.quantity}</span>
+                                        <span class="font-semibold">${item.total.toLocaleString()} د.ع</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        ${order.status === 'placed' ? `
+                            <div class="flex gap-3 justify-end flex-wrap">
+                                <button onclick="updateOrderStatus('${order.id}', 'accepted')" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all">
+                                    <i class="fas fa-check mr-2"></i>قبول الطلب
+                                </button>
+                                <button onclick="updateOrderStatus('${order.id}', 'cancelled')" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all">
+                                    <i class="fas fa-times mr-2"></i>إلغاء الطلب
+                                </button>
+                            </div>
+                        ` : order.status === 'accepted' ? `
+                            <div class="flex gap-3 justify-end">
+                                <button onclick="updateOrderStatus('${order.id}', 'preparing')" class="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-all">
+                                    <i class="fas fa-box-open mr-2"></i>بدء التحضير
+                                </button>
+                            </div>
+                        ` : order.status === 'preparing' ? `
+                            <div class="flex gap-3 justify-end">
+                                <button onclick="updateOrderStatus('${order.id}', 'shipping')" class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all">
+                                    <i class="fas fa-shipping-fast mr-2"></i>خارج للتوصيل
+                                </button>
+                            </div>
+                        ` : order.status === 'shipping' ? `
+                            <div class="flex gap-3 justify-end">
+                                <button onclick="updateOrderStatus('${order.id}', 'delivered')" class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-all">
+                                    <i class="fas fa-check-circle mr-2"></i>تم التسليم
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function updateOrderStatus(orderId, newStatus) {
+            const statusLabels = {
+                accepted: 'قبول',
+                preparing: 'تحضير',
+                shipping: 'شحن',
+                delivered: 'تسليم',
+                cancelled: 'إلغاء'
+            };
+            
+            const statusLabelsEn = {
+                accepted: 'Order Accepted',
+                preparing: 'Preparing Order',
+                shipping: 'Out for Delivery',
+                delivered: 'Delivered',
+                cancelled: 'Cancelled'
+            };
+            
+            if (confirm(`هل تريد ${statusLabels[newStatus]} هذا الطلب؟`)) {
+                const orderIndex = orders.findIndex(o => o.id === orderId);
+                if (orderIndex !== -1) {
+                    orders[orderIndex].status = newStatus;
+                    orders[orderIndex].updatedAt = new Date().toLocaleString('ar-SA');
+                    
+                    // Add to status history for tracking
+                    if (!orders[orderIndex].statusHistory) {
+                        orders[orderIndex].statusHistory = [];
+                    }
+                    orders[orderIndex].statusHistory.push({
+                        status: newStatus,
+                        timestamp: Date.now(),
+                        label: statusLabelsEn[newStatus]
+                    });
+                    
+                    localStorage.setItem('storeOrders', JSON.stringify(orders));
+                    
+                    showNotification(`تم ${statusLabels[newStatus]} الطلب بنجاح`, 'success');
+                    loadOrders();
+                    updateStats();
+                }
+            }
+        }
+        
+        function filterOrders(status) {
+            currentOrderFilter = status;
+            
+            // Update filter button styles
+            document.querySelectorAll('.order-filter-btn').forEach(btn => {
+                if (btn.dataset.status === status) {
+                    btn.classList.add('ring-2', 'ring-white');
+                } else {
+                    btn.classList.remove('ring-2', 'ring-white');
+                }
+            });
+            
+            loadOrders();
+        }
+        
+        function showOrdersSection() {
+            const ordersSection = document.getElementById('ordersSection');
+            ordersSection.classList.remove('hidden');
+            ordersSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        function refreshOrders() {
+            orders = JSON.parse(localStorage.getItem('storeOrders')) || [];
+            loadOrders();
+            updateStats();
+            showNotification('تم تحديث الطلبات', 'success');
+        }
+        
+        function testLocalStorage() {
+            console.log('=== TESTING LOCALSTORAGE ===');
+            
+            try {
+                // Test if localStorage works
+                localStorage.setItem('test', 'working');
+                const test = localStorage.getItem('test');
+                console.log('localStorage is working:', test === 'working');
+                localStorage.removeItem('test');
+                
+                // Check products
+                const productsRaw = localStorage.getItem('storeProducts');
+                console.log('Products raw data:', productsRaw);
+                const productsData = JSON.parse(productsRaw);
+                console.log('Products count:', productsData ? productsData.length : 0);
+                console.log('Products:', productsData);
+                
+                // Check orders
+                const ordersRaw = localStorage.getItem('storeOrders');
+                console.log('Orders raw data:', ordersRaw);
+                const ordersData = JSON.parse(ordersRaw);
+                console.log('Orders count:', ordersData ? ordersData.length : 0);
+                console.log('Orders:', ordersData);
+                
+                // Check sales stats
+                const salesRaw = localStorage.getItem('productSales');
+                console.log('Sales data:', salesRaw);
+                
+                // Summary
+                let message = `المنتجات: ${productsData ? productsData.length : 0}\n`;
+                message += `الطلبات: ${ordersData ? ordersData.length : 0}\n`;
+                message += `تحقق من Console للمزيد من التفاصيل`;
+                
+                alert(message);
+                showNotification('تم عرض نتائج الاختبار في Console', 'info');
+                
+                console.log('=== TEST COMPLETE ===');
+            } catch (error) {
+                console.error('Error in test:', error);
+                showNotification('حدث خطأ في الاختبار - تحقق من Console', 'error');
+            }
+        }
+    </script>
+</body>
+</html>
+

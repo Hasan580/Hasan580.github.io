@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>3D Hub | مركز الطباعة ثلاثية الأبعاد</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Three.js for 3D Model Viewing - Using importmap -->
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-black shadow-lg animate-slideDown transition-colors duration-300 border-b dark:border-gray-900">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <img src="IMG_1778.PNG" alt="Logo" class="h-16 w-16 object-contain animate-float">
+                    <div class="logo-text">
+                        <h1 class="text-2xl font-bold text-primary">3D Hub</h1>
+                        <p class="text-xs text-gray-600 dark:text-gray-300" data-en="Your 3D Printing Center" data-ar="مركز الطباعة ثلاثية الأبعاد">مركز الطباعة ثلاثية الأبعاد</p>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="flex items-center gap-3 md:gap-6">
+                    <!-- Music Toggle (also toggles dark mode) -->
+                    <button id="musicToggle" class="px-3 md:px-4 py-2 rounded-full bg-gray-200 dark:bg-blue-600 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-blue-500 transition-all music-btn">
+                        <i class="fas fa-music"></i>
+                        <span class="ml-2 text-sm hidden md:inline" id="musicStatus">OFF</span>
+                    </button>
+                    
+                    <!-- Language Toggle -->
+                    <button id="langToggle" class="px-3 md:px-4 py-2 rounded-full bg-primary dark:bg-blue-700 text-white hover:bg-secondary dark:hover:bg-blue-600 transition-all">
+                        <i class="fas fa-language mr-2"></i>
+                        <span id="langText">EN</span>
+                    </button>
+
+                    <!-- My Orders Link -->
+                    <a href="my-orders.html" class="px-3 md:px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-all" title="My Orders">
+                        <i class="fas fa-box mr-1 md:mr-2"></i>
+                        <span class="hidden md:inline" data-en="My Orders" data-ar="طلباتي">طلباتي</span>
+                    </a>
+                    
+                    <!-- Admin Panel Link (only visible for admin) -->
+                    <a id="adminPanelLink" href="admin.html" class="hidden px-3 md:px-4 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all" title="Admin Panel">
+                        <i class="fas fa-cog mr-1 md:mr-2"></i>
+                        <span class="hidden md:inline" data-en="Admin" data-ar="الإدارة">الإدارة</span>
+                    </a>
+
+                    <!-- User/Login Button -->
+                    <a id="userBtn" href="login.html" class="px-3 md:px-4 py-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-all">
+                        <i class="fas fa-user mr-1 md:mr-2"></i>
+                        <span id="userName" class="hidden md:inline" data-en="Login" data-ar="دخول">دخول</span>
+                    </a>
+
+                    <!-- Cart Button -->
+                    <button id="cartBtn" class="relative px-3 md:px-4 py-2 rounded-full bg-accent text-white hover:bg-accent-dark transition-all">
+                        <i class="fas fa-shopping-cart mr-1 md:mr-2"></i>
+                        <span class="hidden md:inline" data-en="Cart" data-ar="السلة">السلة</span>
+                        <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center animate-pulse">0</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-8 px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-5xl font-bold text-primary dark:text-blue-400 mb-4 animate-fadeIn" data-en="Welcome to 3D Hub" data-ar="مرحباً بك في 3D Hub">مرحباً بك في 3D Hub</h2>
+            <p class="text-xl text-gray-700 dark:text-gray-300 mb-8 animate-fadeIn animation-delay-200" data-en="Discover amazing 3D printed figures and collectibles" data-ar="اكتشف مجسمات ومقتنيات مطبوعة ثلاثية الأبعاد مذهلة">اكتشف مجسمات ومقتنيات مطبوعة ثلاثية الأبعاد مذهلة</p>
+            <div class="flex justify-center gap-4 animate-fadeIn animation-delay-400">
+                <button class="category-btn active" data-category="all" data-en="All Products" data-ar="جميع المنتجات">جميع المنتجات</button>
+                <button class="category-btn" data-category="figures" data-en="Figures" data-ar="المجسمات">المجسمات</button>
+                <button class="category-btn" data-category="accessories" data-en="Accessories" data-ar="الإكسسوارات">الإكسسوارات</button>
+                <button class="category-btn" data-category="decorations" data-en="Decorations" data-ar="الديكورات">الديكورات</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="py-16 px-4">
+        <div class="container mx-auto">
+            <h3 class="text-3xl font-bold text-center mb-8 text-primary dark:text-blue-400" data-en="Our Products" data-ar="منتجاتنا">منتجاتنا</h3>
+            
+            <!-- Search Bar -->
+            <div class="max-w-2xl mx-auto mb-12">
+                <div class="relative">
+                    <i class="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="searchInput" class="w-full pr-12 pl-4 py-4 border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-full focus:outline-none focus:ring-2 focus:ring-primary transition-all" placeholder="" data-en="Search products..." data-ar="ابحث عن المنتجات...">
+                    <button id="clearSearch" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-red-500 hidden">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+            
+            <!-- Call to Action - AI Converter -->
+            <div class="text-center mt-16 animate-fadeIn">
+                <div class="max-w-2xl mx-auto bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-3xl p-12 shadow-xl">
+                    <h3 class="text-4xl font-bold text-gray-800 dark:text-white mb-4" data-en="Can't Find What You Love?" data-ar="لم تجد ما تحب؟">لم تجد ما تحب؟</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-lg mb-8" data-en="Create your own custom 3D model with our AI-powered converter" data-ar="صمم نموذجك الخاص بمحول الذكاء الاصطناعي">صمم نموذجك الخاص بمحول الذكاء الاصطناعي</p>
+                    <a href="converter.html" class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-4 px-8 rounded-full hover:shadow-2xl transform hover:scale-105 transition-all">
+                        <i class="fas fa-magic mr-2"></i>
+                        <span data-en="Try AI Converter" data-ar="جرب المحول الذكي">جرب المحول الذكي</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="fixed top-0 left-0 h-full w-full md:w-96 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-primary" data-en="Shopping Cart" data-ar="سلة التسوق">سلة التسوق</h3>
+                <button id="closeCart" class="text-gray-500 hover:text-red-500 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div id="cartItems" class="space-y-4 mb-6">
+                <!-- Cart items will be dynamically loaded here -->
+            </div>
+
+            <div class="border-t pt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-xl font-bold" data-en="Total:" data-ar="المجموع:">المجموع:</span>
+                    <span id="cartTotal" class="text-2xl font-bold text-accent">0 ريال</span>
+                </div>
+                <button id="checkoutBtn" class="w-full bg-primary text-white py-3 rounded-full hover:bg-secondary transition-all transform hover:scale-105 font-bold" data-en="Checkout" data-ar="إتمام الشراء">إتمام الشراء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full animate-scaleIn">
+            <h3 class="text-2xl font-bold text-primary mb-6 text-center" data-en="Complete Your Order" data-ar="أكمل طلبك">أكمل طلبك</h3>
+            
+            <form id="checkoutForm" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 mb-2 font-semibold" data-en="Full Name" data-ar="الاسم الكامل">الاسم الكامل</label>
+                    <input type="text" id="customerName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 mb-2 font-semibold" data-en="Phone Number" data-ar="رقم الهاتف">رقم الهاتف</label>
+                    <input type="tel" id="customerPhone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 mb-2 font-semibold" data-en="Email" data-ar="البريد الإلكتروني">البريد الإلكتروني</label>
+                    <input type="email" id="customerEmail" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 mb-2 font-semibold" data-en="Shipping Address" data-ar="عنوان التوصيل">عنوان التوصيل</label>
+                    <textarea id="customerAddress" required rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                </div>
+
+                <div class="flex gap-4">
+                    <button type="submit" class="flex-1 bg-primary text-white py-3 rounded-full hover:bg-secondary transition-all transform hover:scale-105 font-bold" data-en="Submit Order" data-ar="إرسال الطلب">إرسال الطلب</button>
+                    <button type="button" id="closeCheckout" class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-full hover:bg-gray-400 transition-all font-bold" data-en="Cancel" data-ar="إلغاء">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full text-center animate-scaleIn">
+            <div class="mb-4">
+                <i class="fas fa-check-circle text-green-500 text-6xl animate-bounce"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-primary mb-4" data-en="Order Successful!" data-ar="تم الطلب بنجاح!">تم الطلب بنجاح!</h3>
+            <p class="text-gray-600 mb-6" data-en="Thank you for your order. We will contact you soon!" data-ar="شكراً لطلبك. سنتواصل معك قريباً!">شكراً لطلبك. سنتواصل معك قريباً!</p>
+            <button id="closeSuccess" class="bg-primary text-white px-8 py-3 rounded-full hover:bg-secondary transition-all transform hover:scale-105 font-bold" data-en="Continue Shopping" data-ar="متابعة التسوق">متابعة التسوق</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-primary dark:bg-gray-900 text-white py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2" data-en="© 2024 3D Hub. All rights reserved." data-ar="© 2024 3D Hub. جميع الحقوق محفوظة.">© 2024 3D Hub. جميع الحقوق محفوظة.</p>
+            <div class="flex justify-center gap-4 mt-4">
+                <a href="#" class="hover:text-accent transition-colors"><i class="fab fa-facebook fa-2x"></i></a>
+                <a href="#" class="hover:text-accent transition-colors"><i class="fab fa-instagram fa-2x"></i></a>
+                <a href="#" class="hover:text-accent transition-colors"><i class="fab fa-twitter fa-2x"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    
+    <!-- Background Music -->
+    <audio id="backgroundMusic" loop>
+        <source src="riserayss, LONOWN - jessie (Slowed).mp3" type="audio/mpeg">
+    </audio>
+    
+    <script src="script.js"></script>
+</body>
+</html>
