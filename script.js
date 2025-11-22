@@ -10,9 +10,12 @@ const CONFIG = {
     yourEmail: 'your-email@example.com',
     
     // Backend Server Configuration
-    backendUrl: 'http://localhost:3000',
+    backendUrl: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+        ? 'http://localhost:3000' 
+        : 'https://hasan580.github.io',
     pollInterval: 5000, // 5 seconds
-    maxPollTime: 300000 // 5 minutes
+    maxPollTime: 300000, // 5 minutes
+    demoMode: true // Set to false when you have a working backend
 };
 
 // Load Products from localStorage or use default
@@ -929,7 +932,10 @@ function initializeAIConverter() {
     }
     
     // Click to upload
-    uploadArea.addEventListener('click', () => {
+    uploadArea.addEventListener('click', (e) => {
+        // Don't trigger if clicking on the remove button
+        if (e.target.id === 'removeImage' || e.target.closest('#removeImage')) return;
+        
         if (!imagePreview.classList.contains('hidden')) return;
         imageUpload.click();
     });
@@ -1023,7 +1029,7 @@ function resetResultArea() {
 }
 
 async function convertImageTo3D() {
-    if (!uploadedImageFile) {
+    if (!uploadedImageFile && !uploadedImage) {
         showNotification(
             currentLanguage === 'ar' ? 'الرجاء رفع صورة أولاً' : 'Please upload an image first',
             'error'
@@ -1040,8 +1046,13 @@ async function convertImageTo3D() {
     document.getElementById('successState').classList.add('hidden');
     
     try {
-        // Real API call with backend server
-        await callAIAPI(uploadedImageFile);
+        // Check if backend is available or use demo mode
+        if (CONFIG.demoMode || window.location.hostname !== 'localhost') {
+            await simulateAIProcessing();
+        } else {
+            // Real API call with backend server
+            await callAIAPI(uploadedImageFile);
+        }
         
         // Show success state
         document.getElementById('processingState').classList.add('hidden');
@@ -1135,18 +1146,37 @@ async function callAIAPI(imageFile) {
 }
 
 async function simulateAIProcessing() {
-    // Simulate AI processing delay (30-60 seconds)
+    // Simulate AI processing delay with progress updates
     return new Promise((resolve) => {
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += 10;
+            updateProgressDisplay(progress);
+            if (progress >= 100) {
+                clearInterval(interval);
+            }
+        }, 300);
+        
         setTimeout(() => {
+            // Use a demo 3D model URL (a simple cube GLB file)
             currentModelData = {
-                modelUrl: 'demo-model.stl',
-                format: 'stl',
+                modelUrl: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Box/glTF-Binary/Box.glb',
+                glbUrl: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Box/glTF-Binary/Box.glb',
+                format: 'glb',
                 size: document.getElementById('modelSize').value,
-                type: document.getElementById('modelType').value
+                type: document.getElementById('modelType').value,
+                isDemo: true
             };
             resolve();
         }, 3000); // 3 seconds for demo
     });
+}
+
+function updateProgressDisplay(progress) {
+    const progressText = document.querySelector('.progress-text');
+    if (progressText) {
+        progressText.textContent = `${Math.round(progress)}%`;
+    }
 }
 
 function downloadSTLFile() {
@@ -1156,6 +1186,14 @@ function downloadSTLFile() {
             'error'
         );
         return;
+    }
+    
+    // Show demo mode message
+    if (currentModelData.isDemo) {
+        showNotification(
+            currentLanguage === 'ar' ? 'هذا نموذج تجريبي. للحصول على نموذج حقيقي، يرجى التواصل معنا.' : 'This is a demo model. For real conversion, please contact us.',
+            'info'
+        );
     }
     
     // Download GLB model from Meshy AI
