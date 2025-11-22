@@ -932,11 +932,21 @@ function initializeAIConverter() {
     }
     
     // Click to upload
+    console.log('Upload area initialized');
     uploadArea.addEventListener('click', (e) => {
+        console.log('Upload area clicked', e.target);
         // Don't trigger if clicking on the remove button
-        if (e.target.id === 'removeImage' || e.target.closest('#removeImage')) return;
+        if (e.target.id === 'removeImage' || e.target.closest('#removeImage')) {
+            console.log('Clicked on remove button, ignoring');
+            return;
+        }
         
-        if (!imagePreview.classList.contains('hidden')) return;
+        if (!imagePreview.classList.contains('hidden')) {
+            console.log('Image preview visible, ignoring click');
+            return;
+        }
+        
+        console.log('Triggering file input click');
         imageUpload.click();
     });
     
@@ -961,9 +971,13 @@ function initializeAIConverter() {
     
     // File input change
     imageUpload.addEventListener('change', (e) => {
+        console.log('File input changed', e.target.files);
         const file = e.target.files[0];
         if (file) {
+            console.log('File selected:', file.name, file.type, file.size);
             handleImageUpload(file);
+        } else {
+            console.log('No file selected');
         }
     });
     
@@ -976,18 +990,44 @@ function initializeAIConverter() {
     }
     
     // Convert button
-    if (convertBtn) convertBtn.addEventListener('click', convertImageTo3D);
+    if (convertBtn) {
+        console.log('Convert button found, attaching event listener');
+        convertBtn.addEventListener('click', (e) => {
+            console.log('Convert button clicked!');
+            e.preventDefault();
+            convertImageTo3D();
+        });
+    } else {
+        console.log('Convert button not found');
+    }
     
     // Download model
-    if (downloadModel) downloadModel.addEventListener('click', downloadSTLFile);
+    if (downloadModel) {
+        console.log('Download button found, attaching event listener');
+        downloadModel.addEventListener('click', (e) => {
+            console.log('Download button clicked!');
+            e.preventDefault();
+            downloadSTLFile();
+        });
+    }
     
     // Order custom model
-    if (orderCustomModel) orderCustomModel.addEventListener('click', orderCustomPrint);
+    if (orderCustomModel) {
+        console.log('Order button found, attaching event listener');
+        orderCustomModel.addEventListener('click', (e) => {
+            console.log('Order button clicked!');
+            e.preventDefault();
+            orderCustomPrint();
+        });
+    }
 }
 
 function handleImageUpload(file) {
+    console.log('handleImageUpload called with file:', file.name);
+    
     // Check file size (max 10MB)
     if (file.size > 10 * 1024 * 1024) {
+        console.log('File too large:', file.size);
         showNotification(
             currentLanguage === 'ar' ? 'حجم الملف كبير جداً (الحد الأقصى 10 ميجا)' : 'File too large (max 10MB)',
             'error'
@@ -997,10 +1037,12 @@ function handleImageUpload(file) {
     
     // Store the file object for backend upload
     uploadedImageFile = file;
+    console.log('File stored in uploadedImageFile');
     
     // Read and display image preview
     const reader = new FileReader();
     reader.onload = (e) => {
+        console.log('File read complete, displaying preview');
         uploadedImage = e.target.result;
         document.getElementById('previewImg').src = uploadedImage;
         document.getElementById('uploadPlaceholder').classList.add('hidden');
@@ -1011,6 +1053,7 @@ function handleImageUpload(file) {
         );
     };
     reader.readAsDataURL(file);
+    console.log('Started reading file');
 }
 
 function resetUpload() {
@@ -1029,7 +1072,12 @@ function resetResultArea() {
 }
 
 async function convertImageTo3D() {
+    console.log('convertImageTo3D called');
+    console.log('uploadedImageFile:', uploadedImageFile);
+    console.log('uploadedImage:', uploadedImage ? 'exists' : 'null');
+    
     if (!uploadedImageFile && !uploadedImage) {
+        console.log('No image uploaded');
         showNotification(
             currentLanguage === 'ar' ? 'الرجاء رفع صورة أولاً' : 'Please upload an image first',
             'error'
@@ -1039,6 +1087,7 @@ async function convertImageTo3D() {
     
     const modelType = document.getElementById('modelType').value;
     const modelSize = document.getElementById('modelSize').value;
+    console.log('Model type:', modelType, 'Size:', modelSize);
     
     // Show processing state
     document.getElementById('waitingState').classList.add('hidden');
