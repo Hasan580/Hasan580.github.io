@@ -167,15 +167,54 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Saved', products.length, 'products');
     }
     
-    initializeDarkMode();
-    initializeLanguage();
-    initializeMusic();
-    initializeUserStatus();
-    initializeSearch();
-    renderProducts();
-    updateCartUI();
-    attachEventListeners();
-    initializeAIConverter();
+    console.log('DOM Content Loaded - Starting initialization');
+    
+    try {
+        initializeDarkMode();
+        console.log('✓ Dark mode initialized');
+    } catch (e) { console.error('Dark mode error:', e); }
+    
+    try {
+        initializeLanguage();
+        console.log('✓ Language initialized');
+    } catch (e) { console.error('Language error:', e); }
+    
+    try {
+        initializeMusic();
+        console.log('✓ Music initialized');
+    } catch (e) { console.error('Music error:', e); }
+    
+    try {
+        initializeUserStatus();
+        console.log('✓ User status initialized');
+    } catch (e) { console.error('User status error:', e); }
+    
+    try {
+        initializeSearch();
+        console.log('✓ Search initialized');
+    } catch (e) { console.error('Search error:', e); }
+    
+    try {
+        renderProducts();
+        console.log('✓ Products rendered');
+    } catch (e) { console.error('Products error:', e); }
+    
+    try {
+        updateCartUI();
+        console.log('✓ Cart UI updated');
+    } catch (e) { console.error('Cart UI error:', e); }
+    
+    try {
+        attachEventListeners();
+        console.log('✓ Event listeners attached');
+    } catch (e) { console.error('Event listeners error:', e); }
+    
+    try {
+        initializeAIConverter();
+        console.log('✓ AI Converter initialized');
+    } catch (e) { console.error('AI Converter error:', e); }
+    
+    console.log('All initialization complete');
 });
 
 // Check if user is logged in and update UI
@@ -900,15 +939,17 @@ function attachEventListeners() {
     });
     
     // Close cart when clicking outside
-    document.addEventListener('click', (e) => {
-        const sidebar = document.getElementById('cartSidebar');
-        const cartBtn = document.getElementById('cartBtn');
-        if (sidebar.classList.contains('active') && 
-            !sidebar.contains(e.target) && 
-            !cartBtn.contains(e.target)) {
-            toggleCart();
-        }
-    });
+    const sidebar = document.getElementById('cartSidebar');
+    if (sidebar) {
+        document.addEventListener('click', (e) => {
+            const cartBtn = document.getElementById('cartBtn');
+            if (sidebar.classList.contains('active') && 
+                !sidebar.contains(e.target) && 
+                cartBtn && !cartBtn.contains(e.target)) {
+                toggleCart();
+            }
+        });
+    }
 }
 
 // ============================================
