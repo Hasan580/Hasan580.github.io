@@ -666,19 +666,36 @@ function updateCartUI() {
                     <div class="cart-item-price">${item.price.toLocaleString()} ${currentLanguage === 'ar' ? 'د.ع' : 'IQD'}</div>
                 </div>
                 <div class="cart-item-actions">
-                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">
+                    <button class="quantity-btn" data-action="decrease" data-id="${item.id}">
                         <i class="fas fa-minus"></i>
                     </button>
                     <span class="quantity-display">${item.quantity}</span>
-                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">
+                    <button class="quantity-btn" data-action="increase" data-id="${item.id}">
                         <i class="fas fa-plus"></i>
                     </button>
-                    <button class="remove-btn" onclick="removeFromCart(${item.id})">
+                    <button class="remove-btn" data-action="remove" data-id="${item.id}">
                         <i class="fas fa-trash"></i>
                     </button>
                 </div>
             </div>
         `).join('');
+        
+        // Attach event listeners to cart buttons using event delegation
+        cartItems.querySelectorAll('[data-action]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent event from bubbling up
+                const action = btn.dataset.action;
+                const id = parseInt(btn.dataset.id);
+                
+                if (action === 'decrease') {
+                    updateQuantity(id, -1);
+                } else if (action === 'increase') {
+                    updateQuantity(id, 1);
+                } else if (action === 'remove') {
+                    removeFromCart(id);
+                }
+            });
+        });
     }
 }
 
@@ -943,8 +960,11 @@ function attachEventListeners() {
     if (sidebar) {
         document.addEventListener('click', (e) => {
             const cartBtn = document.getElementById('cartBtn');
+            // Don't close if clicking inside the cart (including buttons)
+            // Don't close if clicking the cart button
             if (sidebar.classList.contains('active') && 
                 !sidebar.contains(e.target) && 
+                !e.target.closest('#cartSidebar') &&
                 cartBtn && !cartBtn.contains(e.target)) {
                 toggleCart();
             }
