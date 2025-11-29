@@ -1,311 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="theme-color" content="#3b82f6">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>AI Converter | 3D Hub</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {}
-            }
-        }
-    </script>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
-    
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-black shadow-lg animate-slideDown transition-colors duration-300 border-b dark:border-gray-900">
-        <nav class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <a href="index.html" class="flex items-center space-x-3 space-x-reverse">
-                    <img src="IMG_1778.PNG" alt="Logo" class="h-16 w-16 object-contain animate-float">
-                    <div class="logo-text">
-                        <h1 class="text-2xl font-bold text-primary">3D Hub</h1>
-                        <p class="text-xs text-gray-600 dark:text-gray-300">مركز الطباعة ثلاثية الأبعاد</p>
-                    </div>
-                </a>
-
-                <!-- Navigation -->
-                <div class="flex items-center gap-6">
-                    <!-- Music Toggle (also toggles dark mode) -->
-                    <button id="musicToggle" class="px-4 py-2 rounded-full bg-gray-200 dark:bg-blue-600 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-blue-500 transition-all music-btn">
-                        <i class="fas fa-music"></i>
-                        <span class="ml-2 text-sm" id="musicStatus">OFF</span>
-                    </button>
-                    
-                    <!-- Language Toggle -->
-                    <button id="langToggle" class="px-4 py-2 rounded-full bg-primary dark:bg-blue-700 text-white hover:bg-secondary dark:hover:bg-blue-600 transition-all">
-                        <i class="fas fa-language mr-2"></i>
-                        <span id="langText">EN</span>
-                    </button>
-
-                    <!-- My Orders Link -->
-                    <a href="my-orders.html" class="px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-all">
-                        <i class="fas fa-box mr-2"></i>
-                        <span data-en="My Orders" data-ar="طلباتي">طلباتي</span>
-                    </a>
-
-                    <!-- Cart Button -->
-                    <button id="cartBtn" class="relative px-4 py-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-all">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">0</span>
-                    </button>
-
-                    <!-- Back to Store -->
-                    <a href="index.html" class="px-4 py-2 rounded-full bg-accent text-white hover:bg-accent-dark transition-all">
-                        <i class="fas fa-arrow-right mr-2"></i>
-                        <span data-en="Back to Store" data-ar="العودة للمتجر">العودة للمتجر</span>
-                    </a>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- AI Image to 3D Converter Section -->
-    <section class="pt-32 pb-16 px-4 min-h-screen">
-        <div class="container mx-auto">
-            <div class="text-center mb-12 animate-fadeIn">
-                <h2 class="text-5xl font-bold text-primary dark:text-blue-400 mb-4" data-en="AI Image to 3D Converter" data-ar="محول الصور إلى نماذج ثلاثية الأبعاد">محول الصور إلى نماذج ثلاثية الأبعاد</h2>
-                <p class="text-xl text-gray-700 dark:text-gray-300" data-en="Upload any image and let AI convert it to a 3D printable model!" data-ar="ارفع أي صورة ودع الذكاء الاصطناعي يحولها إلى نموذج ثلاثي الأبعاد قابل للطباعة!">ارفع أي صورة ودع الذكاء الاصطناعي يحولها إلى نموذج ثلاثي الأبعاد قابل للطباعة!</p>
-            </div>
-            
-            <div class="max-w-6xl mx-auto bg-white dark:bg-black rounded-3xl shadow-2xl p-8 animate-scaleIn border dark:border-gray-800">
-                <div class="grid md:grid-cols-2 gap-8">
-                    <!-- Upload Section -->
-                    <div class="space-y-6">
-                        <div class="text-center">
-                            <i class="fas fa-cloud-upload-alt text-6xl text-primary dark:text-blue-400 mb-4 animate-float"></i>
-                            <h4 class="text-2xl font-bold text-primary dark:text-blue-400 mb-2" data-en="Upload Your Image" data-ar="ارفع صورتك">ارفع صورتك</h4>
-                            <p class="text-gray-600 dark:text-gray-400" data-en="Support: JPG, PNG, WEBP (Max 10MB)" data-ar="الصيغ المدعومة: JPG, PNG, WEBP (حد أقصى 10 ميجا)">الصيغ المدعومة: JPG, PNG, WEBP (حد أقصى 10 ميجا)</p>
-                        </div>
-                        
-                        <div id="uploadArea" class="border-4 border-dashed border-primary dark:border-blue-500 rounded-2xl p-8 text-center cursor-pointer hover:bg-blue-50 dark:hover:bg-gray-700 hover:border-accent transition-all">
-                            <input type="file" id="imageUpload" accept="image/*" class="hidden">
-                            <div id="uploadPlaceholder">
-                                <i class="fas fa-image text-5xl text-gray-300 dark:text-gray-600 mb-4"></i>
-                                <p class="text-gray-600 dark:text-gray-400 font-semibold" data-en="Click to upload or drag & drop" data-ar="انقر للرفع أو اسحب وأفلت">انقر للرفع أو اسحب وأفلت</p>
-                                <p class="text-sm text-gray-400 dark:text-gray-500 mt-2" data-en="Click anywhere in this box" data-ar="انقر في أي مكان في هذا المربع">انقر في أي مكان في هذا المربع</p>
-                            </div>
-                            <div id="imagePreview" class="hidden">
-                                <img id="previewImg" src="" alt="Preview" class="max-h-64 mx-auto rounded-lg shadow-lg">
-                                <button id="removeImage" class="mt-4 px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all">
-                                    <i class="fas fa-times mr-2"></i>
-                                    <span data-en="Remove" data-ar="إزالة">إزالة</span>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-2" data-en="Model Type" data-ar="نوع النموذج">نوع النموذج</label>
-                                <select id="modelType" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                                    <option value="figure">مجسم/شخصية</option>
-                                    <option value="relief">نحت بارز</option>
-                                    <option value="lithophane">ليثوفين</option>
-                                    <option value="keychain">حامل مفاتيح</option>
-                                </select>
-                            </div>
-                            
-                            <div>
-                                <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-2" data-en="Size (cm)" data-ar="الحجم (سم)">الحجم (سم)</label>
-                                <input type="number" id="modelSize" value="10" min="1" max="30" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                            </div>
-                            
-                            <button id="convertBtn" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-4 rounded-full font-bold text-lg hover:shadow-xl transform hover:scale-105 transition-all glow-on-dark">
-                                <i class="fas fa-magic mr-2"></i>
-                                <span data-en="Convert to 3D Model" data-ar="تحويل إلى نموذج ثلاثي الأبعاد">تحويل إلى نموذج ثلاثي الأبعاد</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Result Section -->
-                    <div class="space-y-6">
-                        <div class="text-center">
-                            <i class="fas fa-cube text-6xl text-accent dark:text-blue-400 mb-4 animate-float" style="animation-delay: 0.5s;"></i>
-                            <h4 class="text-2xl font-bold text-primary dark:text-blue-400 mb-2" data-en="Your 3D Model" data-ar="نموذجك ثلاثي الأبعاد">نموذجك ثلاثي الأبعاد</h4>
-                        </div>
-                        
-                        <div id="resultArea" class="border-4 border-gray-200 dark:border-gray-600 rounded-2xl p-8 min-h-[300px] flex items-center justify-center bg-gray-50 dark:bg-gray-700">
-                            <div id="waitingState" class="text-center">
-                                <i class="fas fa-robot text-6xl text-gray-300 dark:text-gray-600 mb-4"></i>
-                                <p class="text-gray-500 dark:text-gray-400" data-en="Upload an image to start" data-ar="ارفع صورة للبدء">ارفع صورة للبدء</p>
-                            </div>
-                            
-                            <div id="processingState" class="hidden text-center">
-                                <div class="relative">
-                                    <i class="fas fa-cog text-6xl text-primary dark:text-blue-400 animate-spin mb-4"></i>
-                                    <i class="fas fa-magic text-3xl text-accent dark:text-blue-300 absolute top-0 left-1/2 transform -translate-x-1/2 animate-pulse"></i>
-                                </div>
-                                <p class="text-primary dark:text-blue-400 font-bold text-lg" data-en="AI is creating your 3D model..." data-ar="الذكاء الاصطناعي يصنع نموذجك...">الذكاء الاصطناعي يصنع نموذجك...</p>
-                                <p class="text-gray-600 dark:text-gray-400 mt-2" data-en="This may take 2-3 minutes" data-ar="قد يستغرق 2-3 دقائق">قد يستغرق 2-3 دقائق</p>
-                                <div class="progress-text mt-4"></div>
-                            </div>
-                            
-                            <div id="successState" class="hidden text-center w-full">
-                                <i class="fas fa-check-circle text-6xl text-green-500 mb-4 animate-bounce"></i>
-                                <p class="text-green-600 dark:text-green-400 font-bold text-lg mb-4" data-en="3D Model Ready!" data-ar="النموذج جاهز!">النموذج جاهز!</p>
-                                <div id="modelPreview" class="bg-white dark:bg-gray-900 rounded-lg p-2 mb-4 shadow-inner relative">
-                                    <canvas id="model3dCanvas" class="w-full aspect-square rounded-lg"></canvas>
-                                    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-60 text-white px-3 py-1 rounded-full text-xs">
-                                        <i class="fas fa-mouse mr-1"></i>
-                                        <span data-en="Drag to rotate" data-ar="اسحب للتدوير">اسحب للتدوير</span>
-                                    </div>
-                                </div>
-                                <div class="space-y-2">
-                                    <button id="downloadModel" class="w-full bg-accent dark:bg-blue-600 text-white py-3 rounded-full font-bold hover:bg-accent-dark dark:hover:bg-blue-500 transition-all glow-on-dark">
-                                        <i class="fas fa-download mr-2"></i>
-                                        <span data-en="Download STL File" data-ar="تحميل ملف STL">تحميل ملف STL</span>
-                                    </button>
-                                    <button id="orderCustomModel" class="w-full bg-primary dark:bg-blue-700 text-white py-3 rounded-full font-bold hover:bg-secondary dark:hover:bg-blue-600 transition-all glow-on-dark">
-                                        <i class="fas fa-shopping-cart mr-2"></i>
-                                        <span data-en="Order Print Service" data-ar="طلب خدمة الطباعة">طلب خدمة الطباعة</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-blue-50 dark:bg-gray-700 rounded-lg p-4">
-                            <h5 class="font-bold text-primary dark:text-blue-400 mb-2">
-                                <i class="fas fa-info-circle mr-2"></i>
-                                <span data-en="How it works" data-ar="كيف يعمل">كيف يعمل</span>
-                            </h5>
-                            <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
-                                <li>• الذكاء الاصطناعي يحلل صورتك</li>
-                                <li>• يحولها إلى شبكة ثلاثية الأبعاد</li>
-                                <li>• يحسنها للطباعة ثلاثية الأبعاد</li>
-                                <li>• ملف STL جاهز للطباعة</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Cart Sidebar -->
-    <div id="cartSidebar" class="fixed top-0 left-0 h-full w-96 bg-white dark:bg-gray-900 shadow-2xl transform -translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
-        <div class="p-6">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-primary dark:text-blue-400" data-en="Shopping Cart" data-ar="سلة التسوق">سلة التسوق</h3>
-                <button id="closeCart" class="text-gray-500 hover:text-red-500 text-2xl">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div id="cartItems" class="space-y-4 mb-6">
-                <!-- Cart items will be inserted here -->
-            </div>
-            
-            <div class="border-t border-gray-300 dark:border-gray-700 pt-4">
-                <div class="flex justify-between items-center text-xl font-bold mb-4">
-                    <span data-en="Total" data-ar="المجموع">المجموع</span>
-                    <span id="cartTotal" class="text-primary dark:text-blue-400">0 IQD</span>
-                </div>
-                <button id="checkoutBtn" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-full font-bold hover:shadow-xl transition-all">
-                    <i class="fas fa-credit-card mr-2"></i>
-                    <span data-en="Proceed to Checkout" data-ar="إتمام الطلب">إتمام الطلب</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Checkout Modal -->
-    <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
-        <div class="bg-white dark:bg-gray-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-scaleIn">
-            <div class="p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-3xl font-bold text-primary dark:text-blue-400" data-en="Checkout" data-ar="إتمام الطلب">إتمام الطلب</h3>
-                    <button id="closeCheckout" class="text-gray-500 hover:text-red-500 text-2xl">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                
-                <form id="checkoutForm" class="space-y-6">
-                    <div>
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-2" data-en="Full Name" data-ar="الاسم الكامل">الاسم الكامل</label>
-                        <input type="text" id="customerName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-2" data-en="Phone Number" data-ar="رقم الهاتف">رقم الهاتف</label>
-                        <input type="tel" id="customerPhone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-2" data-en="Email (Optional)" data-ar="البريد الإلكتروني (اختياري)">البريد الإلكتروني (اختياري)</label>
-                        <input type="email" id="customerEmail" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-gray-700 dark:text-gray-300 font-semibold mb-2" data-en="Delivery Address" data-ar="عنوان التوصيل">عنوان التوصيل</label>
-                        <textarea id="customerAddress" required rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
-                    </div>
-                    
-                    <div class="bg-blue-50 dark:bg-gray-800 rounded-lg p-4">
-                        <h4 class="font-bold text-primary dark:text-blue-400 mb-3" data-en="Order Summary" data-ar="ملخص الطلب">ملخص الطلب</h4>
-                        <div id="checkoutSummary" class="space-y-2 text-sm">
-                            <!-- Order items will be shown here -->
-                        </div>
-                        <div class="border-t border-gray-300 dark:border-gray-600 mt-3 pt-3 flex justify-between font-bold text-lg">
-                            <span data-en="Total" data-ar="المجموع">المجموع</span>
-                            <span id="checkoutTotal" class="text-primary dark:text-blue-400">0 IQD</span>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-4 rounded-full font-bold text-lg hover:shadow-xl transition-all">
-                        <i class="fas fa-check-circle mr-2"></i>
-                        <span data-en="Confirm Order" data-ar="تأكيد الطلب">تأكيد الطلب</span>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Success Modal -->
-    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
-        <div class="bg-white dark:bg-gray-900 rounded-3xl max-w-md w-full p-8 text-center animate-scaleIn">
-            <div class="text-6xl mb-4">🎉</div>
-            <h3 class="text-3xl font-bold text-primary dark:text-blue-400 mb-4" data-en="Order Confirmed!" data-ar="تم تأكيد الطلب!">تم تأكيد الطلب!</h3>
-            <p class="text-gray-700 dark:text-gray-300 mb-6" data-en="Thank you for your order! We'll contact you soon." data-ar="شكراً لطلبك! سنتواصل معك قريباً.">شكراً لطلبك! سنتواصل معك قريباً.</p>
-            <button id="closeSuccess" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-full font-bold hover:shadow-xl transition-all">
-                <span data-en="Continue Shopping" data-ar="متابعة التسوق">متابعة التسوق</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-primary dark:bg-gray-900 text-white py-8 mt-16">
-        <div class="container mx-auto px-4 text-center">
-            <p class="mb-2">© 2024 3D Hub. جميع الحقوق محفوظة.</p>
-            <p class="text-sm text-gray-300">مدعوم بالذكاء الاصطناعي | Powered by AI</p>
-        </div>
-    </footer>
-
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-            }
-        }
-    </script>
-    
-    <!-- Background Music -->
-    <audio id="backgroundMusic" loop>
-        <source src="riserayss, LONOWN - jessie (Slowed).mp3" type="audio/mpeg">
-    </audio>
-    
-    <script src="script.js"></script>
-</body>
-</html>
