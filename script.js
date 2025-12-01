@@ -298,7 +298,7 @@ class DashboardApp {
     checkAuth() {
         const userSession = sessionStorage.getItem('currentUser');
         if (!userSession) {
-            window.location.href = 'index.html';
+            window.location.href = 'dashboard.html';
             return;
         }
         this.currentUser = JSON.parse(userSession);
