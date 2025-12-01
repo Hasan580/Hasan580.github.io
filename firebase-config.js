@@ -27,6 +27,11 @@ function initializeFirebase() {
     }
 }
 
+// Auto-initialize Firebase when script loads
+if (typeof firebase !== 'undefined') {
+    initializeFirebase();
+}
+
 // ========================================
 // FIREBASE DATA OPERATIONS
 // ========================================
