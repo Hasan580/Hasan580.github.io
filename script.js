@@ -303,19 +303,10 @@ class DashboardApp {
         }
         this.currentUser = JSON.parse(userSession);
         
-        // Wait for Firebase to initialize if available
-        if (typeof firebase !== 'undefined') {
-            firebase.auth().onAuthStateChanged((user) => {
-                if (user) {
-                    this.init();
-                } else if (!this.dataStore.useFirebase) {
-                    // Fallback to local mode
-                    this.init();
-                }
-            });
-        } else {
+        // Initialize immediately - Firebase auth is optional
+        setTimeout(() => {
             this.init();
-        }
+        }, 100);
     }
 
     async init() {
@@ -375,7 +366,7 @@ class DashboardApp {
             logoutBtn.addEventListener('click', () => {
                 if (confirm('Are you sure you want to logout?')) {
                     sessionStorage.removeItem('currentUser');
-                    window.location.href = 'index.html';
+                    window.location.href = 'login.html';
                 }
             });
         }
@@ -1098,5 +1089,10 @@ class DashboardApp {
 // ========================================
 let app;
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Firebase if available
+    if (typeof initializeFirebase !== 'undefined') {
+        initializeFirebase();
+    }
+    
     app = new DashboardApp();
 });
