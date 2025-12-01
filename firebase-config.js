@@ -56,7 +56,7 @@ class FirebaseDataStore {
     async signIn(username, password) {
         try {
             // Use Firebase Authentication with email format
-            const email = `${username}@4andmore.local`;
+            const email = `${username}@4andmore.com`;
             const userCredential = await auth.signInWithEmailAndPassword(email, password);
             
             // Get user role from Firestore
@@ -83,7 +83,7 @@ class FirebaseDataStore {
 
     async createUser(username, password, role, name) {
         try {
-            const email = `${username}@4andmore.local`;
+            const email = `${username}@4andmore.com`;
             const userCredential = await auth.createUserWithEmailAndPassword(email, password);
             
             // Store user data in Firestore
