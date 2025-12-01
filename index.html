@@ -1,607 +1,382 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="X Space Cyber Cafe - أفضل مركز ألعاب في بغداد">
-    <title>X Space Cyber Cafe | Gaming Center</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>4andmore - Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2d7a3e, #8b6f47);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .login-left {
+            background: linear-gradient(135deg, #2d7a3e, #8b6f47);
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .login-logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 1.5rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 15px;
+        }
+
+        .login-left h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-left p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .login-right {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-header {
+            margin-bottom: 2rem;
+        }
+
+        .login-header h2 {
+            color: #2d7a3e;
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            color: #757575;
+            font-size: 0.9375rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #212121;
+            font-size: 0.875rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #757575;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 0.9375rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #2d7a3e;
+            box-shadow: 0 0 0 3px rgba(45, 122, 62, 0.1);
+        }
+
+        .error-message {
+            color: #c44536;
+            font-size: 0.8125rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #2d7a3e, #8b6f47);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(45, 122, 62, 0.3);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .quick-login {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .quick-login p {
+            font-size: 0.875rem;
+            color: #757575;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .quick-login-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-quick {
+            padding: 0.75rem;
+            border: 2px solid #2d7a3e;
+            background: white;
+            color: #2d7a3e;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-quick:hover {
+            background: #2d7a3e;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                grid-template-columns: 1fr;
+            }
+
+            .login-left {
+                padding: 2rem;
+            }
+
+            .login-right {
+                padding: 2rem;
+            }
+
+            .quick-login-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="animated-bg">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
+    <div class="login-container">
+        <div class="login-left">
+            <img src="four and more logo.jpg" alt="4andmore Logo" class="login-logo">
+            <h1>4andmore</h1>
+            <p>Women's Fashion Dashboard</p>
+        </div>
+        
+        <div class="login-right">
+            <div class="login-header">
+                <h2>Welcome Back!</h2>
+                <p>Please login to continue to your dashboard</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                </div>
+
+                <div class="error-message" id="errorMessage">
+                    <i class="fas fa-exclamation-circle"></i> Invalid username or password
+                </div>
+
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+
+            <div class="quick-login">
+                <p>Quick Login (For Demo)</p>
+                <div class="quick-login-buttons">
+                    <button class="btn-quick" onclick="quickLogin('admin', 'admin')">
+                        <i class="fas fa-user-shield"></i> Admin
+                    </button>
+                    <button class="btn-quick" onclick="quickLogin('afnan', 'afnan')">
+                        <i class="fas fa-user"></i> Afnan
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="container">
-            <div class="nav-wrapper">
-                <div class="logo">
-                    <img src="xspace_logo.jpg" alt="X Space Logo">
-                    <span class="logo-text">X Space</span>
-                </div>
-                <div class="nav-toggle" id="navToggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <ul class="nav-menu" id="navMenu">
-                    <li><a href="#home" class="nav-link active">الرئيسية</a></li>
-                    <li><a href="#services" class="nav-link">الخدمات</a></li>
-                    <li><a href="#tournaments" class="nav-link">البطولات</a></li>
-                    <li><a href="#gallery" class="nav-link">المعرض</a></li>
-                    <li><a href="#pricing" class="nav-link">الأسعار</a></li>
-                    <li><a href="#locations" class="nav-link">المواقع</a></li>
-                    <li><a href="#contact" class="nav-link">اتصل بنا</a></li>
-                    <li><a href="#booking" class="btn-book-nav">احجز الآن</a></li>
-                    <li><button class="music-toggle" id="musicToggle" title="تشغيل الموسيقى">
-                        <i class="fas fa-music"></i>
-                    </button></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    
+    <!-- Firebase Configuration -->
+    <script src="firebase-config.js"></script>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="container">
-                <h1 class="hero-title glitch" data-text="X SPACE">X SPACE</h1>
-                <h2 class="hero-subtitle">CYBER CAFE & GAMING CENTER</h2>
-                <p class="hero-description">تجربة ألعاب استثنائية مع أحدث التقنيات</p>
-                <div class="hero-buttons">
-                    <a href="#booking" class="btn btn-primary">
-                        <i class="fas fa-gamepad"></i> احجز الآن
-                    </a>
-                    <a href="#services" class="btn btn-secondary">
-                        <i class="fas fa-arrow-down"></i> اكتشف المزيد
-                    </a>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <h3 class="stat-number" data-target="3">0</h3>
-                        <p>فروع</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3 class="stat-number" data-target="50">0</h3>
-                        <p>جهاز +</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3 class="stat-number" data-target="24">0</h3>
-                        <p>ساعة / 7 أيام</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <div class="mouse"></div>
-        </div>
-    </section>
+    <script>
+        // Initialize Firebase
+        let firebaseStore;
+        
+        window.addEventListener('load', () => {
+            if (initializeFirebase()) {
+                firebaseStore = new FirebaseDataStore();
+                
+                // Check if already logged in
+                firebase.auth().onAuthStateChanged(async (user) => {
+                    if (user) {
+                        const userDoc = await firebase.firestore().collection('users').doc(user.uid).get();
+                        if (userDoc.exists) {
+                            const userData = userDoc.data();
+                            sessionStorage.setItem('currentUser', JSON.stringify({
+                                uid: user.uid,
+                                username: userData.username,
+                                role: userData.role,
+                                name: userData.name
+                            }));
+                            window.location.href = 'dashboard.html';
+                        }
+                    }
+                });
+            }
+        });
 
-    <!-- Services Section -->
-    <section id="services" class="services">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">خدماتنا</span>
-                <h2 class="section-title">ماذا نقدم لك</h2>
-                <p class="section-description">تجارب متنوعة تلبي جميع احتياجات اللاعبين</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card" data-aos="fade-up">
-                    <div class="service-icon">
-                        <i class="fas fa-desktop"></i>
-                    </div>
-                    <h3>Gaming PC</h3>
-                    <p>أجهزة كمبيوتر عالية الأداء مع أحدث المواصفات</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> RTX 4000 Series</li>
-                        <li><i class="fas fa-check"></i> شاشات 240Hz</li>
-                        <li><i class="fas fa-check"></i> كراسي احترافية</li>
-                    </ul>
-                    <a href="#booking" class="service-btn">احجز الآن</a>
-                </div>
-
-                <div class="service-card featured" data-aos="fade-up" data-aos-delay="100">
-                    <div class="featured-badge">VIP</div>
-                    <div class="service-icon">
-                        <i class="fas fa-crown"></i>
-                    </div>
-                    <h3>VIP Gaming PC</h3>
-                    <p>تجربة VIP مع أفضل التجهيزات والخصوصية التامة</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> غرف خاصة</li>
-                        <li><i class="fas fa-check"></i> مشروبات مجانية</li>
-                        <li><i class="fas fa-check"></i> أولوية الحجز</li>
-                    </ul>
-                    <a href="#booking" class="service-btn">احجز الآن</a>
-                </div>
-
-                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="service-icon">
-                        <i class="fab fa-playstation"></i>
-                    </div>
-                    <h3>PlayStation 5</h3>
-                    <p>أحدث ألعاب PS5 مع شاشات 4K</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> مكتبة ألعاب ضخمة</li>
-                        <li><i class="fas fa-check"></i> DualSense Controllers</li>
-                        <li><i class="fas fa-check"></i> صوت محيطي</li>
-                    </ul>
-                    <a href="#booking" class="service-btn">احجز الآن</a>
-                </div>
-
-                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="service-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <h3>VIP PS5 Rooms</h3>
-                    <p>غرف خاصة للعائلات والأصدقاء</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> خصوصية كاملة</li>
-                        <li><i class="fas fa-check"></i> شاشات عملاقة</li>
-                        <li><i class="fas fa-check"></i> أجواء مريحة</li>
-                    </ul>
-                    <a href="#booking" class="service-btn">احجز الآن</a>
-                </div>
-
-                <div class="service-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="service-icon">
-                        <i class="fas fa-billiard-ball"></i>
-                    </div>
-                    <h3>Billiards</h3>
-                    <p>طاولات بلياردو احترافية</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> طاولات حديثة</li>
-                        <li><i class="fas fa-check"></i> إضاءة مثالية</li>
-                        <li><i class="fas fa-check"></i> معدات عالية الجودة</li>
-                    </ul>
-                    <a href="#booking" class="service-btn">احجز الآن</a>
-                </div>
-
-                <div class="service-card" data-aos="fade-up" data-aos-delay="500">
-                    <div class="service-icon">
-                        <i class="fas fa-table-tennis"></i>
-                    </div>
-                    <h3>Snooker</h3>
-                    <p>طاولات سنوكر بمواصفات عالمية</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> طاولات احترافية</li>
-                        <li><i class="fas fa-check"></i> أجواء هادئة</li>
-                        <li><i class="fas fa-check"></i> عصي متنوعة</li>
-                    </ul>
-                    <a href="#booking" class="service-btn">احجز الآن</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tournaments Section -->
-    <section id="tournaments" class="tournaments">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">البطولات</span>
-                <h2 class="section-title">البطولات والمسابقات</h2>
-                <p class="section-description">شارك في أحدث البطولات واربح جوائز مذهلة</p>
-            </div>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            <div class="tournaments-controls">
-                <button class="btn btn-primary" id="loadTournamentsBtn">
-                    <i class="fas fa-trophy"></i> عرض البطولات الحالية
-                </button>
-                <button class="btn btn-secondary" id="refreshTournamentsBtn" style="display: none;">
-                    <i class="fas fa-sync-alt"></i> تحديث
-                </button>
-            </div>
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            await login(username, password);
+        });
 
-            <div id="tournamentsLoading" class="tournaments-loading" style="display: none;">
-                <div class="loading-spinner"></div>
-                <p>جاري تحميل البطولات...</p>
-            </div>
+        async function login(username, password) {
+            const errorMsg = document.getElementById('errorMessage');
+            const loginBtn = document.querySelector('.btn-login');
+            
+            // Show loading
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+            
+            if (firebaseStore) {
+                // Firebase login
+                const result = await firebaseStore.signIn(username, password);
+                
+                if (result.success) {
+                    sessionStorage.setItem('currentUser', JSON.stringify(result.user));
+                    window.location.href = 'dashboard.html';
+                } else {
+                    errorMsg.textContent = result.error || 'Invalid username or password';
+                    errorMsg.classList.add('show');
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+                    
+                    setTimeout(() => {
+                        errorMsg.classList.remove('show');
+                    }, 3000);
+                }
+            } else {
+                // Fallback to local authentication
+                const users = {
+                    'admin': {
+                        password: 'admin',
+                        role: 'admin',
+                        name: 'Administrator'
+                    },
+                    'afnan': {
+                        password: 'afnan',
+                        role: 'user',
+                        name: 'Afnan'
+                    }
+                };
+                
+                const user = users[username];
+                
+                if (user && user.password === password) {
+                    sessionStorage.setItem('currentUser', JSON.stringify({
+                        username: username,
+                        role: user.role,
+                        name: user.name
+                    }));
+                    window.location.href = 'dashboard.html';
+                } else {
+                    errorMsg.classList.add('show');
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+                    
+                    setTimeout(() => {
+                        errorMsg.classList.remove('show');
+                    }, 3000);
+                }
+            }
+        }
 
-            <div id="tournamentsError" class="tournaments-error" style="display: none;">
-                <i class="fas fa-exclamation-triangle"></i>
-                <p>حدث خطأ في تحميل البطولات</p>
-                <button class="btn btn-secondary" onclick="loadTournaments()">
-                    <i class="fas fa-redo"></i> حاول مرة أخرى
-                </button>
-            </div>
-
-            <div id="tournamentsGrid" class="tournaments-grid">
-                <!-- Tournaments will be loaded here dynamically -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section id="gallery" class="gallery">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">معرض الصور</span>
-                <h2 class="section-title">داخل X Space</h2>
-                <p class="section-description">استعرض صور المركز والتجهيزات</p>
-            </div>
-            <div class="gallery-grid">
-                <div class="gallery-item" data-category="pc">
-                    <div class="gallery-placeholder">
-                        <i class="fas fa-desktop"></i>
-                        <p>Gaming PC Setup</p>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="ps5">
-                    <div class="gallery-placeholder">
-                        <i class="fab fa-playstation"></i>
-                        <p>PS5 Gaming Area</p>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="vip">
-                    <div class="gallery-placeholder">
-                        <i class="fas fa-crown"></i>
-                        <p>VIP Room</p>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="billiards">
-                    <div class="gallery-placeholder">
-                        <i class="fas fa-billiard-ball"></i>
-                        <p>Billiards Area</p>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="lounge">
-                    <div class="gallery-placeholder">
-                        <i class="fas fa-couch"></i>
-                        <p>Lounge</p>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="snooker">
-                    <div class="gallery-placeholder">
-                        <i class="fas fa-table-tennis"></i>
-                        <p>Snooker Tables</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="pricing">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">الأسعار</span>
-                <h2 class="section-title">باقات مناسبة للجميع</h2>
-                <p class="section-description">اختر الباقة المناسبة لك</p>
-            </div>
-            <div class="pricing-grid">
-                <div class="pricing-card" data-aos="zoom-in">
-                    <div class="pricing-header">
-                        <h3>ساعة واحدة</h3>
-                        <div class="price">
-                            <span class="currency">IQD</span>
-                            <span class="amount">2,000</span>
-                        </div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Gaming PC</li>
-                        <li><i class="fas fa-check"></i> إنترنت عالي السرعة</li>
-                        <li><i class="fas fa-check"></i> ألعاب مجانية</li>
-                    </ul>
-                    <a href="#booking" class="pricing-btn">احجز الآن</a>
-                </div>
-
-                <div class="pricing-card popular" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="popular-badge">الأكثر شعبية</div>
-                    <div class="pricing-header">
-                        <h3>باقة يومية</h3>
-                        <div class="price">
-                            <span class="currency">IQD</span>
-                            <span class="amount">15,000</span>
-                        </div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 12 ساعة</li>
-                        <li><i class="fas fa-check"></i> VIP PC</li>
-                        <li><i class="fas fa-check"></i> مشروبات مجانية</li>
-                        <li><i class="fas fa-check"></i> خصم 20%</li>
-                    </ul>
-                    <a href="#booking" class="pricing-btn">احجز الآن</a>
-                </div>
-
-                <div class="pricing-card" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="pricing-header">
-                        <h3>باقة شهرية</h3>
-                        <div class="price">
-                            <span class="currency">IQD</span>
-                            <span class="amount">300,000</span>
-                        </div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> استخدام غير محدود</li>
-                        <li><i class="fas fa-check"></i> VIP Access</li>
-                        <li><i class="fas fa-check"></i> أولوية الحجز</li>
-                        <li><i class="fas fa-check"></i> خصم 40%</li>
-                    </ul>
-                    <a href="#booking" class="pricing-btn">احجز الآن</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Locations Section -->
-    <section id="locations" class="locations">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">مواقعنا</span>
-                <h2 class="section-title">فروع X Space</h2>
-                <p class="section-description">ثلاثة فروع في بغداد لخدمتك</p>
-            </div>
-            <div class="locations-grid">
-                <div class="location-card" data-aos="fade-right">
-                    <div class="location-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3>حي الجامعة</h3>
-                    <p>بناية ال جي</p>
-                    <div class="location-info">
-                        <p><i class="fas fa-phone"></i> قريباً</p>
-                        <p><i class="fas fa-clock"></i> 24/7</p>
-                    </div>
-                    <button class="location-btn" onclick="alert('خريطة قريباً')">
-                        <i class="fas fa-directions"></i> الاتجاهات
-                    </button>
-                </div>
-
-                <div class="location-card" data-aos="fade-up">
-                    <div class="location-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3>ساحة الواثق</h3>
-                    <p>بناية شميساني</p>
-                    <div class="location-info">
-                        <p><i class="fas fa-phone"></i> قريباً</p>
-                        <p><i class="fas fa-clock"></i> 24/7</p>
-                    </div>
-                    <a href="https://maps.app.goo.gl/qcD9UgHcroNnpwzp9" target="_blank" class="location-btn">
-                        <i class="fas fa-directions"></i> الاتجاهات
-                    </a>
-                </div>
-
-                <div class="location-card" data-aos="fade-left">
-                    <div class="location-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3>السيدية</h3>
-                    <p>فلكة الخيزران</p>
-                    <div class="location-info">
-                        <p><i class="fas fa-phone"></i> قريباً</p>
-                        <p><i class="fas fa-clock"></i> 24/7</p>
-                    </div>
-                    <button class="location-btn" onclick="alert('خريطة قريباً')">
-                        <i class="fas fa-directions"></i> الاتجاهات
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Booking Section -->
-    <section id="booking" class="booking">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">احجز الآن</span>
-                <h2 class="section-title">احجز جلستك</h2>
-                <p class="section-description">املأ النموذج وسنتصل بك لتأكيد الحجز</p>
-            </div>
-            <div class="booking-wrapper">
-                <form class="booking-form" id="bookingForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><i class="fas fa-user"></i> الاسم</label>
-                            <input type="text" name="name" required placeholder="أدخل اسمك">
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-phone"></i> رقم الهاتف</label>
-                            <input type="tel" name="phone" required placeholder="07XX XXX XXXX">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><i class="fas fa-map-marker-alt"></i> الفرع</label>
-                            <select name="location" required>
-                                <option value="">اختر الفرع</option>
-                                <option value="university">حي الجامعة</option>
-                                <option value="wathaiq">ساحة الواثق</option>
-                                <option value="saidiya">السيدية</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-gamepad"></i> الخدمة</label>
-                            <select name="service" required>
-                                <option value="">اختر الخدمة</option>
-                                <option value="pc">Gaming PC</option>
-                                <option value="vip-pc">VIP Gaming PC</option>
-                                <option value="ps5">PlayStation 5</option>
-                                <option value="vip-ps5">VIP PS5 Room</option>
-                                <option value="billiards">Billiards</option>
-                                <option value="snooker">Snooker</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><i class="fas fa-calendar"></i> التاريخ</label>
-                            <input type="date" name="date" required>
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-clock"></i> الوقت</label>
-                            <input type="time" name="time" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-comment"></i> ملاحظات إضافية</label>
-                        <textarea name="notes" rows="4" placeholder="أي متطلبات خاصة؟"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-submit">
-                        <i class="fas fa-paper-plane"></i> إرسال الحجز
-                    </button>
-                </form>
-                <div class="booking-info">
-                    <div class="info-card">
-                        <i class="fas fa-clock"></i>
-                        <h4>ساعات العمل</h4>
-                        <p>24 ساعة / 7 أيام</p>
-                    </div>
-                    <div class="info-card">
-                        <i class="fas fa-phone"></i>
-                        <h4>اتصل بنا</h4>
-                        <p>سيتم إضافة الأرقام قريباً</p>
-                    </div>
-                    <div class="info-card">
-                        <i class="fas fa-shield-alt"></i>
-                        <h4>ضمان الحجز</h4>
-                        <p>تأكيد فوري</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">تواصل معنا</span>
-                <h2 class="section-title">نحن هنا لخدمتك</h2>
-            </div>
-            <div class="contact-grid">
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <h4>البريد الإلكتروني</h4>
-                    <p>info@xspace-cafe.com</p>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-facebook"></i>
-                    <h4>فيسبوك</h4>
-                    <p>@XSpaceCafe</p>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-instagram"></i>
-                    <h4>انستغرام</h4>
-                    <p>@XSpaceCafe</p>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-tiktok"></i>
-                    <h4>تيك توك</h4>
-                    <p>@XSpaceCafe</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <img src="xspace_logo.jpg" alt="X Space Logo">
-                        <h3>X Space Cyber Cafe</h3>
-                    </div>
-                    <p>أفضل تجربة ألعاب في بغداد</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-tiktok"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>روابط سريعة</h4>
-                    <ul>
-                        <li><a href="#home">الرئيسية</a></li>
-                        <li><a href="#services">الخدمات</a></li>
-                        <li><a href="#pricing">الأسعار</a></li>
-                        <li><a href="#locations">المواقع</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>الخدمات</h4>
-                    <ul>
-                        <li><a href="#services">Gaming PC</a></li>
-                        <li><a href="#services">PlayStation 5</a></li>
-                        <li><a href="#services">VIP Rooms</a></li>
-                        <li><a href="#services">Billiards</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>اشترك في النشرة</h4>
-                    <p>احصل على أحدث العروض</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="بريدك الإلكتروني">
-                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
-                    </form>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 X Space Cyber Cafe. جميع الحقوق محفوظة.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scroll to Top Button -->
-    <button class="scroll-top" id="scrollTop">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
-    </div>
-
-    <!-- Headphone Modal -->
-    <div class="headphone-modal" id="headphoneModal">
-        <div class="headphone-modal-content">
-            <div class="headphone-icon-wrapper">
-                <i class="fas fa-headphones"></i>
-            </div>
-            <h2>للحصول على أفضل تجربة</h2>
-            <p>ارتدِ سماعات الرأس</p>
-            <p class="sub-text">Wear Headphones for the Best Experience</p>
-            <button class="btn btn-primary" id="startMusicBtn">
-                <i class="fas fa-play"></i> ابدأ التشغيل
-            </button>
-        </div>
-    </div>
-
-    <!-- Audio Element -->
-    <audio id="backgroundMusic" loop>
-        <source src="xspace.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <!-- Music Mode Overlay -->
-    <div class="music-mode-overlay" id="musicModeOverlay">
-        <div class="music-particles">
-            <div class="music-particle"></div>
-            <div class="music-particle"></div>
-            <div class="music-particle"></div>
-            <div class="music-particle"></div>
-            <div class="music-particle"></div>
-            <div class="music-particle"></div>
-            <div class="music-particle"></div>
-            <div class="music-particle"></div>
-        </div>
-        <div class="music-waves">
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+        function quickLogin(username, password) {
+            document.getElementById('username').value = username;
+            document.getElementById('password').value = password;
+            login(username, password);
+        }
+    </script>
 </body>
 </html>

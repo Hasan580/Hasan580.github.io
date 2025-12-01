@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4andmore - Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <img src="four and more logo.jpg" alt="4andmore" class="mobile-logo">
+        <div class="header-actions">
+            <button class="lang-toggle" id="langToggleMobile">
+                <span class="lang-text">AR</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            <img src="four and more logo.jpg" alt="4andmore Logo" class="logo-img">
+            <p class="tagline" data-en="Women's Fashion" data-ar="أزياء نسائية">Women's Fashion</p>
+            <button class="lang-toggle" id="langToggle">
+                <i class="fas fa-language"></i>
+                <span class="lang-text">العربية</span>
+            </button>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="#" class="nav-item active" data-page="dashboard">
+                <i class="fas fa-chart-line"></i>
+                <span data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</span>
+            </a>
+            <a href="#" class="nav-item" data-page="products">
+                <i class="fas fa-tshirt"></i>
+                <span data-en="Products" data-ar="المنتجات">Products</span>
+            </a>
+            <a href="#" class="nav-item" data-page="orders">
+                <i class="fas fa-shopping-cart"></i>
+                <span data-en="Orders" data-ar="الطلبات">Orders</span>
+            </a>
+            <a href="#" class="nav-item" data-page="analytics">
+                <i class="fas fa-chart-bar"></i>
+                <span data-en="Analytics" data-ar="التحليلات">Analytics</span>
+            </a>
+            <a href="#" class="nav-item" data-page="instagram">
+                <i class="fab fa-instagram"></i>
+                <span data-en="Instagram Link" data-ar="ربط إنستغرام">Instagram Link</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Page -->
+        <section id="dashboard" class="page active">
+            <div class="page-header">
+                <h1>Dashboard Overview</h1>
+                <p>Welcome back! Here's what's happening with your store.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #e91e63;">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalProducts">0</h3>
+                        <p>Total Products</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #9c27b0;">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalOrders">0</h3>
+                        <p>Total Orders</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #ff9800;">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalRevenue">$0</h3>
+                        <p>Total Revenue</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #4caf50;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="pendingOrders">0</h3>
+                        <p>Pending Orders</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card recent-orders">
+                    <h2>Recent Orders</h2>
+                    <div id="recentOrdersList" class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Product</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrdersBody">
+                                <tr>
+                                    <td colspan="5" class="empty-state">No orders yet</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card top-products">
+                    <h2>Top Selling Products</h2>
+                    <div id="topProductsList">
+                        <p class="empty-state">No sales data available</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Page -->
+        <section id="products" class="page">
+            <div class="page-header">
+                <h1>Products Management</h1>
+                <button class="btn btn-primary" id="addProductBtn">
+                    <i class="fas fa-plus"></i> Add Product
+                </button>
+            </div>
+
+            <div class="card">
+                <div id="productsList" class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-en="Image" data-ar="الصورة">Image</th>
+                                <th data-en="Product Name" data-ar="اسم المنتج">Product Name</th>
+                                <th data-en="Category" data-ar="الفئة">Category</th>
+                                <th data-en="Price" data-ar="السعر">Price</th>
+                                <th data-en="Stock" data-ar="المخزون">Stock</th>
+                                <th data-en="Sales" data-ar="المبيعات">Sales</th>
+                                <th data-en="Actions" data-ar="الإجراءات">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody">
+                            <tr>
+                                <td colspan="7" class="empty-state">No products yet. Add your first product!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Orders Page -->
+        <section id="orders" class="page">
+            <div class="page-header">
+                <h1>Orders Management</h1>
+                <button class="btn btn-primary" id="addOrderBtn">
+                    <i class="fas fa-plus"></i> Add Order
+                </button>
+            </div>
+
+            <div class="filters">
+                <select id="orderStatusFilter" class="filter-select">
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="processing">Processing</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+            </div>
+
+            <div class="card">
+                <div id="ordersList" class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-en="Order ID" data-ar="رقم الطلب">Order ID</th>
+                                <th data-en="Date" data-ar="التاريخ">Date</th>
+                                <th data-en="Customer" data-ar="العميل">Customer</th>
+                                <th data-en="Product" data-ar="المنتج">Product</th>
+                                <th data-en="Quantity" data-ar="الكمية">Quantity</th>
+                                <th data-en="Amount" data-ar="المبلغ">Amount</th>
+                                <th data-en="Status" data-ar="الحالة">Status</th>
+                                <th data-en="Actions" data-ar="الإجراءات">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <tr>
+                                <td colspan="8" class="empty-state">No orders yet</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Page -->
+        <section id="analytics" class="page">
+            <div class="page-header">
+                <h1>Sales Analytics</h1>
+                <p>Detailed insights about your store performance</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #2196f3;">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="bestSellerName">N/A</h3>
+                        <p>Best Selling Product</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #00bcd4;">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="bestSellerSales">0</h3>
+                        <p>Units Sold</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #673ab7;">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="avgOrderValue">$0</h3>
+                        <p>Average Order Value</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #ff5722;">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="conversionRate">0%</h3>
+                        <p>Conversion Rate</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Product Performance</h2>
+                <div id="productPerformanceList">
+                    <div class="performance-item" style="display: none;">
+                        <div class="performance-info">
+                            <h4></h4>
+                            <p></p>
+                        </div>
+                        <div class="performance-bar">
+                            <div class="performance-fill"></div>
+                        </div>
+                    </div>
+                </div>
+                <p id="noPerformanceData" class="empty-state">No sales data available</p>
+            </div>
+        </section>
+
+        <!-- Instagram Integration Page -->
+        <section id="instagram" class="page">
+            <div class="page-header">
+                <h1>Instagram Integration</h1>
+                <p>Connect your dashboard with Instagram for better management</p>
+            </div>
+
+            <div class="card">
+                <h2><i class="fab fa-instagram"></i> Why Link Your Dashboard to Instagram?</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <i class="fas fa-sync"></i>
+                        <h3>Sync Products</h3>
+                        <p>Automatically sync your products from dashboard to Instagram Shopping</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h3>Track Orders</h3>
+                        <p>Manage orders from Instagram DMs directly in your dashboard</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Analytics</h3>
+                        <p>Get insights on which products perform best on Instagram</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-tags"></i>
+                        <h3>Product Tags</h3>
+                        <p>Automatically tag products in your Instagram posts and stories</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Quick Updates</h3>
+                        <p>Update prices and availability instantly across both platforms</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Customer Data</h3>
+                        <p>Collect customer information from Instagram interactions</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>How to Connect</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Convert to Business Account</h3>
+                            <p>Convert your Instagram account to a Business or Creator account in Settings</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Connect to Facebook</h3>
+                            <p>Link your Instagram to a Facebook Business Page</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Set Up Instagram Shopping</h3>
+                            <p>Enable Instagram Shopping in your account settings and submit for review</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Use Instagram API</h3>
+                            <p>Integrate using Instagram Graph API or third-party tools like Shopify, WooCommerce</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card integration-tools">
+                <h2>Recommended Integration Tools</h2>
+                <ul>
+                    <li><strong>Meta Business Suite:</strong> Free tool to manage Instagram and Facebook together</li>
+                    <li><strong>Instagram Shopping API:</strong> Direct integration for custom solutions</li>
+                    <li><strong>Third-party Platforms:</strong> Shopify, WooCommerce, BigCommerce with Instagram integration</li>
+                    <li><strong>Social Media Management Tools:</strong> Later, Planoly, Buffer for scheduling and analytics</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Add/Edit Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="productModalTitle">Add New Product</h2>
+                <button class="close-btn" id="closeProductModal">&times;</button>
+            </div>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <div class="form-group">
+                    <label for="productName">Product Name *</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div class="form-group">
+                    <label for="productCategory">Category *</label>
+                    <select id="productCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="Dresses">Dresses</option>
+                        <option value="Tops">Tops</option>
+                        <option value="Bottoms">Bottoms</option>
+                        <option value="Outerwear">Outerwear</option>
+                        <option value="Accessories">Accessories</option>
+                        <option value="Shoes">Shoes</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productPrice">Price ($) *</label>
+                        <input type="number" id="productPrice" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productStock">Stock *</label>
+                        <input type="number" id="productStock" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="productImage">Image URL</label>
+                    <input type="url" id="productImage" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Description</label>
+                    <textarea id="productDescription" rows="3"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelProduct">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add/Edit Order Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="orderModalTitle">Add New Order</h2>
+                <button class="close-btn" id="closeOrderModal">&times;</button>
+            </div>
+            <form id="orderForm">
+                <input type="hidden" id="orderId">
+                <div class="form-group">
+                    <label for="customerName">Customer Name *</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Phone Number</label>
+                    <input type="tel" id="customerPhone">
+                </div>
+                <div class="form-group">
+                    <label for="orderProduct">Product *</label>
+                    <select id="orderProduct" required>
+                        <option value="">Select Product</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="orderQuantity">Quantity *</label>
+                        <input type="number" id="orderQuantity" value="1" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderStatus">Status *</label>
+                        <select id="orderStatus" required>
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="orderAddress">Delivery Address</label>
+                    <textarea id="orderAddress" rows="2"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelOrder">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    
+    <!-- Firebase Configuration -->
+    <script src="firebase-config.js"></script>
+    
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+</html>

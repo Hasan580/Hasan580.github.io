@@ -1,8 +1,0 @@
-this is the infos for xspace cyper cafe
-name: X Space Cyber Cafe
-Gaming center
-pc,vip pc,ps5,vip ps5 rooms, biliardo, snoker
-locations :
-(حي الجامعة,بناية ال جي)[]
-(ساحة الواثق, بناية شميساني)[https://maps.app.goo.gl/qcD9UgHcroNnpwzp9]
-(السيدية,فلكة الخيزران)[]

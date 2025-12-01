@@ -1,930 +1,1102 @@
-// ===== Page Loading =====
-window.addEventListener('load', () => {
-    const loadingOverlay = document.getElementById('loadingOverlay');
-    setTimeout(() => {
-        loadingOverlay.classList.add('hidden');
-    }, 1000);
-});
-
-// ===== Navigation =====
-const navbar = document.getElementById('navbar');
-const navToggle = document.getElementById('navToggle');
-const navMenu = document.getElementById('navMenu');
-const navLinks = document.querySelectorAll('.nav-link');
-
-// Navbar scroll effect
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
-
-// Mobile menu toggle
-navToggle.addEventListener('click', () => {
-    navToggle.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
-
-// Close mobile menu when clicking on a link
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        navToggle.classList.remove('active');
-        navMenu.classList.remove('active');
-    });
-});
-
-// Active navigation link on scroll
-const sections = document.querySelectorAll('section[id]');
-
-function activateNavLink() {
-    const scrollY = window.pageYOffset;
-
-    sections.forEach(section => {
-        const sectionHeight = section.offsetHeight;
-        const sectionTop = section.offsetTop - 100;
-        const sectionId = section.getAttribute('id');
-        const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
-
-        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-            navLinks.forEach(link => link.classList.remove('active'));
-            if (navLink) navLink.classList.add('active');
-        }
-    });
-}
-
-window.addEventListener('scroll', activateNavLink);
-
-// ===== Smooth Scrolling =====
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const offsetTop = target.offsetTop - 80;
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-
-// ===== Counter Animation =====
-const counters = document.querySelectorAll('.stat-number');
-const speed = 200;
-let hasAnimated = false;
-
-function animateCounters() {
-    if (hasAnimated) return;
-
-    const heroSection = document.querySelector('.hero');
-    const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
-    const scrollPosition = window.pageYOffset + window.innerHeight;
-
-    if (scrollPosition > heroBottom - 200) {
-        counters.forEach(counter => {
-            const target = parseInt(counter.getAttribute('data-target'));
-            const increment = target / speed;
-            let count = 0;
-
-            const updateCount = () => {
-                count += increment;
-                if (count < target) {
-                    counter.textContent = Math.ceil(count);
-                    setTimeout(updateCount, 10);
-                } else {
-                    counter.textContent = target + (target === 50 ? '+' : '');
-                }
-            };
-
-            updateCount();
-        });
-        hasAnimated = true;
-    }
-}
-
-window.addEventListener('scroll', animateCounters);
-
-// ===== AOS (Animate On Scroll) =====
-function initAOS() {
-    const elements = document.querySelectorAll('[data-aos]');
-
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('aos-animate');
-                }
-            });
-        },
-        {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        }
-    );
-
-    elements.forEach(element => {
-        observer.observe(element);
-    });
-}
-
-document.addEventListener('DOMContentLoaded', initAOS);
-
-// ===== Booking Form =====
-const bookingForm = document.getElementById('bookingForm');
-
-bookingForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    // Get form data
-    const formData = new FormData(bookingForm);
-    const data = {};
-    formData.forEach((value, key) => {
-        data[key] = value;
-    });
-
-    // Validate form
-    if (!data.name || !data.phone || !data.location || !data.service || !data.date || !data.time) {
-        showNotification('الرجاء ملء جميع الحقول المطلوبة', 'error');
-        return;
-    }
-
-    // Format date
-    const selectedDate = new Date(data.date);
-    const formattedDate = selectedDate.toLocaleDateString('ar-IQ', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
-
-    // Create confirmation message
-    const message = `
-تم استلام طلب الحجز بنجاح!
-
-الاسم: ${data.name}
-رقم الهاتف: ${data.phone}
-الفرع: ${getLocationName(data.location)}
-الخدمة: ${getServiceName(data.service)}
-التاريخ: ${formattedDate}
-الوقت: ${data.time}
-${data.notes ? `\nملاحظات: ${data.notes}` : ''}
-
-سنتصل بك قريباً لتأكيد الحجز.
-    `;
-
-    // Show confirmation
-    showNotification('تم إرسال طلب الحجز بنجاح!', 'success');
-    alert(message);
-
-    // Reset form
-    bookingForm.reset();
-
-    // In a real application, you would send this data to a server
-    console.log('Booking data:', data);
-});
-
-// Helper functions for booking
-function getLocationName(value) {
-    const locations = {
-        'university': 'حي الجامعة',
-        'wathaiq': 'ساحة الواثق',
-        'saidiya': 'السيدية'
-    };
-    return locations[value] || value;
-}
-
-function getServiceName(value) {
-    const services = {
-        'pc': 'Gaming PC',
-        'vip-pc': 'VIP Gaming PC',
-        'ps5': 'PlayStation 5',
-        'vip-ps5': 'VIP PS5 Room',
-        'billiards': 'Billiards',
-        'snooker': 'Snooker'
-    };
-    return services[value] || value;
-}
-
-// Notification system
-function showNotification(message, type = 'info') {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-            <span>${message}</span>
-        </div>
-    `;
-
-    // Add styles if not already added
-    if (!document.querySelector('#notification-styles')) {
-        const style = document.createElement('style');
-        style.id = 'notification-styles';
-        style.textContent = `
-            .notification {
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                background: var(--card-bg);
-                border: 1px solid var(--border-color);
-                border-radius: 10px;
-                padding: 15px 20px;
-                box-shadow: var(--shadow-lg);
-                z-index: 10000;
-                animation: slideIn 0.3s ease;
-                max-width: 400px;
-            }
-            
-            .notification-success {
-                border-color: var(--success);
-            }
-            
-            .notification-error {
-                border-color: var(--danger);
-            }
-            
-            .notification-content {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            }
-            
-            .notification-success i {
-                color: var(--success);
-            }
-            
-            .notification-error i {
-                color: var(--danger);
-            }
-            
-            @keyframes slideIn {
-                from {
-                    transform: translateX(400px);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            
-            @keyframes slideOut {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(400px);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    // Add to page
-    document.body.appendChild(notification);
-
-    // Remove after 3 seconds
-    setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => {
-            notification.remove();
-        }, 300);
-    }, 3000);
-}
-
-// ===== Gallery =====
-const galleryItems = document.querySelectorAll('.gallery-item');
-
-galleryItems.forEach(item => {
-    item.addEventListener('click', () => {
-        const category = item.getAttribute('data-category');
-        showNotification(`معرض ${category} - قريباً سيتم إضافة الصور`, 'info');
-    });
-});
-
-// ===== Newsletter Form =====
-const newsletterForm = document.querySelector('.newsletter-form');
-
-if (newsletterForm) {
-    newsletterForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = newsletterForm.querySelector('input[type="email"]').value;
+// ========================================
+// DATA STORAGE
+// ========================================
+class DataStore {
+    constructor(useFirebase = false) {
+        this.useFirebase = useFirebase && typeof FirebaseDataStore !== 'undefined';
         
-        if (email) {
-            showNotification('شكراً لاشتراكك! سنرسل لك أحدث العروض.', 'success');
-            newsletterForm.reset();
-        }
-    });
-}
-
-// ===== Scroll to Top Button =====
-const scrollTopBtn = document.getElementById('scrollTop');
-
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-        scrollTopBtn.classList.add('show');
-    } else {
-        scrollTopBtn.classList.remove('show');
-    }
-});
-
-scrollTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
-
-// ===== Service Cards Tilt Effect =====
-const serviceCards = document.querySelectorAll('.service-card');
-
-serviceCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = (y - centerY) / 20;
-        const rotateY = (centerX - x) / 20;
-        
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
-    });
-    
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-    });
-});
-
-// ===== Pricing Cards Interaction =====
-const pricingCards = document.querySelectorAll('.pricing-card');
-
-pricingCards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-        card.style.transform = 'translateY(-10px) scale(1.02)';
-    });
-    
-    card.addEventListener('mouseleave', () => {
-        if (card.classList.contains('popular')) {
-            card.style.transform = 'scale(1.05)';
+        if (this.useFirebase) {
+            this.firebaseStore = new FirebaseDataStore();
+            this.products = [];
+            this.orders = [];
+            console.log('Using Firebase for data storage');
         } else {
-            card.style.transform = '';
+            this.products = this.loadData('products') || [];
+            this.orders = this.loadData('orders') || [];
+            this.initializeSampleData();
+            console.log('Using localStorage for data storage');
         }
-    });
-});
+    }
 
-// ===== Dynamic Current Year =====
-const currentYear = new Date().getFullYear();
-const footerBottom = document.querySelector('.footer-bottom p');
-if (footerBottom) {
-    footerBottom.innerHTML = `&copy; ${currentYear} X Space Cyber Cafe. جميع الحقوق محفوظة.`;
-}
+    loadData(key) {
+        try {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : null;
+        } catch (e) {
+            console.error('Error loading data:', e);
+            return null;
+        }
+    }
 
-// ===== Lazy Loading for Images =====
-if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                if (img.dataset.src) {
-                    img.src = img.dataset.src;
-                    img.removeAttribute('data-src');
+    saveData(key, data) {
+        try {
+            localStorage.setItem(key, JSON.stringify(data));
+        } catch (e) {
+            console.error('Error saving data:', e);
+        }
+    }
+
+    initializeSampleData() {
+        if (this.products.length === 0) {
+            this.products = [
+                {
+                    id: 1,
+                    name: 'Floral Summer Dress',
+                    category: 'Dresses',
+                    price: 45.99,
+                    stock: 15,
+                    sales: 28,
+                    image: '',
+                    description: 'Beautiful floral print summer dress, perfect for casual outings'
+                },
+                {
+                    id: 2,
+                    name: 'Elegant Silk Blouse',
+                    category: 'Tops',
+                    price: 32.50,
+                    stock: 22,
+                    sales: 35,
+                    image: '',
+                    description: 'Luxurious silk blouse available in multiple colors'
+                },
+                {
+                    id: 3,
+                    name: 'High-Waist Jeans',
+                    category: 'Bottoms',
+                    price: 54.99,
+                    stock: 8,
+                    sales: 42,
+                    image: '',
+                    description: 'Comfortable high-waist denim jeans with stretch'
+                },
+                {
+                    id: 4,
+                    name: 'Leather Jacket',
+                    category: 'Outerwear',
+                    price: 89.99,
+                    stock: 5,
+                    sales: 18,
+                    image: '',
+                    description: 'Classic leather jacket for a stylish look'
                 }
-                observer.unobserve(img);
+            ];
+            this.saveProducts();
+        }
+
+        if (this.orders.length === 0) {
+            this.orders = [
+                {
+                    id: 1001,
+                    date: new Date().toISOString(),
+                    customerName: 'Sarah Johnson',
+                    customerPhone: '+1234567890',
+                    productId: 2,
+                    productName: 'Elegant Silk Blouse',
+                    quantity: 2,
+                    amount: 65.00,
+                    status: 'delivered',
+                    address: '123 Main St, New York, NY 10001'
+                },
+                {
+                    id: 1002,
+                    date: new Date().toISOString(),
+                    customerName: 'Emily Davis',
+                    customerPhone: '+1234567891',
+                    productId: 3,
+                    productName: 'High-Waist Jeans',
+                    quantity: 1,
+                    amount: 54.99,
+                    status: 'shipped',
+                    address: '456 Oak Ave, Los Angeles, CA 90001'
+                },
+                {
+                    id: 1003,
+                    date: new Date().toISOString(),
+                    customerName: 'Jessica Williams',
+                    customerPhone: '+1234567892',
+                    productId: 1,
+                    productName: 'Floral Summer Dress',
+                    quantity: 1,
+                    amount: 45.99,
+                    status: 'pending',
+                    address: '789 Pine Rd, Chicago, IL 60601'
+                }
+            ];
+            this.saveOrders();
+        }
+    }
+
+    saveProducts() {
+        this.saveData('products', this.products);
+    }
+
+    saveOrders() {
+        this.saveData('orders', this.orders);
+    }
+
+    async getProducts() {
+        if (this.useFirebase) {
+            this.products = await this.firebaseStore.getProducts();
+        }
+        return this.products;
+    }
+
+    async getOrders() {
+        if (this.useFirebase) {
+            this.orders = await this.firebaseStore.getOrders();
+        }
+        return this.orders;
+    }
+
+    async addProduct(product) {
+        if (this.useFirebase) {
+            const result = await this.firebaseStore.addProduct(product);
+            if (result.success) {
+                product.id = result.id;
+                this.products.unshift(product);
+                return product;
             }
-        });
-    });
-
-    document.querySelectorAll('img[data-src]').forEach(img => {
-        imageObserver.observe(img);
-    });
-}
-
-// ===== Keyboard Navigation =====
-document.addEventListener('keydown', (e) => {
-    // ESC key closes mobile menu
-    if (e.key === 'Escape' && navMenu.classList.contains('active')) {
-        navToggle.classList.remove('active');
-        navMenu.classList.remove('active');
+            return null;
+        } else {
+            product.id = Date.now();
+            product.sales = 0;
+            this.products.push(product);
+            this.saveProducts();
+            return product;
+        }
     }
-});
 
-// ===== Performance Optimization =====
-let ticking = false;
-
-function onScroll() {
-    if (!ticking) {
-        window.requestAnimationFrame(() => {
-            activateNavLink();
-            animateCounters();
-            ticking = false;
-        });
-        ticking = true;
+    async updateProduct(id, updatedProduct) {
+        if (this.useFirebase) {
+            const result = await this.firebaseStore.updateProduct(id, updatedProduct);
+            if (result.success) {
+                const index = this.products.findIndex(p => p.id === id);
+                if (index !== -1) {
+                    this.products[index] = { ...this.products[index], ...updatedProduct };
+                }
+                return this.products[index];
+            }
+            return null;
+        } else {
+            const index = this.products.findIndex(p => p.id === id);
+            if (index !== -1) {
+                this.products[index] = { ...this.products[index], ...updatedProduct };
+                this.saveProducts();
+                return this.products[index];
+            }
+            return null;
+        }
     }
-}
 
-window.addEventListener('scroll', onScroll, { passive: true });
+    async deleteProduct(id) {
+        if (this.useFirebase) {
+            await this.firebaseStore.deleteProduct(id);
+        }
+        this.products = this.products.filter(p => p.id !== id);
+        if (!this.useFirebase) {
+            this.saveProducts();
+        }
+    }
 
-// ===== Console Welcome Message =====
-console.log('%c🎮 X Space Cyber Cafe 🎮', 'color: #8b5cf6; font-size: 24px; font-weight: bold;');
-console.log('%cأهلاً بك في موقع X Space Cyber Cafe!', 'color: #06b6d4; font-size: 16px;');
-console.log('%cللتواصل: info@xspace-cafe.com', 'color: #10b981; font-size: 14px;');
+    async addOrder(order) {
+        if (this.useFirebase) {
+            const result = await this.firebaseStore.addOrder(order);
+            if (result.success) {
+                order.id = result.id;
+                this.orders.unshift(order);
+                
+                // Update local product cache
+                const product = this.products.find(p => p.id === order.productId);
+                if (product) {
+                    product.sales += order.quantity;
+                    product.stock -= order.quantity;
+                }
+                
+                return order;
+            }
+            return null;
+        } else {
+            order.id = 1000 + this.orders.length + 1;
+            order.date = new Date().toISOString();
+            this.orders.unshift(order);
+            
+            const product = this.products.find(p => p.id === order.productId);
+            if (product) {
+                product.sales += order.quantity;
+                product.stock -= order.quantity;
+                this.saveProducts();
+            }
+            
+            this.saveOrders();
+            return order;
+        }
+    }
 
-// ===== Prevent Context Menu on Certain Elements (Optional) =====
-// Uncomment if you want to protect images
-/*
-document.querySelectorAll('img').forEach(img => {
-    img.addEventListener('contextmenu', (e) => e.preventDefault());
-});
-*/
+    async updateOrder(id, updatedOrder) {
+        if (this.useFirebase) {
+            const result = await this.firebaseStore.updateOrder(id, updatedOrder);
+            if (result.success) {
+                const index = this.orders.findIndex(o => o.id === id);
+                if (index !== -1) {
+                    this.orders[index] = { ...this.orders[index], ...updatedOrder };
+                }
+                return this.orders[index];
+            }
+            return null;
+        } else {
+            const index = this.orders.findIndex(o => o.id === id);
+            if (index !== -1) {
+                this.orders[index] = { ...this.orders[index], ...updatedOrder };
+                this.saveOrders();
+                return this.orders[index];
+            }
+            return null;
+        }
+    }
 
-// ===== Add Loading State to Forms =====
-function addLoadingState(button) {
-    const originalText = button.innerHTML;
-    button.disabled = true;
-    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
-    
-    return () => {
-        button.disabled = false;
-        button.innerHTML = originalText;
-    };
-}
+    async deleteOrder(id) {
+        if (this.useFirebase) {
+            await this.firebaseStore.deleteOrder(id);
+        }
+        this.orders = this.orders.filter(o => o.id !== id);
+        if (!this.useFirebase) {
+            this.saveOrders();
+        }
+    }
 
-// ===== Date Input Min Value (Today) =====
-const dateInput = document.querySelector('input[type="date"]');
-if (dateInput) {
-    const today = new Date().toISOString().split('T')[0];
-    dateInput.setAttribute('min', today);
-}
-
-// ===== Phone Number Validation =====
-const phoneInput = document.querySelector('input[type="tel"]');
-if (phoneInput) {
-    phoneInput.addEventListener('input', (e) => {
-        // Allow only numbers and common phone characters
-        e.target.value = e.target.value.replace(/[^\d\s\-\+\(\)]/g, '');
-    });
-}
-
-// ===== Service Availability Check =====
-function checkServiceAvailability(service, location, date, time) {
-    // This would normally make an API call to check availability
-    // For now, we'll simulate it
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve({
-                available: true,
-                message: 'الخدمة متاحة في الوقت المحدد'
+    setupRealtimeListeners(onProductsChange, onOrdersChange) {
+        if (this.useFirebase && this.firebaseStore) {
+            this.firebaseStore.onProductsChange((products) => {
+                this.products = products;
+                onProductsChange(products);
             });
-        }, 1000);
-    });
-}
-
-// ===== Enhanced Booking Form with Real-time Validation =====
-const formInputs = bookingForm.querySelectorAll('input, select, textarea');
-
-formInputs.forEach(input => {
-    input.addEventListener('blur', () => {
-        validateInput(input);
-    });
-});
-
-function validateInput(input) {
-    const value = input.value.trim();
-    
-    if (input.hasAttribute('required') && !value) {
-        input.style.borderColor = 'var(--danger)';
-        return false;
-    }
-    
-    if (input.type === 'tel' && value) {
-        const phoneRegex = /^07\d{9}$/;
-        if (!phoneRegex.test(value.replace(/\s/g, ''))) {
-            input.style.borderColor = 'var(--danger)';
-            return false;
-        }
-    }
-    
-    input.style.borderColor = 'var(--success)';
-    return true;
-}
-
-// ===== Music Player & Music Mode =====
-const musicToggle = document.getElementById('musicToggle');
-const headphoneModal = document.getElementById('headphoneModal');
-const startMusicBtn = document.getElementById('startMusicBtn');
-const backgroundMusic = document.getElementById('backgroundMusic');
-const musicModeOverlay = document.getElementById('musicModeOverlay');
-let musicModeActive = false;
-
-// Initialize music player
-musicToggle.addEventListener('click', () => {
-    if (!backgroundMusic.paused) {
-        // Pause music and exit music mode
-        backgroundMusic.pause();
-        deactivateMusicMode();
-    } else {
-        // Show headphone modal
-        headphoneModal.classList.add('show');
-    }
-});
-
-// Start music from modal
-startMusicBtn.addEventListener('click', () => {
-    headphoneModal.classList.remove('show');
-    startMusic();
-});
-
-// Start music function
-function startMusic() {
-    backgroundMusic.play().then(() => {
-        activateMusicMode();
-        showNotification('🎵 وضع الموسيقى مُفعّل | Music Mode Activated', 'success');
-    }).catch(error => {
-        console.error('Error playing music:', error);
-        showNotification('حدث خطأ في تشغيل الموسيقى', 'error');
-    });
-}
-
-// Activate music mode
-function activateMusicMode() {
-    musicModeActive = true;
-    musicToggle.classList.add('playing');
-    musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
-    document.body.classList.add('music-mode');
-    musicModeOverlay.classList.add('active');
-    
-    // Smooth transition
-    setTimeout(() => {
-        document.body.style.transition = 'all 1s ease';
-    }, 100);
-}
-
-// Deactivate music mode
-function deactivateMusicMode() {
-    musicModeActive = false;
-    musicToggle.classList.remove('playing');
-    musicToggle.innerHTML = '<i class="fas fa-music"></i>';
-    document.body.classList.remove('music-mode');
-    musicModeOverlay.classList.remove('active');
-    showNotification('وضع الموسيقى مُعطّل | Music Mode Deactivated', 'info');
-}
-
-// Close modal on outside click
-headphoneModal.addEventListener('click', (e) => {
-    if (e.target === headphoneModal) {
-        headphoneModal.classList.remove('show');
-    }
-});
-
-// Close modal on ESC key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && headphoneModal.classList.contains('show')) {
-        headphoneModal.classList.remove('show');
-    }
-});
-
-// Keyboard shortcut for music (Space bar)
-document.addEventListener('keydown', (e) => {
-    if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-        e.preventDefault();
-        musicToggle.click();
-    }
-});
-
-// Volume control with mouse wheel (optional enhancement)
-musicToggle.addEventListener('wheel', (e) => {
-    if (musicModeActive) {
-        e.preventDefault();
-        const volumeChange = e.deltaY > 0 ? -0.1 : 0.1;
-        backgroundMusic.volume = Math.max(0, Math.min(1, backgroundMusic.volume + volumeChange));
-        showNotification(`🔊 مستوى الصوت: ${Math.round(backgroundMusic.volume * 100)}%`, 'info');
-    }
-}, { passive: false });
-
-// ===== Tournaments Section =====
-const loadTournamentsBtn = document.getElementById('loadTournamentsBtn');
-const refreshTournamentsBtn = document.getElementById('refreshTournamentsBtn');
-const tournamentsGrid = document.getElementById('tournamentsGrid');
-const tournamentsLoading = document.getElementById('tournamentsLoading');
-const tournamentsError = document.getElementById('tournamentsError');
-
-if (loadTournamentsBtn) {
-    loadTournamentsBtn.addEventListener('click', loadTournaments);
-}
-if (refreshTournamentsBtn) {
-    refreshTournamentsBtn.addEventListener('click', loadTournaments);
-}
-
-function loadTournaments() {
-    console.log('Loading tournaments...');
-    
-    // Show loading state
-    tournamentsLoading.style.display = 'block';
-    tournamentsError.style.display = 'none';
-    tournamentsGrid.innerHTML = '';
-    loadTournamentsBtn.style.display = 'none';
-    refreshTournamentsBtn.style.display = 'inline-flex';
-
-    // Simulate loading delay for smooth transition
-    setTimeout(() => {
-        tournamentsLoading.style.display = 'none';
-        displayTournaments();
-    }, 800);
-}
-
-function displayTournaments() {
-    console.log('Displaying ZAIN ESPORTS tournaments...');
-    
-    // Tournament dates (Year, Month-1, Day, Hour, Minute)
-    const tournaments = [
-        {
-            name: 'FC26 - ZAIN ESPORTS',
-            description: 'مهرجان العراق للألعاب والرياضات الإلكترونية - الخريف',
-            game: 'FC26',
-            game_icon: 'fa-futbol',
-            date: new Date(2025, 11, 15, 16, 0), // Dec 15, 2025, 4:00 PM
-            location: 'Xspace حي الجامعة',
-            venue_details: 'الكرادة, حي الجامعة, السيدية',
-            participants: 'فردي',
-            prize: '15,000,000 دينار عراقي',
-            status: 'upcoming',
-            registration_link: '#booking',
-            image: null // No image for FC26
-        },
-        {
-            name: 'Generals - ZAIN ESPORTS',
-            description: 'مهرجان العراق للألعاب والرياضات الإلكترونية - الخريف',
-            game: 'Generals',
-            game_icon: 'fa-chess-knight',
-            date: new Date(2025, 11, 20, 16, 0), // Dec 20, 2025, 4:00 PM
-            location: 'Xspace الكرادة, ساحة الواثق',
-            venue_details: '3 مواقع في بغداد',
-            participants: 'فريق (3 لاعبين + 1 احتياطي اختياري)',
-            prize: '15,000,000 دينار عراقي',
-            status: 'upcoming',
-            registration_link: '#booking',
-            image: null
-        },
-        {
-            name: 'Valorant - ZAIN ESPORTS',
-            description: 'مهرجان العراق للألعاب والرياضات الإلكترونية - الخريف',
-            game: 'Valorant',
-            game_icon: 'fa-bullseye',
-            date: new Date(2025, 11, 25, 16, 0), // Dec 25, 2025, 4:00 PM
-            location: 'Xspace الكرادة, ساحة الواثق',
-            venue_details: '6 منافسات مختلفة',
-            participants: 'فريق (5 لاعبين + 1 احتياطي اختياري)',
-            prize: '15,000,000 دينار عراقي',
-            status: 'upcoming',
-            registration_link: '#booking',
-            image: null
-        },
-        {
-            name: 'Call of Duty - ZAIN ESPORTS',
-            description: 'مهرجان العراق للألعاب والرياضات الإلكترونية - الخريف',
-            game: 'Call of Duty',
-            game_icon: 'fa-crosshairs',
-            date: new Date(2025, 11, 28, 16, 0), // Dec 28, 2025, 4:00 PM
-            location: 'Xspace السيدية',
-            venue_details: 'شهر 2 من المنافسات',
-            participants: 'فريق (5 لاعبين + 1 احتياطي اختياري)',
-            prize: '15,000,000 دينار عراقي',
-            status: 'upcoming',
-            registration_link: '#booking',
-            image: 'call of duty.jpg'
-        },
-        {
-            name: 'Rainbow Six - ZAIN ESPORTS',
-            description: 'مهرجان العراق للألعاب والرياضات الإلكترونية - الخريف',
-            game: 'Rainbow Six',
-            game_icon: 'fa-shield-alt',
-            date: new Date(2026, 0, 5, 16, 0), // Jan 5, 2026, 4:00 PM
-            location: 'Xspace السيدية',
-            venue_details: '3 مواقع في بغداد',
-            participants: 'فريق (5 لاعبين + 1 احتياطي اختياري)',
-            prize: '15,000,000 دينار عراقي',
-            status: 'upcoming',
-            registration_link: '#booking',
-            image: 'Rainbow-Six-Siege-X.jpg'
-        },
-        {
-            name: 'Rocket League - ZAIN ESPORTS',
-            description: 'مهرجان العراق للألعاب والرياضات الإلكترونية - الخريف',
-            game: 'Rocket League',
-            game_icon: 'fa-rocket',
-            date: new Date(2026, 0, 10, 16, 0), // Jan 10, 2026, 4:00 PM
-            location: 'Xspace حي الجامعة',
-            venue_details: 'بطولة شهر 2',
-            participants: 'فريق (2 لاعبين)',
-            prize: '15,000,000 دينار عراقي',
-            status: 'upcoming',
-            registration_link: '#booking',
-            image: 'rocket league.jpg'
-        }
-    ];
-
-    tournamentsGrid.innerHTML = '';
-    tournamentsGrid.style.display = 'grid';
-    tournamentsGrid.style.visibility = 'visible';
-    tournamentsGrid.style.opacity = '1';
-    
-    console.log('Displaying tournaments:', tournaments.length);
-    console.log('tournamentsGrid element:', tournamentsGrid);
-
-    tournaments.forEach((tournament, index) => {
-        console.log(`Creating card ${index + 1} for:`, tournament.name);
-        const card = createTournamentCard(tournament, index);
-        console.log('Card created:', card);
-        tournamentsGrid.appendChild(card);
-    });
-    
-    console.log('Cards appended to grid, total children:', tournamentsGrid.children.length);
-    
-    // Start countdown timers
-    startCountdownTimers();
-    
-    console.log('Tournaments displayed successfully!');
-}
-
-// Countdown timer function
-function startCountdownTimers() {
-    const countdownElements = document.querySelectorAll('.tournament-countdown');
-    
-    function updateCountdowns() {
-        const now = new Date().getTime();
-        
-        countdownElements.forEach(element => {
-            const targetDate = new Date(element.dataset.date).getTime();
-            const distance = targetDate - now;
             
-            if (distance > 0) {
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            this.firebaseStore.onOrdersChange((orders) => {
+                this.orders = orders;
+                onOrdersChange(orders);
+            });
+        }
+    }
+}
+
+// ========================================
+// DASHBOARD APP
+// ========================================
+class DashboardApp {
+    constructor() {
+        // Check if Firebase is available
+        const useFirebase = typeof firebase !== 'undefined' && typeof FirebaseDataStore !== 'undefined';
+        this.dataStore = new DataStore(useFirebase);
+        this.currentPage = 'dashboard';
+        this.currentEditProduct = null;
+        this.currentEditOrder = null;
+        this.currentLanguage = 'en';
+        this.currentUser = null;
+        this.checkAuth();
+    }
+
+    checkAuth() {
+        const userSession = sessionStorage.getItem('currentUser');
+        if (!userSession) {
+            window.location.href = 'index.html';
+            return;
+        }
+        this.currentUser = JSON.parse(userSession);
+        
+        // Wait for Firebase to initialize if available
+        if (typeof firebase !== 'undefined') {
+            firebase.auth().onAuthStateChanged((user) => {
+                if (user) {
+                    this.init();
+                } else if (!this.dataStore.useFirebase) {
+                    // Fallback to local mode
+                    this.init();
+                }
+            });
+        } else {
+            this.init();
+        }
+    }
+
+    async init() {
+        this.setupUserInfo();
+        this.setupNavigation();
+        this.setupMobileMenu();
+        this.setupModals();
+        this.setupForms();
+        this.setupLanguageToggle();
+        this.setupInlineEditing();
+        this.setupLogout();
+        this.applyPermissions();
+        
+        // Setup real-time listeners if using Firebase
+        if (this.dataStore.useFirebase) {
+            this.dataStore.setupRealtimeListeners(
+                (products) => {
+                    if (this.currentPage === 'products') this.renderProducts();
+                    if (this.currentPage === 'dashboard') this.renderDashboard();
+                    if (this.currentPage === 'analytics') this.renderAnalytics();
+                },
+                (orders) => {
+                    if (this.currentPage === 'orders') this.renderOrders();
+                    if (this.currentPage === 'dashboard') this.renderDashboard();
+                    if (this.currentPage === 'analytics') this.renderAnalytics();
+                }
+            );
+        }
+        
+        await this.renderDashboard();
+        await this.renderProducts();
+        await this.renderOrders();
+        await this.renderAnalytics();
+    }
+
+    setupUserInfo() {
+        // Add user info to sidebar
+        const sidebar = document.getElementById('sidebar');
+        const userInfoHTML = `
+            <div class="user-info-sidebar">
+                <i class="fas fa-user-circle"></i>
+                <div class="user-details">
+                    <strong>${this.currentUser.name}</strong>
+                    <span>${this.currentUser.role === 'admin' ? 'Administrator' : 'User'}</span>
+                </div>
+                <button class="btn-logout" id="logoutBtn" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        `;
+        sidebar.insertAdjacentHTML('beforeend', userInfoHTML);
+    }
+
+    setupLogout() {
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to logout?')) {
+                    sessionStorage.removeItem('currentUser');
+                    window.location.href = 'index.html';
+                }
+            });
+        }
+    }
+
+    applyPermissions() {
+        if (this.currentUser.role !== 'admin') {
+            // Hide product management for non-admin users
+            const addProductBtn = document.getElementById('addProductBtn');
+            if (addProductBtn) {
+                addProductBtn.style.display = 'none';
+            }
+
+            // Disable editing and deleting products
+            this.hideAdminFeatures();
+        }
+    }
+
+    hideAdminFeatures() {
+        // This will be applied when rendering tables
+        this.isAdminMode = false;
+    }
+
+    // ========================================
+    // NAVIGATION
+    // ========================================
+    setupNavigation() {
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = item.dataset.page;
+                this.navigateToPage(page);
                 
-                const daysEl = element.querySelector('.countdown-days');
-                const hoursEl = element.querySelector('.countdown-hours');
-                const minutesEl = element.querySelector('.countdown-minutes');
-                const secondsEl = element.querySelector('.countdown-seconds');
-                
-                if (daysEl) daysEl.textContent = days;
-                if (hoursEl) hoursEl.textContent = hours;
-                if (minutesEl) minutesEl.textContent = minutes;
-                if (secondsEl) secondsEl.textContent = seconds;
-            } else {
-                element.innerHTML = '<div class="countdown-expired">\u0628\u062f\u0623\u062a \u0627\u0644\u0628\u0637\u0648\u0644\u0629!</div>';
+                // Close mobile menu
+                if (window.innerWidth <= 768) {
+                    document.getElementById('sidebar').classList.remove('active');
+                }
+            });
+        });
+    }
+
+    navigateToPage(page) {
+        // Update active nav item
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        document.querySelector(`[data-page="${page}"]`).classList.add('active');
+
+        // Show page
+        document.querySelectorAll('.page').forEach(p => {
+            p.classList.remove('active');
+        });
+        document.getElementById(page).classList.add('active');
+
+        this.currentPage = page;
+
+        // Refresh data
+        if (page === 'dashboard') this.renderDashboard();
+        if (page === 'products') this.renderProducts();
+        if (page === 'orders') this.renderOrders();
+        if (page === 'analytics') this.renderAnalytics();
+    }
+
+    setupMobileMenu() {
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+        }
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                    sidebar.classList.remove('active');
+                }
             }
         });
     }
-    
-    updateCountdowns();
-    setInterval(updateCountdowns, 1000);
-}
 
-function createTournamentCard(tournament, index) {
-    const card = document.createElement('div');
-    card.className = 'tournament-card';
-    card.setAttribute('data-aos', 'fade-up');
-    card.setAttribute('data-aos-delay', (index * 100).toString());
-    
-    // Test with simple content first
-    card.style.minHeight = '400px';
-    card.style.display = 'block';
-    card.style.visibility = 'visible';
+    // ========================================
+    // LANGUAGE TOGGLE
+    // ========================================
+    setupLanguageToggle() {
+        const langToggle = document.getElementById('langToggle');
+        const langToggleMobile = document.getElementById('langToggleMobile');
 
-    const gameIcon = tournament.game_icon || 'fa-gamepad';
-    const statusBadge = tournament.status === 'active' ? 
-        '<div class=\"tournament-status active\">نشط الآن</div>' : 
-        '<div class=\"tournament-status upcoming\">قريباً</div>';
-    
-    const dateStr = tournament.date.toLocaleDateString('ar-IQ', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-    
-    // Banner with image or gradient
-    let bannerContent;
-    if (tournament.image) {
-        bannerContent = `
-            <div class="tournament-banner tournament-banner-image" style="background-image: url('${tournament.image}');">
-                ${statusBadge}
-                <div class="tournament-logo">
-                    <div class="zain-logo">ZAIN ESPORTS</div>
-                </div>
-            </div>
-        `;
-    } else {
-        bannerContent = `
-            <div class="tournament-banner" style="background: linear-gradient(135deg, #d4af37 0%, #f4e5a0 50%, #d4af37 100%);">
-                ${statusBadge}
-                <div class="tournament-logo">
-                    <div class="zain-logo">ZAIN ESPORTS</div>
-                    <div class="tournament-subtitle">مهرجان العراق للألعاب والرياضات الإلكترونية - الخريف</div>
-                </div>
-            </div>
-        `;
+        const toggleLanguage = () => {
+            this.currentLanguage = this.currentLanguage === 'en' ? 'ar' : 'en';
+            document.body.classList.toggle('rtl', this.currentLanguage === 'ar');
+            this.updateLanguage();
+        };
+
+        if (langToggle) {
+            langToggle.addEventListener('click', toggleLanguage);
+        }
+        if (langToggleMobile) {
+            langToggleMobile.addEventListener('click', toggleLanguage);
+        }
     }
 
-    card.innerHTML = `
-        ${bannerContent}
-        <div class="tournament-content">
-            <div class="tournament-game-header">
-                <i class="fas ${gameIcon}"></i>
-                <h3 class="tournament-title">${tournament.name}</h3>
+    updateLanguage() {
+        const elements = document.querySelectorAll('[data-en][data-ar]');
+        elements.forEach(el => {
+            const text = this.currentLanguage === 'en' ? el.dataset.en : el.dataset.ar;
+            el.textContent = text;
+        });
+
+        // Update language toggle button text
+        const langText = document.querySelectorAll('.lang-text');
+        langText.forEach(el => {
+            el.textContent = this.currentLanguage === 'en' ? 'العربية' : 'EN';
+        });
+
+        // Re-render pages to apply translations
+        if (this.currentPage === 'dashboard') this.renderDashboard();
+        if (this.currentPage === 'products') this.renderProducts();
+        if (this.currentPage === 'orders') this.renderOrders();
+        if (this.currentPage === 'analytics') this.renderAnalytics();
+    }
+
+    // ========================================
+    // INLINE EDITING
+    // ========================================
+    setupInlineEditing() {
+        // This will be called after rendering tables
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('editable')) {
+                this.startInlineEdit(e.target);
+            }
+        });
+    }
+
+    startInlineEdit(element) {
+        // Check if user has permission
+        if (this.currentUser.role !== 'admin' && element.dataset.type === 'product') {
+            alert('Only administrators can edit products');
+            return;
+        }
+
+        const field = element.dataset.field;
+        const id = parseInt(element.dataset.id);
+        const type = element.dataset.type;
+        const currentValue = element.dataset.value || element.textContent.trim();
+
+        element.classList.add('editing');
+
+        let inputElement;
+        
+        if (field === 'status') {
+            // Create select for status
+            inputElement = document.createElement('select');
+            inputElement.className = 'inline-edit-select';
+            const statuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+            statuses.forEach(status => {
+                const option = document.createElement('option');
+                option.value = status;
+                option.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+                option.selected = status === currentValue.toLowerCase();
+                inputElement.appendChild(option);
+            });
+        } else {
+            // Create input for other fields
+            inputElement = document.createElement('input');
+            inputElement.className = 'inline-edit-input';
+            inputElement.value = currentValue.replace('$', '');
+            inputElement.type = field === 'price' || field === 'stock' || field === 'quantity' ? 'number' : 'text';
+            if (field === 'price') inputElement.step = '0.01';
+        }
+
+        const originalContent = element.innerHTML;
+        element.innerHTML = '';
+        element.appendChild(inputElement);
+        inputElement.focus();
+
+        const saveEdit = () => {
+            const newValue = inputElement.value;
+            element.classList.remove('editing');
+
+            if (type === 'product') {
+                this.updateProductField(id, field, newValue);
+            } else if (type === 'order') {
+                this.updateOrderField(id, field, newValue);
+            }
+
+            element.removeChild(inputElement);
+        };
+
+        const cancelEdit = () => {
+            element.classList.remove('editing');
+            element.innerHTML = originalContent;
+        };
+
+        inputElement.addEventListener('blur', saveEdit);
+        inputElement.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') saveEdit();
+            if (e.key === 'Escape') cancelEdit();
+        });
+    }
+
+    updateProductField(id, field, value) {
+        const product = this.dataStore.getProducts().find(p => p.id === id);
+        if (!product) return;
+
+        if (field === 'price') {
+            product.price = parseFloat(value);
+        } else if (field === 'stock') {
+            product.stock = parseInt(value);
+        }
+
+        this.dataStore.updateProduct(id, product);
+        this.renderProducts();
+        this.renderDashboard();
+    }
+
+    updateOrderField(id, field, value) {
+        const order = this.dataStore.getOrders().find(o => o.id === id);
+        if (!order) return;
+
+        if (field === 'status') {
+            order.status = value;
+        } else if (field === 'quantity') {
+            order.quantity = parseInt(value);
+            const product = this.dataStore.getProducts().find(p => p.id === order.productId);
+            if (product) {
+                order.amount = product.price * order.quantity;
+            }
+        }
+
+        this.dataStore.updateOrder(id, order);
+        this.renderOrders();
+        this.renderDashboard();
+    }
+
+    // ========================================
+    // DASHBOARD
+    // ========================================
+    async renderDashboard() {
+        const products = await this.dataStore.getProducts();
+        const orders = await this.dataStore.getOrders();
+
+        // Update stats
+        document.getElementById('totalProducts').textContent = products.length;
+        document.getElementById('totalOrders').textContent = orders.length;
+        
+        const revenue = orders.reduce((sum, order) => 
+            order.status !== 'cancelled' ? sum + order.amount : sum, 0
+        );
+        document.getElementById('totalRevenue').textContent = `$${revenue.toFixed(2)}`;
+        
+        const pending = orders.filter(o => o.status === 'pending').length;
+        document.getElementById('pendingOrders').textContent = pending;
+
+        // Recent orders
+        this.renderRecentOrders(orders.slice(0, 5));
+
+        // Top products
+        this.renderTopProducts(products);
+    }
+
+    renderRecentOrders(orders) {
+        const tbody = document.getElementById('recentOrdersBody');
+        
+        if (orders.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No orders yet</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = orders.map(order => `
+            <tr>
+                <td>#${order.id}</td>
+                <td>${order.customerName}</td>
+                <td>${order.productName}</td>
+                <td>$${order.amount.toFixed(2)}</td>
+                <td><span class="badge badge-${order.status}">${order.status}</span></td>
+            </tr>
+        `).join('');
+    }
+
+    renderTopProducts(products) {
+        const topProducts = [...products]
+            .sort((a, b) => b.sales - a.sales)
+            .slice(0, 5);
+
+        const container = document.getElementById('topProductsList');
+
+        if (topProducts.length === 0 || topProducts[0].sales === 0) {
+            container.innerHTML = '<p class="empty-state">No sales data available</p>';
+            return;
+        }
+
+        container.innerHTML = topProducts.map((product, index) => `
+            <div class="top-product-item">
+                <div class="top-product-rank">${index + 1}</div>
+                <div class="top-product-details">
+                    <h4>${product.name}</h4>
+                    <p>${product.category}</p>
+                </div>
+                <div class="top-product-sales">
+                    <div class="sales-count">${product.sales}</div>
+                    <div class="sales-label">Sales</div>
+                </div>
             </div>
+        `).join('');
+    }
+
+    // ========================================
+    // PRODUCTS
+    // ========================================
+    async renderProducts() {
+        const products = await this.dataStore.getProducts();
+        const tbody = document.getElementById('productsTableBody');
+
+        if (products.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No products yet. Add your first product!</td></tr>';
+            return;
+        }
+
+        const isAdmin = this.currentUser && this.currentUser.role === 'admin';
+
+        tbody.innerHTML = products.map(product => {
+            const stockStatus = product.stock === 0 ? 'out-of-stock' : 
+                               product.stock < 10 ? 'low-stock' : 'in-stock';
+            const stockText = product.stock === 0 ? 'Out of Stock' : 
+                            product.stock < 10 ? `Low (${product.stock})` : product.stock;
+
+            return `
+                <tr>
+                    <td>
+                        ${product.image ? 
+                            `<img src="${product.image}" alt="${product.name}" class="product-img">` :
+                            `<div class="product-img-placeholder"><i class="fas fa-tshirt"></i></div>`
+                        }
+                    </td>
+                    <td><strong>${product.name}</strong></td>
+                    <td>${product.category}</td>
+                    <td>
+                        <span class="${isAdmin ? 'editable' : ''}" 
+                              ${isAdmin ? `data-field="price" 
+                              data-id="${product.id}" 
+                              data-type="product"
+                              data-value="${product.price}"
+                              title="Click to edit"` : ''}>
+                            $${product.price.toFixed(2)}
+                        </span>
+                    </td>
+                    <td class="stock-status ${stockStatus}">
+                        <span class="${isAdmin ? 'editable' : ''}" 
+                              ${isAdmin ? `data-field="stock" 
+                              data-id="${product.id}" 
+                              data-type="product"
+                              data-value="${product.stock}"
+                              title="Click to edit"` : ''}>
+                            ${stockText}
+                        </span>
+                    </td>
+                    <td>${product.sales}</td>
+                    <td>
+                        ${isAdmin ? `
+                        <button class="btn btn-sm btn-secondary" onclick="app.editProduct(${product.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="app.deleteProduct(${product.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        ` : '<span class="text-muted">View Only</span>'}
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    editProduct(id) {
+        if (this.currentUser.role !== 'admin') {
+            alert('Only administrators can edit products');
+            return;
+        }
+
+        const product = this.dataStore.getProducts().find(p => p.id === id);
+        if (!product) return;
+
+        this.currentEditProduct = product;
+        
+        document.getElementById('productModalTitle').textContent = 'Edit Product';
+        document.getElementById('productId').value = product.id;
+        document.getElementById('productName').value = product.name;
+        document.getElementById('productCategory').value = product.category;
+        document.getElementById('productPrice').value = product.price;
+        document.getElementById('productStock').value = product.stock;
+        document.getElementById('productImage').value = product.image || '';
+        document.getElementById('productDescription').value = product.description || '';
+
+        document.getElementById('productModal').classList.add('active');
+    }
+
+    deleteProduct(id) {
+        if (this.currentUser.role !== 'admin') {
+            alert('Only administrators can delete products');
+            return;
+        }
+
+        if (confirm('Are you sure you want to delete this product?')) {
+            this.dataStore.deleteProduct(id);
+            this.renderProducts();
+            this.renderDashboard();
+            this.renderAnalytics();
+        }
+    }
+
+    // ========================================
+    // ORDERS
+    // ========================================
+    async renderOrders(filterStatus = 'all') {
+        let orders = await this.dataStore.getOrders();
+        
+        if (filterStatus !== 'all') {
+            orders = orders.filter(o => o.status === filterStatus);
+        }
+
+        const tbody = document.getElementById('ordersTableBody');
+
+        if (orders.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No orders found</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = orders.map(order => {
+            const date = new Date(order.date).toLocaleDateString();
+            return `
+                <tr>
+                    <td><strong>#${order.id}</strong></td>
+                    <td>${date}</td>
+                    <td>${order.customerName}</td>
+                    <td>${order.productName}</td>
+                    <td>
+                        <span class="editable" 
+                              data-field="quantity" 
+                              data-id="${order.id}" 
+                              data-type="order"
+                              data-value="${order.quantity}"
+                              title="Click to edit">
+                            ${order.quantity}
+                        </span>
+                    </td>
+                    <td>$${order.amount.toFixed(2)}</td>
+                    <td>
+                        <span class="badge badge-${order.status} editable" 
+                              data-field="status" 
+                              data-id="${order.id}" 
+                              data-type="order"
+                              data-value="${order.status}"
+                              title="Click to edit">
+                            ${order.status}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-secondary" onclick="app.editOrder(${order.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="app.deleteOrder(${order.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    editOrder(id) {
+        const order = this.dataStore.getOrders().find(o => o.id === id);
+        if (!order) return;
+
+        this.currentEditOrder = order;
+        
+        document.getElementById('orderModalTitle').textContent = 'Edit Order';
+        document.getElementById('orderId').value = order.id;
+        document.getElementById('customerName').value = order.customerName;
+        document.getElementById('customerPhone').value = order.customerPhone || '';
+        document.getElementById('orderProduct').value = order.productId;
+        document.getElementById('orderQuantity').value = order.quantity;
+        document.getElementById('orderStatus').value = order.status;
+        document.getElementById('orderAddress').value = order.address || '';
+
+        document.getElementById('orderModal').classList.add('active');
+    }
+
+    deleteOrder(id) {
+        if (confirm('Are you sure you want to delete this order?')) {
+            this.dataStore.deleteOrder(id);
+            this.renderOrders();
+            this.renderDashboard();
+            this.renderAnalytics();
+        }
+    }
+
+    // ========================================
+    // ANALYTICS
+    // ========================================
+    async renderAnalytics() {
+        const products = await this.dataStore.getProducts();
+        const orders = await this.dataStore.getOrders();
+
+        // Best seller
+        const bestSeller = [...products].sort((a, b) => b.sales - a.sales)[0];
+        if (bestSeller && bestSeller.sales > 0) {
+            document.getElementById('bestSellerName').textContent = bestSeller.name;
+            document.getElementById('bestSellerSales').textContent = bestSeller.sales;
+        } else {
+            document.getElementById('bestSellerName').textContent = 'N/A';
+            document.getElementById('bestSellerSales').textContent = '0';
+        }
+
+        // Average order value
+        const completedOrders = orders.filter(o => o.status !== 'cancelled');
+        const avgValue = completedOrders.length > 0 ? 
+            completedOrders.reduce((sum, o) => sum + o.amount, 0) / completedOrders.length : 0;
+        document.getElementById('avgOrderValue').textContent = `$${avgValue.toFixed(2)}`;
+
+        // Conversion rate (simplified)
+        const conversionRate = products.length > 0 ? 
+            (orders.length / (products.length * 10) * 100).toFixed(1) : 0;
+        document.getElementById('conversionRate').textContent = `${conversionRate}%`;
+
+        // Product performance
+        this.renderProductPerformance(products);
+    }
+
+    renderProductPerformance(products) {
+        const sortedProducts = [...products].sort((a, b) => b.sales - a.sales);
+        const maxSales = sortedProducts[0]?.sales || 1;
+        
+        const container = document.getElementById('productPerformanceList');
+        const noDataMsg = document.getElementById('noPerformanceData');
+
+        if (sortedProducts.length === 0 || maxSales === 0) {
+            noDataMsg.style.display = 'block';
+            container.innerHTML = '';
+            return;
+        }
+
+        noDataMsg.style.display = 'none';
+        container.innerHTML = sortedProducts.map(product => {
+            const percentage = (product.sales / maxSales * 100).toFixed(0);
+            const revenue = (product.sales * product.price).toFixed(2);
             
-            <div class="tournament-countdown" data-date="${tournament.date.toISOString()}">
-                <div class="countdown-item">
-                    <span class="countdown-number countdown-days">0</span>
-                    <span class="countdown-label">أيام</span>
+            return `
+                <div class="performance-item">
+                    <div class="performance-info">
+                        <h4>${product.name}</h4>
+                        <p>${product.sales} sales • $${revenue} revenue</p>
+                    </div>
+                    <div class="performance-bar">
+                        <div class="performance-fill" style="width: ${percentage}%"></div>
+                    </div>
                 </div>
-                <div class="countdown-item">
-                    <span class="countdown-number countdown-hours">0</span>
-                    <span class="countdown-label">ساعات</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-number countdown-minutes">0</span>
-                    <span class="countdown-label">دقائق</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-number countdown-seconds">0</span>
-                    <span class="countdown-label">ثواني</span>
-                </div>
-            </div>
-            
-            <div class="tournament-info">
-                <div class="tournament-info-item">
-                    <i class="fas fa-gamepad"></i>
-                    <span><strong>اللعبة:</strong> ${tournament.game}</span>
-                </div>
-                <div class="tournament-info-item">
-                    <i class="fas fa-calendar"></i>
-                    <span><strong>التاريخ:</strong> ${dateStr}</span>
-                </div>
-                <div class="tournament-info-item">
-                    <i class="fas fa-users"></i>
-                    <span><strong>التنسيق:</strong> ${tournament.participants}</span>
-                </div>
-                <div class="tournament-info-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span><strong>الموقع:</strong> ${tournament.location}</span>
-                </div>
-                ${tournament.venue_details ? `
-                <div class="tournament-info-item">
-                    <i class="fas fa-info-circle"></i>
-                    <span><strong>التفاصيل:</strong> ${tournament.venue_details}</span>
-                </div>
-                ` : ''}
-            </div>
+            `;
+        }).join('');
+    }
 
-            <div class="tournament-prizes">
-                <h4><i class="fas fa-trophy"></i> الجوائز</h4>
-                <div class="total-prize">
-                    <span class="prize-amount">${tournament.prize}</span>
-                    <span class="prize-label">إجمالي الجوائز</span>
-                </div>
-            </div>
+    // ========================================
+    // MODALS & FORMS
+    // ========================================
+    setupModals() {
+        // Product modal
+        document.getElementById('addProductBtn').addEventListener('click', () => {
+            this.currentEditProduct = null;
+            document.getElementById('productModalTitle').textContent = 'Add New Product';
+            document.getElementById('productForm').reset();
+            document.getElementById('productId').value = '';
+            document.getElementById('productModal').classList.add('active');
+        });
 
-            <div class="tournament-actions">
-                <a href="${tournament.registration_link}" class="tournament-btn tournament-btn-primary">
-                    <i class="fas fa-user-plus"></i> سجل الآن
-                </a>
-                <a href="#tournaments" class="tournament-btn tournament-btn-secondary">
-                    <i class="fas fa-info-circle"></i> التفاصيل
-                </a>
-            </div>
-        </div>
-    `;
+        document.getElementById('closeProductModal').addEventListener('click', () => {
+            document.getElementById('productModal').classList.remove('active');
+        });
 
-    return card;
+        document.getElementById('cancelProduct').addEventListener('click', () => {
+            document.getElementById('productModal').classList.remove('active');
+        });
+
+        // Order modal
+        document.getElementById('addOrderBtn').addEventListener('click', () => {
+            this.currentEditOrder = null;
+            document.getElementById('orderModalTitle').textContent = 'Add New Order';
+            document.getElementById('orderForm').reset();
+            document.getElementById('orderId').value = '';
+            this.populateProductSelect();
+            document.getElementById('orderModal').classList.add('active');
+        });
+
+        document.getElementById('closeOrderModal').addEventListener('click', () => {
+            document.getElementById('orderModal').classList.remove('active');
+        });
+
+        document.getElementById('cancelOrder').addEventListener('click', () => {
+            document.getElementById('orderModal').classList.remove('active');
+        });
+
+        // Close modals on outside click
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+            }
+        });
+
+        // Order filter
+        document.getElementById('orderStatusFilter').addEventListener('change', (e) => {
+            this.renderOrders(e.target.value);
+        });
+    }
+
+    setupForms() {
+        // Product form
+        document.getElementById('productForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.handleProductSubmit();
+        });
+
+        // Order form
+        document.getElementById('orderForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.handleOrderSubmit();
+        });
+
+        // Update order amount when product or quantity changes
+        document.getElementById('orderProduct').addEventListener('change', () => {
+            this.updateOrderAmount();
+        });
+        
+        document.getElementById('orderQuantity').addEventListener('input', () => {
+            this.updateOrderAmount();
+        });
+    }
+
+    async handleProductSubmit() {
+        const id = document.getElementById('productId').value;
+        const productData = {
+            name: document.getElementById('productName').value,
+            category: document.getElementById('productCategory').value,
+            price: parseFloat(document.getElementById('productPrice').value),
+            stock: parseInt(document.getElementById('productStock').value),
+            image: document.getElementById('productImage').value,
+            description: document.getElementById('productDescription').value
+        };
+
+        if (id) {
+            // Update existing product
+            await this.dataStore.updateProduct(parseInt(id), productData);
+        } else {
+            // Add new product
+            await this.dataStore.addProduct(productData);
+        }
+
+        document.getElementById('productModal').classList.remove('active');
+        await this.renderProducts();
+        await this.renderDashboard();
+        await this.renderAnalytics();
+    }
+
+    async handleOrderSubmit() {
+        const id = document.getElementById('orderId').value;
+        const productId = parseInt(document.getElementById('orderProduct').value);
+        const product = this.dataStore.getProducts().find(p => p.id === productId);
+        const quantity = parseInt(document.getElementById('orderQuantity').value);
+
+        const orderData = {
+            customerName: document.getElementById('customerName').value,
+            customerPhone: document.getElementById('customerPhone').value,
+            productId: productId,
+            productName: product.name,
+            quantity: quantity,
+            amount: product.price * quantity,
+            status: document.getElementById('orderStatus').value,
+            address: document.getElementById('orderAddress').value
+        };
+
+        if (id) {
+            // Update existing order
+            await this.dataStore.updateOrder(parseInt(id), orderData);
+        } else {
+            // Add new order
+            await this.dataStore.addOrder(orderData);
+        }
+
+        document.getElementById('orderModal').classList.remove('active');
+        await this.renderOrders();
+        await this.renderDashboard();
+        await this.renderAnalytics();
+    }
+
+    async populateProductSelect() {
+        const products = await this.dataStore.getProducts();
+        const select = document.getElementById('orderProduct');
+        
+        select.innerHTML = '<option value="">Select Product</option>' + 
+            products.map(p => `<option value="${p.id}">${p.name} - $${p.price.toFixed(2)}</option>`).join('');
+    }
+
+    updateOrderAmount() {
+        const productId = parseInt(document.getElementById('orderProduct').value);
+        const quantity = parseInt(document.getElementById('orderQuantity').value) || 1;
+        
+        if (productId) {
+            const product = this.dataStore.getProducts().find(p => p.id === productId);
+            if (product) {
+                const amount = product.price * quantity;
+                // You can display this amount somewhere if needed
+                console.log('Order amount:', amount);
+            }
+        }
+    }
 }
 
-function displayNoTournaments() {
-    tournamentsGrid.innerHTML = `
-        <div class="no-tournaments">
-            <i class="fas fa-trophy"></i>
-            <p>لا توجد بطولات حالية</p>
-            <p style="font-size: 14px; margin-top: 10px;">تابعنا على وسائل التواصل الاجتماعي للحصول على آخر التحديثات</p>
-        </div>
-    `;
-}
-
-// ===== Initialize Everything =====
+// ========================================
+// INITIALIZE APP
+// ========================================
+let app;
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('✅ X Space Website Initialized Successfully');
-    console.log('🎵 Press Space or click the music icon to start the experience');
-    console.log('🏆 Click the tournaments button to view upcoming competitions');
+    app = new DashboardApp();
 });
